@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XMED — Module Prévention · maquette d'intention</title>
+<style>
+  :root {
+    --paper: #f6f4f0;
+    --ink: #22201d;
+    --ink-soft: #5c5751;
+    --rule: #ddd8d0;
+    --card: #ffffff;
+    --accent: #9c3d2a;
+    --accent-soft: #f3e7e3;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246, 244, 240, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .top-in { max-width: 1240px; margin: 0 auto; padding: 12px 28px; display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+  .top-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
+  .top-title em { font-style: normal; color: var(--accent); }
+  nav.top-nav { margin-left: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+  nav.top-nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+  nav.top-nav a:hover { color: var(--accent); }
+
+  main { max-width: 1240px; margin: 0 auto; padding: 0 28px 100px; }
+
+  .hero { padding: 72px 0 40px; border-bottom: 1px solid var(--rule); }
+  .hero h1 { font-size: 46px; margin: 0 0 18px; max-width: 20ch; }
+  .hero p.lede { font-size: 19px; color: var(--ink-soft); max-width: 62ch; margin: 0; }
+  .meta { margin-top: 28px; font-size: 14px; color: var(--ink-soft); }
+
+  section { padding: 56px 0 0; }
+  .sec-num { font-size: 13px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  section h2 { font-size: 31px; margin: 8px 0 18px; }
+  section p { max-width: 68ch; }
+  section p.wide { max-width: 84ch; }
+
+  blockquote {
+    margin: 26px 0;
+    padding: 20px 26px;
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    font-family: Georgia, serif;
+    font-size: 21px;
+    line-height: 1.45;
+    max-width: 60ch;
+  }
+
+  figure { margin: 0; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(660px, 1fr)); gap: 28px; margin-top: 30px; align-items: start; }
+  .shot { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 22px; overflow-x: auto; }
+  .shot figcaption { font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px; font-weight: 600; }
+  .shot.is-now { background: #fbfaf8; }
+  .hint { font-size: 14px; color: var(--ink-soft); margin-top: 14px; font-style: italic; }
+
+  table.decisions { border-collapse: collapse; margin-top: 26px; width: 100%; max-width: 900px; font-size: 15px; background: var(--card); }
+  table.decisions th, table.decisions td { border-bottom: 1px solid var(--rule); padding: 11px 14px; text-align: left; vertical-align: top; }
+  table.decisions th { font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+  table.decisions td:first-child { width: 30%; font-weight: 600; }
+
+  ul.plain { max-width: 68ch; padding-left: 20px; }
+  ul.plain li { margin-bottom: 10px; }
+
+  footer { border-top: 1px solid var(--rule); margin-top: 70px; padding-top: 26px; font-size: 14px; color: var(--ink-soft); max-width: 68ch; }
+
+  /* ---------- maquettes WinForms ---------- */
+  .wf { font-family: "Segoe UI", Tahoma, Geneva, sans-serif; font-size: 12px; color: #1b1b1b; line-height: normal; }
+  .wf .win { background: #ffffff; border: 1px solid #9aa0a6; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+  .wf .title { display: flex; align-items: center; height: 29px; background: #ffffff; border-bottom: 1px solid #eceef0; padding-left: 8px; }
+  .wf .title .t { margin-left: 7px; flex-grow: 1; }
+  .wf .winbtns { display: flex; }
+  .wf .winbtn { width: 44px; height: 28px; display: flex; align-items: center; justify-content: center; }
+  .wf .body { padding: 16px 14px 14px; }
+  .wf .row { display: flex; align-items: center; gap: 10px; }
+  .wf .lbl { flex-shrink: 0; }
+  .wf .txt { height: 21px; display: flex; align-items: center; border: 1px solid #7f9db9; background: #fff; padding: 0 5px; overflow: hidden; white-space: nowrap; }
+  .wf .txt.dim { border-color: #c3cbd3; background: #f2f4f6; color: #9aa0a6; }
+  .wf .combo { display: flex; align-items: center; height: 21px; border: 1px solid #7f9db9; background: #fff; }
+  .wf .combo .v { flex-grow: 1; padding: 0 5px; overflow: hidden; white-space: nowrap; }
+  .wf .combo .arr { width: 17px; height: 19px; display: flex; align-items: center; justify-content: center; background: linear-gradient(#fdfdfd,#e4e4e4); border-left: 1px solid #c8ccd0; }
+  .wf .btn { min-width: 68px; height: 23px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border: 1px solid #707070; border-radius: 2px; background: linear-gradient(#fdfdfd,#e6e6e6); }
+  .wf .btn.def { border-color: #3c7fb1; box-shadow: inset 0 0 0 1px #ffffff; }
+  .wf .btn.sq { min-width: 0; width: 23px; padding: 0; }
+  .wf .sep { height: 1px; background: #e0e3e6; margin: 15px 0 14px; }
+  .wf .panel { margin: 8px 0 0 20px; background: #f6f8fa; border: 1px solid #dde2e7; padding: 10px; }
+  .wf .box { display: inline-flex; width: 13px; height: 13px; border: 1px solid #767676; background: #fff; flex-shrink: 0; align-items: center; justify-content: center; }
+  .wf .radio { display: inline-flex; width: 13px; height: 13px; border-radius: 50%; border: 1px solid #767676; background: #fff; align-items: center; justify-content: center; flex-shrink: 0; }
+  .wf .radio.on { border-color: #5a5a5a; }
+  .wf .radio.on i { width: 5px; height: 5px; border-radius: 50%; background: #1a5fb4; display: block; }
+  .wf .navy { color: #1f3a63; }
+  .wf .grey { color: #6b7075; }
+
+  .wf .check { display: flex; align-items: center; gap: 7px; }
+  .wf .check.click { cursor: pointer; user-select: none; }
+  .wf .check .tick { display: none; }
+  .wf .check.on .box { border-color: #5a5a5a; }
+  .wf .check.on .tick { display: block; }
+  .wf [data-panel][hidden] { display: none; }
+
+  .wf .combo.click { cursor: pointer; }
+  .wf .dd-wrap { position: relative; flex-grow: 1; }
+  .wf .dd { position: absolute; left: 0; top: 22px; width: 100%; max-height: 224px; overflow: auto; background: #fff; border: 1px solid #7f9db9; box-shadow: 0 6px 16px rgba(0,0,0,0.22); z-index: 5; }
+  .wf .dd[hidden] { display: none; }
+  .wf .dd div { height: 21px; display: flex; align-items: center; padding: 0 7px; cursor: pointer; border-bottom: 1px solid #f2f4f6; }
+  .wf .dd div:hover { background: #eef4fb; }
+  .wf .dd div.sel { background: #d6e4f5; }
+
+  .wf .tabs { display: flex; align-items: flex-end; gap: 2px; padding-left: 2px; }
+  .wf .tab { height: 25px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border: 1px solid #c3c7cb; border-bottom: none; background: linear-gradient(#f7f8f9,#e6e9ec); color: #3a3f45; }
+  .wf .tab.act { height: 27px; background: #fff; font-weight: 600; color: #1b1b1b; }
+  .wf .grid { border: 1px solid #c3c7cb; background: #fff; margin-top: -1px; }
+  .wf .grouper { display: flex; align-items: center; height: 27px; background: linear-gradient(#fbfbfc,#f0f2f4); border-bottom: 1px solid #d8dce0; padding: 0 8px; color: #7a8087; }
+  .wf .ghead { display: flex; height: 25px; align-items: center; background: linear-gradient(#fefefe,#eceef0); border-bottom: 1px solid #c3c7cb; color: #2a2f35; }
+  .wf .ghead > div { padding: 0 6px; border-right: 1px solid #dfe3e6; }
+  .wf .grow { display: flex; height: 24px; align-items: center; border-bottom: 1px solid #eef0f2; }
+  .wf .grow > div { padding: 0 6px; overflow: hidden; white-space: nowrap; }
+  .wf .grow.sel { background: #d6e4f5; border-top: 1px solid #a8c6e8; border-bottom: 1px solid #a8c6e8; }
+  .wf .c1 { width: 40px; } .wf .c2 { width: 200px; } .wf .c3 { width: 88px; } .wf .c4 { width: 128px; }
+  .wf .c5 { width: 324px; } .wf .c6 { width: 88px; } .wf .c7 { width: 108px; }
+  .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
+  .wf .hist { display: flex; align-items: center; gap: 7px; height: 25px; padding: 0 8px; background: linear-gradient(#fbfbfc,#f2f4f6); border-top: 1px solid #dfe3e6; color: #4a5058; }
+  .wf .detail { border: 1px solid #c3c7cb; background: #fff; margin-top: 8px; padding: 11px 12px; }
+  .wf .sidebtns { width: 140px; flex-shrink: 0; display: flex; flex-direction: column; gap: 7px; padding-top: 27px; }
+  .wf .sbtn { height: 26px; display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #8ab0d9; border-radius: 2px; background: linear-gradient(#ffffff,#eef3f9); }
+  .wf .sbtn.off { border-color: #cdd2d7; background: #f3f4f5; color: #a2a8ae; }
+  .wf .spacer { height: 10px; }
+  .wf a { color: #1a5fb4; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="top-title">XMED — module <em>Prévention</em></div>
+    <nav class="top-nav">
+      <a href="#principe">Le principe</a>
+      <a href="#fenetre">La fenêtre</a>
+      <a href="#module">Le module</a>
+      <a href="#arbitrages">Les arbitrages</a>
+      <a href="#perimetre">Hors périmètre</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero">
+    <h1>Poser le rappel là où la décision se prend</h1>
+    <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Elle montre trois écrans : la fenêtre d'incorporation telle qu'elle est aujourd'hui, la même enrichie, et le module à deux onglets.</p>
+    <div class="meta">Dr Matthieu ANEX — 19 août 2026 · Maquette redessinée d'après captures d'écran : les cotes et les teintes sont approchées, ce n'est pas une spécification pixel.</div>
+  </div>
+
+  <section id="principe">
+    <div class="sec-num">01</div>
+    <h2>Le principe</h2>
+    <p>Au moment où un document arrive, le raisonnement médical tient en une phrase.</p>
+    <blockquote>« J'ai lu le document, je vais l'intégrer, donc je détermine les actions à entreprendre si nécessaire. »</blockquote>
+    <p class="wide">Les trois temps ne se séparent pas : ils forment un seul geste de décision, et ce geste se situe au clic sur <strong>« Incorporer »</strong>. C'est de là que découle tout le reste de cette maquette — et notamment le parti pris suivant : <strong>rien n'est ajouté dans la liste H'</strong>, ni colonne, ni case, ni bouton. La liste reste exactement ce qu'elle est. Tout se joue dans la fenêtre qui s'ouvre à l'incorporation, qui devient l'endroit unique où l'on répond à la question « et maintenant, quelles suites ? ».</p>
+  </section>
+
+  <section id="fenetre">
+    <div class="sec-num">02</div>
+    <h2>La fenêtre d'incorporation</h2>
+    <p class="wide">La fenêtre garde ses options actuelles — intitulé du document, incorporation manuelle, ouvrir la fiche patient — et gagne trois sections repliables. Chacune est une case à cocher : décochée, elle n'occupe qu'une ligne ; cochée, elle déplie son mini-menu. Les trois décochées, on retrouve exactement la fenêtre d'aujourd'hui.</p>
+
+    <ul class="plain">
+      <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
+      <li><strong>Prévention</strong> — l'élément de suivi à prévoir (repris du listing existant du cadre « Éléments de suivi »), l'échéance en délai ou en date, la répétition éventuelle, une note. Le bouton « Ajouter un rappel » couvre les comptes rendus qui appellent deux ou trois suites — la coloscopie qui demande un contrôle à cinq ans <em>et</em> une consultation gastro à un an.</li>
+      <li><strong>Création d'un épisode de soins</strong> — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsque l'affection y ouvre droit. Le document qui révèle la pathologie est aussi celui qui devrait permettre d'ouvrir l'épisode : autant le faire dans le même mouvement.</li>
+    </ul>
+
+    <div class="shots">
+      <figure class="shot is-now">
+        <figcaption>Aujourd'hui</figcaption>
+        <div class="wf">
+          <div class="win" style="width: 516px;">
+            <div class="title">
+              <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <div class="t">Traitement des résultats H'</div>
+              <div class="winbtns">
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+              </div>
+            </div>
+            <div class="body">
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="flex-shrink:0; padding-top:2px;">
+                  <svg width="32" height="32" viewBox="0 0 32 32"><defs><linearGradient id="q1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ddf7"/><stop offset="0.5" stop-color="#4aa3e0"/><stop offset="1" stop-color="#1668ad"/></linearGradient></defs><circle cx="16" cy="16" r="15" fill="url(#q1)" stroke="#0f4c81" stroke-width="1"/><text x="16" y="23.5" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#fff">?</text></svg>
+                </div>
+                <div style="flex-grow:1; padding-top:6px;">
+                  <div>XMed ne peut pas intégrer automatiquement les résultats HPRIM 1.</div>
+                  <div style="display:flex; flex-direction:column; gap:9px; margin-top:18px;">
+                    <div class="check"><span class="box"></span><span class="navy">Incorporer des résultats manuellement</span></div>
+                    <div class="check"><span class="box"></span><span class="navy">Ouvrir la fiche patient</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top:20px;">
+                <div class="lbl" style="width:136px;">Intitulé du document :</div>
+                <div class="txt" style="flex-grow:1;">Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir</div>
+              </div>
+              <div style="display:flex; gap:72px; margin-top:22px; padding-left:146px;">
+                <div class="btn def">Valider</div>
+                <div class="btn">Annuler</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <figure class="shot">
+        <figcaption>Proposé</figcaption>
+        <div class="wf">
+          <div class="win" style="width: 640px;">
+            <div class="title">
+              <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <div class="t">Traitement des résultats H'</div>
+              <div class="winbtns">
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+              </div>
+            </div>
+            <div class="body">
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="flex-shrink:0; padding-top:2px;">
+                  <svg width="32" height="32" viewBox="0 0 32 32"><defs><linearGradient id="q2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ddf7"/><stop offset="0.5" stop-color="#4aa3e0"/><stop offset="1" stop-color="#1668ad"/></linearGradient></defs><circle cx="16" cy="16" r="15" fill="url(#q2)" stroke="#0f4c81" stroke-width="1"/><text x="16" y="23.5" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#fff">?</text></svg>
+                </div>
+                <div style="flex-grow:1; padding-top:6px;">
+                  <div>XMed ne peut pas intégrer automatiquement les résultats HPRIM 1.</div>
+                  <div style="display:flex; flex-direction:column; gap:9px; margin-top:16px;">
+                    <div class="check"><span class="box"></span><span class="navy">Incorporer des résultats manuellement</span></div>
+                    <div class="check"><span class="box"></span><span class="navy">Ouvrir la fiche patient</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:18px;">
+                <div class="lbl" style="width:136px;">Intitulé du document :</div>
+                <div class="txt" style="flex-grow:1;">Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir</div>
+              </div>
+
+              <div class="sep"></div>
+
+              <div class="check click on" data-toggle="marquer">
+                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="navy">Marquer le patient</span>
+              </div>
+              <div class="panel" data-panel="marquer">
+                <div class="row">
+                  <div class="lbl" style="width:96px;">Note :</div>
+                  <div class="txt" style="flex-grow:1;">à rappeler — commenter le résultat</div>
+                </div>
+              </div>
+
+              <div class="sep"></div>
+
+              <div class="check click on" data-toggle="prevention">
+                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="navy">Prévention</span>
+              </div>
+              <div class="panel" data-panel="prevention">
+                <div class="row">
+                  <div class="lbl" style="width:96px;">Élément de suivi :</div>
+                  <div class="combo" style="flex-grow:1;"><div class="v">Échographie cervicale</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                  <div class="btn sq"><svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                </div>
+                <div class="row" style="margin-top:9px;">
+                  <div class="lbl" style="width:96px;">Échéance :</div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="radio on"><i></i></span><span>dans</span>
+                    <div class="combo" style="width:96px;"><div class="v">1 an</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-left:14px;">
+                    <span class="radio"></span><span class="grey">le</span>
+                    <div class="txt dim" style="width:96px;">__/__/____</div>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:9px;">
+                  <div class="lbl" style="width:96px;">Répéter :</div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="box" style="border-color:#5a5a5a;"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    <span>tous les</span>
+                    <div class="txt" style="width:38px;">1</div>
+                    <div class="combo" style="width:76px;"><div class="v">an(s)</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                    <span>pendant</span>
+                    <div class="txt" style="width:38px;">5</div>
+                    <span>ans</span>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:9px;">
+                  <div class="lbl" style="width:96px;">Note :</div>
+                  <div class="txt" style="flex-grow:1;">nodule thyroïdien droit 14mm EU-TIRADS 3</div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin-top:11px;">
+                  <div class="btn" style="height:22px;"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1 V9 M1 5 H9" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round"/></svg><span>Ajouter un rappel</span></div>
+                </div>
+              </div>
+
+              <div class="sep"></div>
+
+              <div class="check click on" data-toggle="episode">
+                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="navy">Création d'un épisode de soins</span>
+              </div>
+              <div class="panel" data-panel="episode">
+                <div class="row">
+                  <div class="lbl" style="width:96px;">Pathologie :</div>
+                  <div class="dd-wrap">
+                    <div class="combo click" id="pathoCombo"><div class="v" id="pathoValue">Nodule thyroïdien</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                    <div class="dd" id="pathoList" hidden></div>
+                  </div>
+                  <div class="btn sq"><svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                </div>
+                <div class="row" style="margin-top:9px;">
+                  <div class="lbl" style="width:96px;">Début :</div>
+                  <div class="txt" style="width:96px;">19/08/2026</div>
+                  <div class="check click" data-toggle="ald" style="margin-left:18px;">
+                    <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    <span class="navy">ALD</span><span class="grey">— affection de longue durée</span>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:9px;">
+                  <div class="lbl" style="width:96px;">Note :</div>
+                  <div class="txt" style="flex-grow:1;">découvert sur écho. cervicale du 19/08/2026</div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:72px; margin-top:20px; padding-left:150px;">
+                <div class="btn def">Valider</div>
+                <div class="btn">Annuler</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hint">Les trois cases sont cliquables, ainsi que la liste des pathologies et la case ALD.</div>
+      </figure>
+    </div>
+  </section>
+
+  <section id="module">
+    <div class="sec-num">03</div>
+    <h2>Le module Prévention</h2>
+    <p class="wide">Le module Vaccinations devient « Prévention », à deux onglets. L'onglet <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. L'onglet <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. Chaque onglet porte sa propre pastille d'état, de sorte qu'on voit dès l'ouverture lequel des deux demande l'attention.</p>
+
+    <figure class="shot" style="margin-top:30px;">
+      <figcaption>Module Prévention — onglet Examens &amp; consultations</figcaption>
+      <div class="wf">
+        <div class="win" style="width:1140px; background:#f0f0f0;">
+          <div class="title">
+            <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div class="t">Prévention</div>
+            <div class="winbtns">
+              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg></div>
+            </div>
+          </div>
+          <div style="padding:8px;">
+            <div style="display:flex; gap:8px; align-items:flex-start;">
+              <div style="flex-grow:1;">
+                <div class="tabs">
+                  <div class="tab"><svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#e08a1e"/></svg><span>Vaccins</span></div>
+                  <div class="tab act"><svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg><span>Examens &amp; consultations</span></div>
+                </div>
+                <div class="grid">
+                  <div class="grouper">
+                    <div style="flex-grow:1;">Glisser/déposer ici des entêtes de colonne pour effectuer des regroupements</div>
+                    <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="ghead">
+                    <div class="c1">!</div><div class="c2">Examen / consultation</div><div class="c3">Échéance</div>
+                    <div class="c4">Répétition</div><div class="c5">Note</div><div class="c6">Statut</div><div class="c7" style="border-right:none;">Créé par</div>
+                  </div>
+                  <div class="grow">
+                    <div class="c1"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#c0272d"/></svg></div>
+                    <div class="c2">Frottis cervico-utérin</div><div class="c3 red">12/03/2026</div><div class="c4">tous les 3 ans</div>
+                    <div class="c5">dernier frottis normal</div><div class="c6" style="color:#c0272d;">Dépassé</div><div class="c7">M. ANEX</div>
+                  </div>
+                  <div class="grow">
+                    <div class="c1"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#e08a1e"/></svg></div>
+                    <div class="c2">Mammographie</div><div class="c3 orange">04/10/2026</div><div class="c4">tous les 2 ans</div>
+                    <div class="c5">dépistage organisé</div><div class="c6" style="color:#b06a06;">Proche</div><div class="c7">M. ANEX</div>
+                  </div>
+                  <div class="grow sel">
+                    <div class="c1"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1 L9 8 H1 Z" fill="none" stroke="#8a9099" stroke-width="1"/></svg></div>
+                    <div class="c2">Échographie cervicale</div><div class="c3">19/08/2027</div><div class="c4">tous les ans, 5 ans</div>
+                    <div class="c5">nodule thyroïdien droit 14mm EU-TIRADS 3</div><div class="c6 soft">À venir</div><div class="c7">M. ANEX</div>
+                  </div>
+                  <div class="grow">
+                    <div class="c1"></div>
+                    <div class="c2">Coloscopie</div><div class="c3">15/08/2031</div><div class="c4" style="color:#8a9099;">—</div>
+                    <div class="c5">polype — contrôle à 5 ans</div><div class="c6 soft">À venir</div><div class="c7">M. ANEX</div>
+                  </div>
+                  <div style="height:54px; background:#fff;"></div>
+                  <div class="hist">
+                    <svg width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>
+                    <span>Historique — 6 rappels faits, annulés ou remplacés</span>
+                  </div>
+                </div>
+
+                <div class="detail">
+                  <div style="display:flex; gap:24px; align-items:center;">
+                    <div class="row" style="flex-grow:1;">
+                      <div class="lbl" style="width:104px;">Élément de suivi :</div>
+                      <div class="combo" style="flex-grow:1;"><div class="v">Échographie cervicale</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                    </div>
+                    <div class="row" style="width:330px; flex-shrink:0;">
+                      <div class="lbl" style="width:92px;">Créé par :</div><div class="soft">Matthieu ANEX — le 19/08/2026</div>
+                    </div>
+                  </div>
+                  <div style="display:flex; gap:24px; align-items:center; margin-top:9px;">
+                    <div class="row" style="flex-grow:1;">
+                      <div class="lbl" style="width:104px;">Échéance :</div>
+                      <div style="display:flex; align-items:center; gap:6px;">
+                        <span class="radio on"><i></i></span><span>dans</span>
+                        <div class="combo" style="width:96px;"><div class="v">1 an</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                      </div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-left:10px;">
+                        <span class="radio"></span><span class="grey">le</span>
+                        <div class="txt dim" style="width:96px; color:#4a5058;">19/08/2027</div>
+                      </div>
+                    </div>
+                    <div class="row" style="width:330px; flex-shrink:0;">
+                      <div class="lbl" style="width:92px;">Statut :</div><div class="soft">En cours</div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:9px;">
+                    <div class="lbl" style="width:104px;">Répéter :</div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="box" style="border-color:#5a5a5a;"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                      <span>tous les</span>
+                      <div class="txt" style="width:38px;">1</div>
+                      <div class="combo" style="width:76px;"><div class="v">an(s)</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
+                      <span>pendant</span>
+                      <div class="txt" style="width:38px;">5</div>
+                      <span>ans</span>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:9px;">
+                    <div class="lbl" style="width:104px;">Note :</div>
+                    <div class="txt" style="flex-grow:1;">nodule thyroïdien droit 14mm EU-TIRADS 3</div>
+                  </div>
+                  <div class="row" style="margin-top:9px;">
+                    <div class="lbl" style="width:104px;">Document source :</div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <a href="#module" style="text-decoration:underline;">Écho. cervicale — IRIMED — 19/08/2026</a>
+                      <div class="sbtn" style="height:21px; padding:0 10px;">Ouvrir</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sidebtns">
+                <div class="sbtn">Ajouter</div>
+                <div class="sbtn">Modifier</div>
+                <div class="sbtn">Supprimer</div>
+                <div class="spacer"></div>
+                <div class="sbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 5.6 L4.2 8.4 L9.5 2.2" fill="none" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fait</span></div>
+                <div class="sbtn">Annuler le rappel</div>
+                <div class="spacer"></div>
+                <div class="sbtn">Ok</div>
+                <div class="sbtn off">Appliquer</div>
+                <div class="spacer"></div>
+                <div class="sbtn">Aide</div>
+                <div class="sbtn">Annuler</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <p class="wide" style="margin-top:26px;">Un rappel marqué <strong>« Fait »</strong> sort de la liste active et rejoint l'historique — ce qui conserve la réponse à « c'est quand, votre dernière mammographie ? ». XMED propose alors de reposer le même rappel avec le même délai. Si l'on oublie de le marquer et qu'un nouveau compte rendu arrive, le nouveau rappel <strong>remplace</strong> l'ancien, qui reste dans l'historique au statut « remplacé ».</p>
+  </section>
+
+  <section id="arbitrages">
+    <div class="sec-num">04</div>
+    <h2>Les arbitrages</h2>
+    <p>Réponses aux six points soumis dans l'ébauche du 19 août, plus la question de la périodicité.</p>
+    <table class="decisions">
+      <tr><th>Point</th><th>Réponse</th></tr>
+      <tr><td>Liste des examens</td><td>Le listing existant du cadre « Éléments de suivi » — pas de seconde liste à maintenir.</td></tr>
+      <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
+      <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
+      <tr><td>Marquage</td><td>Case et note dans la fenêtre, <em>en plus</em> de la colonne « Marquer » actuelle, qui ne bouge pas.</td></tr>
+      <tr><td>Module</td><td>Un seul module « Prévention » à deux onglets.</td></tr>
+      <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
+      <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
+      <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
+      <tr><td>Épisode de soins</td><td>Ajout à la maquette : pathologie, date de début, case ALD — créés depuis le même document.</td></tr>
+    </table>
+  </section>
+
+  <section id="perimetre">
+    <div class="sec-num">05</div>
+    <h2>Hors périmètre</h2>
+    <ul class="plain">
+      <li><strong>L'incorporation rapide en masse n'est pas concernée.</strong> Elle intègre les documents sans qu'on les lise ; un rappel de prévention n'a de sens qu'après lecture.</li>
+      <li><strong>Aucun envoi au DMP pour les rappels.</strong> Les échanges DMP restent l'affaire des vaccins seuls.</li>
+      <li><strong>Le marquage actuel reste inchangé</strong> dans ses usages — rappels courts, patients à reprendre au retour de congés.</li>
+      <li><strong>Pas de moteur de règles</strong> déclenchant seul un suivi selon l'âge ou la pathologie : cela relève d'un autre horizon.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Maquette d'intention, redessinée d'après des captures d'écran de XMED. Les dimensions, les teintes et les libellés sont approchés : ils servent à montrer la disposition et l'enchaînement, non à spécifier le rendu. Dr Matthieu ANEX — 19 août 2026.
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  document.querySelectorAll('[data-toggle]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      el.classList.toggle('on');
+      var panel = document.querySelector('[data-panel="' + el.dataset.toggle + '"]');
+      if (panel) { panel.hidden = !el.classList.contains('on'); }
+    });
+  });
+
+  var pathologies = [
+    'Apnées du sommeil', 'Asthme', 'BPCO', 'Cancer colorectal', 'Cancer du sein',
+    'Dépression', 'Diabète de type 2', 'Dyslipidémie', 'Épilepsie',
+    'Fibrillation auriculaire', 'Gonarthrose', 'Hypertension artérielle',
+    'Hypothyroïdie', 'Insuffisance cardiaque', 'Insuffisance rénale chronique',
+    'Lombalgie chronique', 'Maladie de Crohn', 'Maladie de Parkinson', 'Migraine',
+    'Nodule thyroïdien', 'Obésité', 'Polyarthrite rhumatoïde', 'Sclérose en plaques',
+    'Syndrome anxieux', 'Tabagisme'
+  ];
+  var combo = document.getElementById('pathoCombo');
+  var value = document.getElementById('pathoValue');
+  var list = document.getElementById('pathoList');
+  if (!combo) { return; }
+
+  function paint() {
+    list.innerHTML = '';
+    pathologies.forEach(function (nom) {
+      var row = document.createElement('div');
+      row.textContent = nom;
+      if (nom === value.textContent) { row.className = 'sel'; }
+      row.addEventListener('click', function (e) {
+        e.stopPropagation();
+        value.textContent = nom;
+        list.hidden = true;
+      });
+      list.appendChild(row);
+    });
+  }
+
+  combo.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (list.hidden) { paint(); }
+    list.hidden = !list.hidden;
+  });
+  document.addEventListener('click', function () { list.hidden = true; });
+})();
+</script>
+
+</body>
+</html>
