@@ -27,18 +27,15 @@
   }
   h1, h2, h3 { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
 
-  header.top {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(246, 244, 240, 0.94);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-  }
+  header.top { position: sticky; top: 0; z-index: 50; background: rgba(246,244,240,0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
   .top-in { max-width: 1240px; margin: 0 auto; padding: 12px 28px; display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
   .top-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
   .top-title em { font-style: normal; color: var(--accent); }
-  nav.top-nav { margin-left: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+  nav.top-nav { margin-left: auto; display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; }
   nav.top-nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
   nav.top-nav a:hover { color: var(--accent); }
+  nav.top-nav a.reinit { color: var(--accent); border: 1px solid #ddc9c2; border-radius: 3px; padding: 2px 9px; }
+  nav.top-nav a.reinit:hover { background: var(--accent-soft); }
 
   main { max-width: 1240px; margin: 0 auto; padding: 0 28px 100px; }
 
@@ -53,16 +50,7 @@
   section p { max-width: 68ch; }
   section p.wide { max-width: 84ch; }
 
-  blockquote {
-    margin: 26px 0;
-    padding: 20px 26px;
-    background: var(--accent-soft);
-    border-left: 3px solid var(--accent);
-    font-family: Georgia, serif;
-    font-size: 21px;
-    line-height: 1.45;
-    max-width: 60ch;
-  }
+  blockquote { margin: 26px 0; padding: 20px 26px; background: var(--accent-soft); border-left: 3px solid var(--accent); font-family: Georgia, serif; font-size: 21px; line-height: 1.45; max-width: 60ch; }
 
   figure { margin: 0; }
   .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(660px, 1fr)); gap: 28px; margin-top: 30px; align-items: start; }
@@ -82,7 +70,7 @@
 
   footer { border-top: 1px solid var(--rule); margin-top: 70px; padding-top: 26px; font-size: 14px; color: var(--ink-soft); max-width: 68ch; }
 
-  /* ---------- maquettes WinForms ---------- */
+  /* ---------- WinForms ---------- */
   .wf { font-family: "Segoe UI", Tahoma, Geneva, sans-serif; font-size: 12px; color: #1b1b1b; line-height: normal; }
   .wf .win { background: #ffffff; border: 1px solid #9aa0a6; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
   .wf .title { display: flex; align-items: center; height: 29px; background: #ffffff; border-bottom: 1px solid #eceef0; padding-left: 8px; }
@@ -94,35 +82,47 @@
   .wf .lbl { flex-shrink: 0; }
   .wf .txt { height: 21px; display: flex; align-items: center; border: 1px solid #7f9db9; background: #fff; padding: 0 5px; overflow: hidden; white-space: nowrap; }
   .wf .txt.dim { border-color: #c3cbd3; background: #f2f4f6; color: #9aa0a6; }
-  .wf .combo { display: flex; align-items: center; height: 21px; border: 1px solid #7f9db9; background: #fff; }
+  .wf .ed { cursor: text; }
+  .wf .ed:focus { outline: 2px solid #3c7fb1; outline-offset: -1px; }
+  .wf .ed:empty::before { content: attr(data-vide); color: #b0b5ba; }
+  .wf .combo { position: relative; display: flex; align-items: center; height: 21px; border: 1px solid #7f9db9; background: #fff; cursor: pointer; user-select: none; }
+  .wf .combo.dim { border-color: #c3cbd3; background: #f2f4f6; color: #9aa0a6; cursor: default; }
   .wf .combo .v { flex-grow: 1; padding: 0 5px; overflow: hidden; white-space: nowrap; }
   .wf .combo .arr { width: 17px; height: 19px; display: flex; align-items: center; justify-content: center; background: linear-gradient(#fdfdfd,#e4e4e4); border-left: 1px solid #c8ccd0; }
-  .wf .btn { min-width: 68px; height: 23px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border: 1px solid #707070; border-radius: 2px; background: linear-gradient(#fdfdfd,#e6e6e6); }
+  .wf .btn { min-width: 68px; height: 23px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border: 1px solid #707070; border-radius: 2px; background: linear-gradient(#fdfdfd,#e6e6e6); cursor: pointer; user-select: none; }
+  .wf .btn:hover { background: linear-gradient(#ffffff,#dcdcdc); }
   .wf .btn.def { border-color: #3c7fb1; box-shadow: inset 0 0 0 1px #ffffff; }
   .wf .btn.sq { min-width: 0; width: 23px; padding: 0; }
   .wf .sep { height: 1px; background: #e0e3e6; margin: 15px 0 14px; }
   .wf .panel { margin: 8px 0 0 20px; background: #f6f8fa; border: 1px solid #dde2e7; padding: 10px; }
+  .wf .bloc + .bloc { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cfd6dd; }
   .wf .box { display: inline-flex; width: 13px; height: 13px; border: 1px solid #767676; background: #fff; flex-shrink: 0; align-items: center; justify-content: center; }
   .wf .radio { display: inline-flex; width: 13px; height: 13px; border-radius: 50%; border: 1px solid #767676; background: #fff; align-items: center; justify-content: center; flex-shrink: 0; }
   .wf .radio.on { border-color: #5a5a5a; }
   .wf .radio.on i { width: 5px; height: 5px; border-radius: 50%; background: #1a5fb4; display: block; }
   .wf .navy { color: #1f3a63; }
   .wf .grey { color: #6b7075; }
-
   .wf .check { display: flex; align-items: center; gap: 7px; }
   .wf .check.click { cursor: pointer; user-select: none; }
   .wf .check .tick { display: none; }
   .wf .check.on .box { border-color: #5a5a5a; }
   .wf .check.on .tick { display: block; }
-  .wf [data-panel][hidden] { display: none; }
+  .wf .x { cursor: pointer; color: #99a0a7; padding: 0 3px; font-size: 13px; }
+  .wf .x:hover { color: #c0272d; }
 
-  .wf .combo.click { cursor: pointer; }
-  .wf .dd-wrap { position: relative; flex-grow: 1; }
-  .wf .dd { position: absolute; left: 0; top: 22px; width: 100%; max-height: 224px; overflow: auto; background: #fff; border: 1px solid #7f9db9; box-shadow: 0 6px 16px rgba(0,0,0,0.22); z-index: 5; }
-  .wf .dd[hidden] { display: none; }
-  .wf .dd div { height: 21px; display: flex; align-items: center; padding: 0 7px; cursor: pointer; border-bottom: 1px solid #f2f4f6; }
-  .wf .dd div:hover { background: #eef4fb; }
-  .wf .dd div.sel { background: #d6e4f5; }
+  .wf .chips { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .wf .chip { height: 20px; display: inline-flex; align-items: center; padding: 0 9px; border: 1px solid #b9c8d8; border-radius: 10px; background: #f2f7fc; cursor: pointer; user-select: none; }
+  .wf .chip:hover { background: #e0edfa; border-color: #8ab0d9; }
+  .wf .chip.on { background: #d6e4f5; border-color: #7ba7d7; font-weight: 600; }
+
+  .wf .dd { position: absolute; left: 0; top: 22px; min-width: 100%; background: #fff; border: 1px solid #7f9db9; box-shadow: 0 6px 16px rgba(0,0,0,0.22); z-index: 20; }
+  .wf .ddq { width: 100%; height: 22px; border: none; border-bottom: 1px solid #dfe3e6; padding: 0 7px; font: inherit; outline: none; }
+  .wf .ddl { max-height: 190px; overflow-y: auto; }
+  .wf .ddl div { height: 21px; display: flex; align-items: center; padding: 0 7px; cursor: pointer; border-bottom: 1px solid #f4f6f8; white-space: nowrap; }
+  .wf .ddl div:hover { background: #eef4fb; }
+  .wf .ddl div.sel { background: #d6e4f5; }
+  .wf .ddl .rien { color: #9aa0a6; cursor: default; }
+  .wf .ddl .rien:hover { background: #fff; }
 
   .wf .tabs { display: flex; align-items: flex-end; gap: 2px; padding-left: 2px; }
   .wf .tab { height: 25px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border: 1px solid #c3c7cb; border-bottom: none; background: linear-gradient(#f7f8f9,#e6e9ec); color: #3a3f45; cursor: pointer; user-select: none; }
@@ -132,8 +132,10 @@
   .wf .grid { border: 1px solid #c3c7cb; background: #fff; margin-top: -1px; }
   .wf .grouper { display: flex; align-items: center; height: 27px; background: linear-gradient(#fbfbfc,#f0f2f4); border-bottom: 1px solid #d8dce0; padding: 0 8px; color: #7a8087; }
   .wf .ghead { display: flex; height: 25px; align-items: center; background: linear-gradient(#fefefe,#eceef0); border-bottom: 1px solid #c3c7cb; color: #2a2f35; }
-  .wf .ghead > div { padding: 0 6px; border-right: 1px solid #dfe3e6; overflow: hidden; white-space: nowrap; }
+  .wf .ghead > div { padding: 0 6px; border-right: 1px solid #dfe3e6; overflow: hidden; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
   .wf .ghead > div:last-child { border-right: none; }
+  .wf .ghead > div.tri { cursor: pointer; user-select: none; }
+  .wf .ghead > div.tri:hover { background: rgba(0,0,0,.05); }
   .wf .grow { display: flex; height: 24px; align-items: center; border-bottom: 1px solid #eef0f2; cursor: pointer; }
   .wf .grow:hover { background: #f2f7fd; }
   .wf .grow > div { padding: 0 6px; overflow: hidden; white-space: nowrap; }
@@ -141,6 +143,8 @@
   .wf .grow.sel:hover { background: #d6e4f5; }
   .wf .grow.hist { color: #8a9099; cursor: default; background: #fbfbfc; }
   .wf .grow.hist:hover { background: #fbfbfc; }
+  .wf .grow.flash { animation: flash 2s ease-out; }
+  @keyframes flash { 0% { background: #ffe9a8; } 55% { background: #fff4cf; } 100% { background: transparent; } }
   .wf .c1 { width: 40px; } .wf .c2 { width: 200px; } .wf .c3 { width: 88px; } .wf .c4 { width: 128px; }
   .wf .c5 { width: 324px; } .wf .c6 { width: 88px; } .wf .c7 { width: 108px; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
@@ -149,22 +153,23 @@
   .wf .histbar svg { transition: transform .12s; }
   .wf .histbar.open svg { transform: rotate(90deg); }
   .wf .detail { border: 1px solid #c3c7cb; background: #fff; margin-top: 8px; padding: 11px 12px; }
-  .wf .sidebtns { width: 140px; flex-shrink: 0; display: flex; flex-direction: column; gap: 7px; padding-top: 27px; }
-  .wf .sbtn { height: 26px; display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #8ab0d9; border-radius: 2px; background: linear-gradient(#ffffff,#eef3f9); cursor: pointer; user-select: none; }
+  .wf .sidebtns { width: 148px; flex-shrink: 0; display: flex; flex-direction: column; gap: 7px; padding-top: 27px; }
+  .wf .sbtn { min-height: 26px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 6px; text-align: center; border: 1px solid #8ab0d9; border-radius: 2px; background: linear-gradient(#ffffff,#eef3f9); cursor: pointer; user-select: none; }
   .wf .sbtn:hover { background: linear-gradient(#ffffff,#dfeaf6); }
   .wf .sbtn.off { border-color: #cdd2d7; background: #f3f4f5; color: #a2a8ae; cursor: default; }
   .wf .sbtn.off:hover { background: #f3f4f5; }
+  .wf .sbtn.act { border-color: #3c7fb1; background: linear-gradient(#e7f1fb,#cfe2f5); font-weight: 600; }
   .wf .spacer { height: 10px; }
   .wf a { color: #1a5fb4; }
   .wf .relance { display: flex; align-items: center; gap: 12px; margin-top: 8px; padding: 8px 10px; background: #fffbe8; border: 1px solid #e3d9a8; }
   .wf .relance .msg { flex-grow: 1; }
 
-  /* ---------- frise chronologique ---------- */
+  /* ---------- frise ---------- */
   .wf .tl { padding: 12px 14px 14px; }
   .wf .tl-legende { display: flex; align-items: center; gap: 18px; margin-bottom: 12px; color: #4a5058; }
   .wf .tl-leg { display: flex; align-items: center; gap: 6px; }
   .wf .tl-head { display: flex; }
-  .wf .tl-noms { width: 210px; flex-shrink: 0; }
+  .wf .tl-noms { width: 230px; flex-shrink: 0; }
   .wf .tl-plot { flex-grow: 1; position: relative; }
   .wf .tl-annees { height: 20px; position: relative; border-bottom: 1px solid #d8dce0; }
   .wf .tl-annee { position: absolute; top: 2px; transform: translateX(-50%); color: #6b7075; }
@@ -172,21 +177,31 @@
   .wf .tl-grille { position: absolute; inset: 0; pointer-events: none; }
   .wf .tl-vline { position: absolute; top: 0; bottom: 0; width: 1px; background: #eceef0; }
   .wf .tl-today { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed #c0272d; }
-  .wf .tl-today span { position: absolute; top: 0; left: 4px; color: #c0272d; white-space: nowrap; background: #ffffff; padding: 0 4px; }
+  .wf .tl-today span { position: absolute; top: 0; left: 4px; color: #c0272d; white-space: nowrap; background: #fff; padding: 0 4px; }
   .wf #tlNoms, .wf #tlLanes { padding-top: 18px; }
   .wf .tl-lane { height: 34px; position: relative; }
-  .wf .tl-nom { height: 34px; display: flex; align-items: center; padding-right: 10px; overflow: hidden; white-space: nowrap; }
+  .wf .tl-lane.sel { background: #f2f7fd; }
+  .wf .tl-nom { height: 34px; display: flex; align-items: center; padding-right: 10px; overflow: hidden; white-space: nowrap; cursor: pointer; }
+  .wf .tl-nom.sel { background: #f2f7fd; font-weight: 600; }
   .wf .tl-nom i { width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; flex-shrink: 0; display: block; }
   .wf .tl-axe { position: absolute; left: 0; right: 0; top: 17px; height: 1px; background: #e2e5e8; }
   .wf .tl-pt { position: absolute; top: 11px; width: 13px; height: 13px; border-radius: 50%; transform: translateX(-50%); cursor: pointer; box-sizing: border-box; }
   .wf .tl-pt:hover { outline: 2px solid #a8c6e8; outline-offset: 1px; }
-  .wf .tl-pt.fait { background: #ffffff; border: 2px solid #b3b8be; }
+  .wf .tl-pt.fait { background: #fff; border: 2px solid #b3b8be; }
   .wf .tl-pt.depasse { background: #c0272d; border: 2px solid #c0272d; }
   .wf .tl-pt.proche { background: #e08a1e; border: 2px solid #e08a1e; }
-  .wf .tl-pt.avenir { background: #ffffff; border: 2px solid #7a8087; }
+  .wf .tl-pt.avenir { background: #fff; border: 2px solid #7a8087; }
   .wf .tl-pt.hors { border-radius: 2px; transform: translateX(0); }
   .wf .tl-lien { position: absolute; top: 17px; height: 1px; background: #cfd4d9; }
   .wf .tl-info { margin-top: 12px; padding: 8px 10px; background: #f6f8fa; border: 1px solid #dde2e7; min-height: 21px; }
+
+  /* ---------- modale ---------- */
+  #modale { position: fixed; inset: 0; z-index: 200; background: rgba(34,32,29,.34); display: flex; align-items: center; justify-content: center; padding: 24px; }
+  #modale[hidden] { display: none; }
+  #modale .win { max-height: 86vh; overflow: auto; }
+  .doc { font-family: Georgia, serif; font-size: 13px; line-height: 1.55; color: #24211e; }
+  .doc h4 { font-family: Georgia, serif; font-size: 15px; margin: 0 0 8px; }
+  .doc .bloc { border-top: 1px solid #e0e3e6; margin-top: 10px; padding-top: 10px; }
 </style>
 </head>
 <body>
@@ -199,7 +214,7 @@
       <a href="#fenetre">La fenêtre</a>
       <a href="#module">Le module</a>
       <a href="#arbitrages">Les arbitrages</a>
-      <a href="#perimetre">Hors périmètre</a>
+      <a href="#" class="reinit" id="reinit">Réinitialiser la démo</a>
     </nav>
   </div>
 </header>
@@ -208,8 +223,8 @@
 
   <div class="hero">
     <h1>Poser le rappel là où la décision se prend</h1>
-    <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Elle montre la fenêtre d'incorporation telle qu'elle est aujourd'hui, la même enrichie, et le module à trois onglets — ce dernier étant manipulable directement dans la page.</p>
-    <div class="meta">Dr Matthieu ANEX — 19 août 2026 · Maquette redessinée d'après captures d'écran : les cotes et les teintes sont approchées, ce n'est pas une spécification pixel.</div>
+    <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Les écrans de cette page ne sont pas des images : ils fonctionnent. Remplissez la fenêtre d'incorporation, validez, et voyez le rappel apparaître dans le module.</p>
+    <div class="meta">Dr Matthieu ANEX — 19 août 2026 · Démonstration d'ergonomie : aucune base de données derrière, tout vit dans la page et se remet à zéro au rechargement. Les données sont fictives.</div>
   </div>
 
   <section id="principe">
@@ -227,9 +242,12 @@
 
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
-      <li><strong>Prévention</strong> — l'élément de suivi à prévoir (repris du listing existant du cadre « Éléments de suivi »), l'échéance en délai ou en date, la répétition éventuelle, une note. Le bouton « Ajouter un rappel » couvre les comptes rendus qui appellent deux ou trois suites — la coloscopie qui demande un contrôle à cinq ans <em>et</em> une consultation gastro à un an.</li>
-      <li><strong>Création d'un épisode de soins</strong> — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsque l'affection y ouvre droit. Le document qui révèle la pathologie est aussi celui qui devrait permettre d'ouvrir l'épisode : autant le faire dans le même mouvement.</li>
+      <li><strong>Prévention</strong> — l'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
+      <li><strong>Création d'un épisode de soins</strong> — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsque l'affection y ouvre droit.</li>
     </ul>
+
+    <div class="essayez">Tout répond — essayez</div>
+    <p class="wide" style="margin-top:0;">Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
 
     <div class="shots">
       <figure class="shot is-now">
@@ -269,262 +287,32 @@
             </div>
           </div>
         </div>
+        <div class="hint">Reproduction de l'écran actuel, pour comparaison. Cette fenêtre-ci ne réagit pas.</div>
       </figure>
 
       <figure class="shot">
         <figcaption>Proposé</figcaption>
-        <div class="wf">
-          <div class="win" style="width: 640px;">
-            <div class="title">
-              <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>
-              <div class="t">Traitement des résultats H'</div>
-              <div class="winbtns">
-                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-                <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-              </div>
-            </div>
-            <div class="body">
-              <div style="display:flex; gap:14px; align-items:flex-start;">
-                <div style="flex-shrink:0; padding-top:2px;">
-                  <svg width="32" height="32" viewBox="0 0 32 32"><defs><linearGradient id="q2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ddf7"/><stop offset="0.5" stop-color="#4aa3e0"/><stop offset="1" stop-color="#1668ad"/></linearGradient></defs><circle cx="16" cy="16" r="15" fill="url(#q2)" stroke="#0f4c81" stroke-width="1"/><text x="16" y="23.5" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#fff">?</text></svg>
-                </div>
-                <div style="flex-grow:1; padding-top:6px;">
-                  <div>XMed ne peut pas intégrer automatiquement les résultats HPRIM 1.</div>
-                  <div style="display:flex; flex-direction:column; gap:9px; margin-top:16px;">
-                    <div class="check"><span class="box"></span><span class="navy">Incorporer des résultats manuellement</span></div>
-                    <div class="check"><span class="box"></span><span class="navy">Ouvrir la fiche patient</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" style="margin-top:18px;">
-                <div class="lbl" style="width:136px;">Intitulé du document :</div>
-                <div class="txt" style="flex-grow:1;">Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir</div>
-              </div>
-
-              <div class="sep"></div>
-
-              <div class="check click on" data-toggle="marquer">
-                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="navy">Marquer le patient</span>
-              </div>
-              <div class="panel" data-panel="marquer">
-                <div class="row">
-                  <div class="lbl" style="width:96px;">Note :</div>
-                  <div class="txt" style="flex-grow:1;">à rappeler — commenter le résultat</div>
-                </div>
-              </div>
-
-              <div class="sep"></div>
-
-              <div class="check click on" data-toggle="prevention">
-                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="navy">Prévention</span>
-              </div>
-              <div class="panel" data-panel="prevention">
-                <div class="row">
-                  <div class="lbl" style="width:96px;">Élément de suivi :</div>
-                  <div class="combo" style="flex-grow:1;"><div class="v">Échographie cervicale</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
-                  <div class="btn sq"><svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-                </div>
-                <div class="row" style="margin-top:9px;">
-                  <div class="lbl" style="width:96px;">Échéance :</div>
-                  <div style="display:flex; align-items:center; gap:6px;">
-                    <span class="radio on"><i></i></span><span>dans</span>
-                    <div class="combo" style="width:96px;"><div class="v">1 an</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
-                  </div>
-                  <div style="display:flex; align-items:center; gap:6px; margin-left:14px;">
-                    <span class="radio"></span><span class="grey">le</span>
-                    <div class="txt dim" style="width:96px;">__/__/____</div>
-                  </div>
-                </div>
-                <div class="row" style="margin-top:9px;">
-                  <div class="lbl" style="width:96px;">Répéter :</div>
-                  <div style="display:flex; align-items:center; gap:6px;">
-                    <span class="box" style="border-color:#5a5a5a;"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                    <span>tous les</span>
-                    <div class="txt" style="width:38px;">1</div>
-                    <div class="combo" style="width:76px;"><div class="v">an(s)</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
-                    <span>pendant</span>
-                    <div class="txt" style="width:38px;">5</div>
-                    <span>ans</span>
-                  </div>
-                </div>
-                <div class="row" style="margin-top:9px;">
-                  <div class="lbl" style="width:96px;">Note :</div>
-                  <div class="txt" style="flex-grow:1;">nodule thyroïdien droit 14mm EU-TIRADS 3</div>
-                </div>
-                <div style="display:flex; justify-content:flex-end; margin-top:11px;">
-                  <div class="btn" style="height:22px;"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1 V9 M1 5 H9" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round"/></svg><span>Ajouter un rappel</span></div>
-                </div>
-              </div>
-
-              <div class="sep"></div>
-
-              <div class="check click on" data-toggle="episode">
-                <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="navy">Création d'un épisode de soins</span>
-              </div>
-              <div class="panel" data-panel="episode">
-                <div class="row">
-                  <div class="lbl" style="width:96px;">Pathologie :</div>
-                  <div class="dd-wrap">
-                    <div class="combo click" id="pathoCombo"><div class="v" id="pathoValue">Nodule thyroïdien</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div>
-                    <div class="dd" id="pathoList" hidden></div>
-                  </div>
-                  <div class="btn sq"><svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-                </div>
-                <div class="row" style="margin-top:9px;">
-                  <div class="lbl" style="width:96px;">Début :</div>
-                  <div class="txt" style="width:96px;">19/08/2026</div>
-                  <div class="check click" data-toggle="ald" style="margin-left:18px;">
-                    <span class="box"><svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                    <span class="navy">ALD</span><span class="grey">— affection de longue durée</span>
-                  </div>
-                </div>
-                <div class="row" style="margin-top:9px;">
-                  <div class="lbl" style="width:96px;">Note :</div>
-                  <div class="txt" style="flex-grow:1;">découvert sur écho. cervicale du 19/08/2026</div>
-                </div>
-              </div>
-
-              <div style="display:flex; gap:72px; margin-top:20px; padding-left:150px;">
-                <div class="btn def">Valider</div>
-                <div class="btn">Annuler</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="hint">Les trois cases sont cliquables, ainsi que la liste des pathologies et la case ALD.</div>
+        <div class="wf" id="fenetreWF"></div>
       </figure>
     </div>
+
+    <figure class="shot" id="epFigure" style="margin-top:28px;">
+      <figcaption>Dossier patient — cadre « Épisodes de soins »</figcaption>
+      <div class="wf" id="episodesWF"></div>
+      <div class="hint">Ce cadre existe déjà dans la fiche patient. La fenêtre ci-dessus l'alimente sans qu'on ait à l'ouvrir.</div>
+    </figure>
   </section>
 
   <section id="module">
     <div class="sec-num">03</div>
     <h2>Le module Prévention</h2>
-    <p class="wide">Le module Vaccinations devient « Prévention », à trois onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>Timeline</strong> déroule le tout sur un axe du temps. Chaque onglet porte sa propre pastille d'état, de sorte qu'on voit dès l'ouverture lequel des trois demande l'attention.</p>
+    <p class="wide">Le module Vaccinations devient « Prévention », à trois onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
 
-    <div class="essayez">Manipulable — essayez</div>
-    <p class="wide" style="margin-top:0;">Changez d'onglet, sélectionnez une ligne pour voir le panneau de détail suivre, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, dépliez l'historique, cliquez un point de la frise. Les données sont fictives mais la mécanique est celle qui est proposée.</p>
+    <div class="essayez">Manipulable</div>
+    <p class="wide" style="margin-top:0;">Triez en cliquant les entêtes, sélectionnez une ligne, passez le détail en modification, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, ouvrez le document d'origine, dépliez l'historique, cliquez un point de la frise.</p>
 
     <figure class="shot" style="margin-top:22px;">
-      <div class="wf">
-        <div class="win" style="width:1140px; background:#f0f0f0;">
-          <div class="title">
-            <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>
-            <div class="t">Prévention</div>
-            <div class="winbtns">
-              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-              <div class="winbtn"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg></div>
-            </div>
-          </div>
-          <div style="padding:8px;">
-            <div style="display:flex; gap:8px; align-items:flex-start;">
-              <div style="flex-grow:1; min-width:0;">
-
-                <div class="tabs" id="mTabs">
-                  <div class="tab" data-tab="vaccins"><svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg><span>Vaccins</span></div>
-                  <div class="tab act" data-tab="examens"><svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg><span>Examens &amp; consultations</span></div>
-                  <div class="tab" data-tab="timeline"><svg width="11" height="9" viewBox="0 0 11 9"><path d="M0.5 7.5 H10.5" stroke="#5a6068" stroke-width="1"/><circle cx="3" cy="4" r="2" fill="#7a8087"/><circle cx="8" cy="4" r="2" fill="#7a8087"/></svg><span>Timeline</span></div>
-                </div>
-
-                <!-- ONGLET VACCINS -->
-                <div class="pane" data-pane="vaccins" hidden>
-                  <div class="grid">
-                    <div class="grouper">
-                      <div style="flex-grow:1;">Glisser/déposer ici des entêtes de colonne pour effectuer des regroupements</div>
-                      <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="ghead">
-                      <div class="c1">!</div><div style="width:88px;">Date</div><div style="width:48px;">DMP</div>
-                      <div style="width:230px;">Nom commercial</div><div style="width:88px;">Valence</div>
-                      <div style="width:88px;">Rappel</div><div style="width:60px;">Refus</div>
-                      <div style="width:150px;">Notes</div><div style="width:124px;">Acteur</div>
-                    </div>
-                    <div class="grow sel" style="cursor:default;">
-                      <div class="c1"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1 L11 10 H1 Z" fill="#c0272d"/><path d="M6 4.4 V7.2" stroke="#fff" stroke-width="1.2"/><circle cx="6" cy="8.6" r="0.7" fill="#fff"/></svg></div>
-                      <div style="width:88px;">15/09/2010</div><div style="width:48px;"><span class="box"></span></div>
-                      <div style="width:230px;">REPEVAX SER 0,5ML 1 [Supprimé]</div><div style="width:88px;">DTCP</div>
-                      <div style="width:88px;" class="red">15/09/2020</div><div style="width:60px;"><span class="box"></span></div>
-                      <div style="width:150px;"></div><div style="width:124px;">Matthieu ANEX</div>
-                    </div>
-                    <div style="height:126px; background:#fff;"></div>
-                  </div>
-                  <div class="detail">
-                    <div style="display:flex; gap:24px;">
-                      <div style="flex-grow:1;">
-                        <div class="row"><div class="lbl" style="width:104px;">Date :</div><div class="txt" style="width:120px;">15/09/2010</div></div>
-                        <div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Nom commercial :</div><div class="combo" style="flex-grow:1;"><div class="v">REPEVAX SER 0,5ML</div><div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div></div></div>
-                        <div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Valence :</div><div class="txt dim" style="width:200px; color:#4a5058;">DTCP</div></div>
-                        <div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Date de rappel :</div><div class="txt" style="width:120px;">15/09/2020</div><div class="red" style="margin-left:10px;">rappel dépassé depuis près de six ans</div></div>
-                      </div>
-                      <div style="width:300px; flex-shrink:0; color:#6b7075; border-left:1px solid #e6e9ec; padding-left:16px;">
-                        Cet onglet est l'écran Vaccinations d'aujourd'hui, sans aucune modification : mêmes colonnes, mêmes champs, mêmes échanges avec le DMP. Il est reproduit ici en abrégé.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- ONGLET EXAMENS -->
-                <div class="pane" data-pane="examens">
-                  <div class="grid">
-                    <div class="grouper">
-                      <div style="flex-grow:1;">Glisser/déposer ici des entêtes de colonne pour effectuer des regroupements</div>
-                      <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="ghead">
-                      <div class="c1">!</div><div class="c2">Examen / consultation</div><div class="c3">Échéance</div>
-                      <div class="c4">Répétition</div><div class="c5">Note</div><div class="c6">Statut</div><div class="c7">Créé par</div>
-                    </div>
-                    <div id="mLignes"></div>
-                    <div id="mVide" style="background:#fff;"></div>
-                    <div class="histbar" id="mHistBar">
-                      <svg width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>
-                      <span id="mHistLbl"></span>
-                    </div>
-                    <div id="mHist" hidden></div>
-                  </div>
-                  <div id="mRelance"></div>
-                  <div class="detail" id="mDetail"></div>
-                </div>
-
-                <!-- ONGLET TIMELINE -->
-                <div class="pane" data-pane="timeline" hidden>
-                  <div class="grid">
-                    <div class="tl">
-                      <div class="tl-legende">
-                        <div class="tl-leg"><span class="tl-pt depasse" style="position:static; transform:none;"></span> échéance dépassée</div>
-                        <div class="tl-leg"><span class="tl-pt proche" style="position:static; transform:none;"></span> échéance proche</div>
-                        <div class="tl-leg"><span class="tl-pt avenir" style="position:static; transform:none;"></span> à venir</div>
-                        <div class="tl-leg"><span class="tl-pt fait" style="position:static; transform:none;"></span> déjà fait</div>
-                        <div class="tl-leg" style="margin-left:auto;">Les échéances répétées sont projetées jusqu'en 2032.</div>
-                      </div>
-                      <div class="tl-head">
-                        <div class="tl-noms"></div>
-                        <div class="tl-plot"><div class="tl-annees" id="tlAnnees"></div></div>
-                      </div>
-                      <div class="tl-corps">
-                        <div class="tl-noms" id="tlNoms"></div>
-                        <div class="tl-plot">
-                          <div class="tl-grille" id="tlGrille"></div>
-                          <div id="tlLanes"></div>
-                        </div>
-                      </div>
-                      <div class="tl-info" id="tlInfo">Cliquez un point de la frise pour en afficher le détail.</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="sidebtns" id="mBoutons"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="wf" id="moduleWF"></div>
     </figure>
 
     <p class="wide" style="margin-top:26px;">Un rappel marqué <strong>« Fait »</strong> sort de la liste active et rejoint l'historique — ce qui conserve la réponse à « c'est quand, votre dernière mammographie ? ». XMED propose alors de reposer le même rappel avec le même délai. Si l'on oublie de le marquer et qu'un nouveau compte rendu arrive, le nouveau rappel <strong>remplace</strong> l'ancien, qui reste dans l'historique au statut « remplacé ».</p>
@@ -566,479 +354,977 @@
   </section>
 
   <footer>
-    Maquette d'intention, redessinée d'après des captures d'écran de XMED. Les dimensions, les teintes et les libellés sont approchés : ils servent à montrer la disposition et l'enchaînement, non à spécifier le rendu. Les données affichées sont fictives. Dr Matthieu ANEX — 19 août 2026.
+    Maquette d'intention, redessinée d'après des captures d'écran de XMED. Les dimensions, les teintes et les libellés sont approchés : ils servent à montrer la disposition et l'enchaînement, non à spécifier le rendu. La démonstration n'a aucune base de données : tout ce que vous saisissez vit dans votre navigateur et disparaît au rechargement. Patiente, praticiens, documents et résultats sont fictifs. Dr Matthieu ANEX — 19 août 2026.
   </footer>
 
 </main>
 
+<div id="modale" hidden></div>
+
 <script>
 (function () {
+"use strict";
 
-  /* ---------- fenêtre d'incorporation ---------- */
+/* ============================ utilitaires ============================ */
 
-  document.querySelectorAll('[data-toggle]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      el.classList.toggle('on');
-      var panel = document.querySelector('[data-panel="' + el.dataset.toggle + '"]');
-      if (panel) { panel.hidden = !el.classList.contains('on'); }
-    });
-  });
+function d(a, m, j) { return new Date(a, m - 1, j); }
+function fmt(x) { return ('0' + x.getDate()).slice(-2) + '/' + ('0' + (x.getMonth() + 1)).slice(-2) + '/' + x.getFullYear(); }
+function lit(s) {
+  var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(String(s).trim());
+  if (!m) { return null; }
+  var x = d(+m[3], +m[2], +m[1]);
+  return isNaN(x.getTime()) ? null : x;
+}
+function ajoute(x, n, u) {
+  var y = new Date(x.getTime());
+  if (u === 'jour(s)')    { y.setDate(y.getDate() + n); }
+  if (u === 'semaine(s)') { y.setDate(y.getDate() + 7 * n); }
+  if (u === 'mois')       { y.setMonth(y.getMonth() + n); }
+  if (u === 'an(s)')      { y.setFullYear(y.getFullYear() + n); }
+  return y;
+}
+function e(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-  var pathologies = [
-    'Apnées du sommeil', 'Asthme', 'BPCO', 'Cancer colorectal', 'Cancer du sein',
-    'Dépression', 'Diabète de type 2', 'Dyslipidémie', 'Épilepsie',
-    'Fibrillation auriculaire', 'Gonarthrose', 'Hypertension artérielle',
-    'Hypothyroïdie', 'Insuffisance cardiaque', 'Insuffisance rénale chronique',
-    'Lombalgie chronique', 'Maladie de Crohn', 'Maladie de Parkinson', 'Migraine',
-    'Nodule thyroïdien', 'Obésité', 'Polyarthrite rhumatoïde', 'Sclérose en plaques',
-    'Syndrome anxieux', 'Tabagisme'
-  ];
-  var combo = document.getElementById('pathoCombo');
-  var valeur = document.getElementById('pathoValue');
-  var liste = document.getElementById('pathoList');
+var AUJ    = d(2026, 8, 19);
+var DEBUT  = d(2023, 1, 1);
+var FIN    = d(2032, 12, 31);
+var PROCHE = new Date(AUJ.getTime()); PROCHE.setMonth(PROCHE.getMonth() + 3);
 
-  if (combo) {
-    var peindre = function () {
-      liste.innerHTML = '';
-      pathologies.forEach(function (nom) {
-        var ligne = document.createElement('div');
-        ligne.textContent = nom;
-        if (nom === valeur.textContent) { ligne.className = 'sel'; }
-        ligne.addEventListener('click', function (e) {
-          e.stopPropagation();
-          valeur.textContent = nom;
-          liste.hidden = true;
-        });
-        liste.appendChild(ligne);
-      });
-    };
-    combo.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (liste.hidden) { peindre(); }
-      liste.hidden = !liste.hidden;
-    });
-    document.addEventListener('click', function () { liste.hidden = true; });
-  }
+var SVG = {
+  xmed: '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 3.5 L8.5 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 3.5 L2 12.5" stroke="#d0472b" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 5 L14 5 M11.5 8 L14 8 M11.5 11 L14 11" stroke="#e2a33c" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  min: '<svg width="11" height="11" viewBox="0 0 11 11"><path d="M1 6 H10" stroke="#4a4a4a" stroke-width="1"/></svg>',
+  max: '<svg width="11" height="11" viewBox="0 0 11 11"><rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="#4a4a4a" stroke-width="1"/></svg>',
+  fer: '<svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 1.5 L9.5 9.5 M9.5 1.5 L1.5 9.5" stroke="#4a4a4a" stroke-width="1"/></svg>',
+  arr: '<div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div>',
+  tick: '<svg class="tick" width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  loupe: '<svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  plus: '<svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1 V9 M1 5 H9" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  faitv: '<svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 5.6 L4.2 8.4 L9.5 2.2" fill="none" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chev: '<svg width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>',
+  alerte: '<svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1 L11 10 H1 Z" fill="#c0272d"/><path d="M6 4.4 V7.2" stroke="#fff" stroke-width="1.2"/><circle cx="6" cy="8.6" r="0.7" fill="#fff"/></svg>',
+  horloge: '<svg width="15" height="15" viewBox="0 0 15 15" style="flex-shrink:0;"><circle cx="7.5" cy="7.5" r="6.6" fill="none" stroke="#b08a1e" stroke-width="1.3"/><path d="M7.5 4 V8 L10 9.4" fill="none" stroke="#b08a1e" stroke-width="1.3" stroke-linecap="round"/></svg>',
+  question: '<svg width="32" height="32" viewBox="0 0 32 32"><defs><linearGradient id="qg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ddf7"/><stop offset="0.5" stop-color="#4aa3e0"/><stop offset="1" stop-color="#1668ad"/></linearGradient></defs><circle cx="16" cy="16" r="15" fill="url(#qg)" stroke="#0f4c81" stroke-width="1"/><text x="16" y="23.5" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#fff">?</text></svg>',
+  ok: '<svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" fill="#e8f4ea" stroke="#2a6b34" stroke-width="1.2"/><path d="M6.5 13.4 L11 18 L19.5 8.5" fill="none" stroke="#2a6b34" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  doc: '<svg width="26" height="26" viewBox="0 0 26 26"><path d="M6 2 H16 L21 7 V24 H6 Z" fill="#fff" stroke="#7a8087" stroke-width="1.2"/><path d="M16 2 V7 H21" fill="none" stroke="#7a8087" stroke-width="1.2"/><path d="M9 12 H18 M9 15.5 H18 M9 19 H14" stroke="#9aa0a6" stroke-width="1.1"/></svg>'
+};
 
-  /* ---------- module Prévention ---------- */
+function chrome(titre, largeur, corps, fond) {
+  return '<div class="win" style="width:' + largeur + 'px;' + (fond ? 'background:' + fond + ';' : '') + '">' +
+    '<div class="title">' + SVG.xmed + '<div class="t">' + e(titre) + '</div><div class="winbtns">' +
+    '<div class="winbtn">' + SVG.min + '</div><div class="winbtn">' + SVG.max + '</div><div class="winbtn">' + SVG.fer + '</div>' +
+    '</div></div>' + corps + '</div>';
+}
 
-  function d(a, m, j) { return new Date(a, m - 1, j); }
-  function fmt(x) {
-    var j = ('0' + x.getDate()).slice(-2), m = ('0' + (x.getMonth() + 1)).slice(-2);
-    return j + '/' + m + '/' + x.getFullYear();
-  }
-  function plusAns(x, n) { var y = new Date(x.getTime()); y.setFullYear(y.getFullYear() + n); return y; }
+/* ============================ listes ============================ */
 
-  var AUJ   = d(2026, 8, 19);
-  var DEBUT = d(2023, 1, 1);
-  var FIN   = d(2032, 12, 31);
-  var PROCHE = new Date(AUJ.getTime()); PROCHE.setMonth(PROCHE.getMonth() + 3);
+var LISTES = {
+  suivi: ['Coloscanner', 'Coloscopie', 'Consultation cardiologique', 'Consultation dermatologique',
+    'Consultation gastro-entérologique', 'Consultation gynécologique', 'Consultation néphrologique',
+    'Consultation ophtalmologique', 'Consultation ORL', 'Consultation pneumologique',
+    'Consultation urologique', 'Doppler artériel', 'Doppler veineux', 'Échographie abdominale',
+    'Échographie cardiaque', 'Échographie cervicale', 'EFR', 'Fond d’œil',
+    'Frottis cervico-utérin', 'Holter tensionnel', 'Mammographie', 'Ostéodensitométrie',
+    'Recherche de sang dans les selles', 'Scanner thoracique', 'Suivi oncologique', 'Test respiratoire'],
+  delai: ['1 mois', '3 mois', '6 mois', '1 an', '18 mois', '2 ans', '3 ans', '5 ans', '10 ans'],
+  unite: ['jour(s)', 'semaine(s)', 'mois', 'an(s)'],
+  patho: ['Apnées du sommeil', 'Asthme', 'BPCO', 'Cancer colorectal', 'Cancer du sein',
+    'Dépression', 'Diabète de type 2', 'Dyslipidémie', 'Épilepsie', 'Fibrillation auriculaire',
+    'Gonarthrose', 'Hypertension artérielle', 'Hypothyroïdie', 'Insuffisance cardiaque',
+    'Insuffisance rénale chronique', 'Lombalgie chronique', 'Maladie de Crohn',
+    'Maladie de Parkinson', 'Migraine', 'Nodule thyroïdien', 'Obésité',
+    'Polyarthrite rhumatoïde', 'Sclérose en plaques', 'Syndrome anxieux', 'Tabagisme'],
+  vaccin: ['BOOSTRIX TETRA', 'ENGERIX B 20', 'GARDASIL 9', 'INFLUVAC TETRA', 'PNEUMOVAX',
+    'PREVENAR 13', 'REPEVAX SER 0,5ML', 'REVAXIS', 'SHINGRIX', 'VAXIGRIP TETRA']
+};
 
-  var compteur = 100;
+/* ============================ état ============================ */
 
-  var rappels = [
-    { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12),  rep: { n: 3 }, note: 'dernier frottis normal', auteur: 'M. ANEX' },
-    { id: 2, nom: 'Mammographie',           due: d(2026, 10, 4),  rep: { n: 2 }, note: 'dépistage organisé', auteur: 'M. ANEX' },
-    { id: 3, nom: 'Échographie cervicale',  due: d(2027, 8, 19),  rep: { n: 1, pendant: 5 }, note: 'nodule thyroïdien droit 14mm EU-TIRADS 3', auteur: 'M. ANEX' },
-    { id: 4, nom: 'Coloscopie',             due: d(2031, 8, 15),  rep: null, note: 'polype — contrôle à 5 ans', auteur: 'M. ANEX' }
-  ];
+var Etat, favoris, compteur;
 
-  var historique = [
-    { nom: 'Frottis cervico-utérin', due: d(2023, 3, 12),  statut: 'fait',     le: d(2023, 3, 14) },
-    { nom: 'Mammographie',           due: d(2024, 10, 4),  statut: 'fait',     le: d(2024, 10, 11) },
-    { nom: 'Coloscopie',             due: d(2026, 8, 15),  statut: 'fait',     le: d(2026, 8, 15) },
-    { nom: 'Échographie cervicale',  due: d(2026, 8, 19),  statut: 'fait',     le: d(2026, 8, 19) },
-    { nom: 'Consultation cardio.',   due: d(2025, 5, 20),  statut: 'annulé',   le: d(2025, 6, 2) },
-    { nom: 'Frottis cervico-utérin', due: d(2020, 3, 12),  statut: 'remplacé', le: d(2023, 3, 14) }
-  ];
-
-  var vaccin = { nom: 'Rappel DTP (Repevax)', fait: d(2010, 9, 15), du: d(2020, 9, 15) };
-
-  var selection = 3;
-  var histOuvert = false;
-  var onglet = 'examens';
-  var relance = null;
-
-  function etat(x) {
-    if (x < AUJ)     { return { cle: 'depasse', lib: 'Dépassé',  cls: 'red' }; }
-    if (x <= PROCHE) { return { cle: 'proche',  lib: 'Proche',   cls: 'orange' }; }
-    return { cle: 'avenir', lib: 'À venir', cls: 'soft' };
-  }
-
-  function repetitionTexte(r) {
-    if (!r.rep) { return '—'; }
-    var t = 'tous les ' + r.rep.n + (r.rep.n > 1 ? ' ans' : ' an');
-    if (r.rep.pendant) { t += ', ' + r.rep.pendant + ' ans'; }
-    return t;
-  }
-
-  function occurrences(r) {
-    var out = [new Date(r.due.getTime())];
-    if (!r.rep) { return out; }
-    var max = r.rep.pendant ? Math.floor(r.rep.pendant / r.rep.n) - 1 : 99;
-    var x = r.due;
-    for (var i = 0; i < max; i++) {
-      x = plusAns(x, r.rep.n);
-      if (x > FIN) { break; }
-      out.push(new Date(x.getTime()));
-    }
-    return out;
-  }
-
-  function echap(s) {
-    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  var pastille = {
-    depasse: '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#c0272d"/></svg>',
-    proche:  '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#e08a1e"/></svg>',
-    avenir:  '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="#8a9099" stroke-width="1"/></svg>'
+function blocInitial() {
+  return { suivi: 'Échographie cervicale', mode: 'delai', delai: '1 an', date: '',
+           repeter: true, repN: '1', repU: 'an(s)', repPendant: '5',
+           note: 'nodule thyroïdien droit 14mm EU-TIRADS 3' };
+}
+function blocVide() {
+  return { suivi: '', mode: 'delai', delai: '1 an', date: '',
+           repeter: false, repN: '1', repU: 'an(s)', repPendant: '', note: '' };
+}
+function saisieInitiale() {
+  return {
+    manuel: false, fiche: false,
+    intitule: 'Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir',
+    marquer: { on: true, note: 'à rappeler — commenter le résultat' },
+    prevention: { on: true, blocs: [blocInitial()] },
+    episode: { on: true, patho: 'Nodule thyroïdien', debut: '19/08/2026', ald: false,
+               note: 'découvert sur écho. cervicale du 19/08/2026' }
   };
+}
 
-  /* --- grille des rappels --- */
-
-  function dessineLignes() {
-    var hote = document.getElementById('mLignes');
-    hote.innerHTML = '';
-    rappels.slice().sort(function (a, b) { return a.due - b.due; }).forEach(function (r) {
-      var e = etat(r.due);
-      var li = document.createElement('div');
-      li.className = 'grow' + (r.id === selection ? ' sel' : '');
-      li.innerHTML =
-        '<div class="c1">' + pastille[e.cle] + '</div>' +
-        '<div class="c2">' + echap(r.nom) + '</div>' +
-        '<div class="c3 ' + e.cls + '">' + fmt(r.due) + '</div>' +
-        '<div class="c4">' + echap(repetitionTexte(r)) + '</div>' +
-        '<div class="c5">' + echap(r.note) + '</div>' +
-        '<div class="c6 ' + e.cls + '">' + e.lib + '</div>' +
-        '<div class="c7">' + echap(r.auteur) + '</div>';
-      li.addEventListener('click', function () { selection = r.id; relance = null; tout(); });
-      hote.appendChild(li);
-    });
-    var reste = Math.max(0, 6 - rappels.length) * 24;
-    document.getElementById('mVide').style.height = reste + 'px';
-  }
-
-  function dessineHistorique() {
-    var barre = document.getElementById('mHistBar');
-    var hote = document.getElementById('mHist');
-    document.getElementById('mHistLbl').textContent =
-      'Historique — ' + historique.length + ' rappels faits, annulés ou remplacés';
-    barre.className = 'histbar' + (histOuvert ? ' open' : '');
-    hote.hidden = !histOuvert;
-    hote.innerHTML = '';
-    if (!histOuvert) { return; }
-    historique.slice().sort(function (a, b) { return b.due - a.due; }).forEach(function (h) {
-      var li = document.createElement('div');
-      li.className = 'grow hist';
-      li.innerHTML =
-        '<div class="c1"></div>' +
-        '<div class="c2">' + echap(h.nom) + '</div>' +
-        '<div class="c3">' + fmt(h.due) + '</div>' +
-        '<div class="c4">—</div>' +
-        '<div class="c5">' + (h.statut === 'fait' ? 'réalisé le ' + fmt(h.le) : h.statut + ' le ' + fmt(h.le)) + '</div>' +
-        '<div class="c6">' + h.statut.charAt(0).toUpperCase() + h.statut.slice(1) + '</div>' +
-        '<div class="c7">M. ANEX</div>';
-      hote.appendChild(li);
-    });
-  }
-
-  function dessineRelance() {
-    var hote = document.getElementById('mRelance');
-    hote.innerHTML = '';
-    if (!relance) { return; }
-    var bloc = document.createElement('div');
-    bloc.className = 'relance';
-    bloc.innerHTML =
-      '<svg width="15" height="15" viewBox="0 0 15 15" style="flex-shrink:0;"><circle cx="7.5" cy="7.5" r="6.6" fill="none" stroke="#b08a1e" stroke-width="1.3"/><path d="M7.5 4 V8 L10 9.4" fill="none" stroke="#b08a1e" stroke-width="1.3" stroke-linecap="round"/></svg>' +
-      '<div class="msg">' + echap(relance.nom) + ' marqué fait. Reposer le même rappel dans ' +
-      relance.n + (relance.n > 1 ? ' ans' : ' an') + ' — le ' + fmt(relance.due) + ' ?</div>' +
-      '<div class="btn def" id="relOui">Oui</div><div class="btn" id="relNon">Non</div>';
-    hote.appendChild(bloc);
-    document.getElementById('relOui').addEventListener('click', function () {
-      compteur += 1;
-      rappels.push({ id: compteur, nom: relance.nom, due: relance.due, rep: relance.rep, note: relance.note, auteur: 'M. ANEX' });
-      selection = compteur;
-      relance = null;
-      tout();
-    });
-    document.getElementById('relNon').addEventListener('click', function () { relance = null; tout(); });
-  }
-
-  function dessineDetail() {
-    var hote = document.getElementById('mDetail');
-    var r = rappels.filter(function (x) { return x.id === selection; })[0];
-    if (!r) {
-      hote.innerHTML = '<div class="grey" style="padding:14px 0; text-align:center;">Aucun rappel sélectionné — cliquez une ligne de la liste.</div>';
-      return;
-    }
-    var e = etat(r.due);
-    var coche = '<span class="box" style="border-color:#5a5a5a;"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.6 L3.4 7 L8 1.7" fill="none" stroke="#1a5fb4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
-    var vide = '<span class="box"></span>';
-    var fleche = '<div class="arr"><svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#3a3a3a"/></svg></div>';
-    hote.innerHTML =
-      '<div style="display:flex; gap:24px; align-items:center;">' +
-        '<div class="row" style="flex-grow:1;"><div class="lbl" style="width:104px;">Élément de suivi :</div>' +
-        '<div class="combo" style="flex-grow:1;"><div class="v">' + echap(r.nom) + '</div>' + fleche + '</div></div>' +
-        '<div class="row" style="width:330px; flex-shrink:0;"><div class="lbl" style="width:92px;">Créé par :</div>' +
-        '<div class="soft">Matthieu ANEX — le 19/08/2026</div></div>' +
-      '</div>' +
-      '<div style="display:flex; gap:24px; align-items:center; margin-top:9px;">' +
-        '<div class="row" style="flex-grow:1;"><div class="lbl" style="width:104px;">Échéance :</div>' +
-        '<div class="txt" style="width:110px;">' + fmt(r.due) + '</div></div>' +
-        '<div class="row" style="width:330px; flex-shrink:0;"><div class="lbl" style="width:92px;">Statut :</div>' +
-        '<div class="' + e.cls + '">' + e.lib + '</div></div>' +
-      '</div>' +
-      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Répéter :</div>' +
-        '<div style="display:flex; align-items:center; gap:6px;">' + (r.rep ? coche : vide) + '<span>tous les</span>' +
-        '<div class="txt" style="width:38px;">' + (r.rep ? r.rep.n : '') + '</div>' +
-        '<div class="combo" style="width:76px;"><div class="v">an(s)</div>' + fleche + '</div>' +
-        '<span>pendant</span><div class="txt" style="width:38px;">' + (r.rep && r.rep.pendant ? r.rep.pendant : '') + '</div><span>ans</span></div></div>' +
-      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Note :</div>' +
-        '<div class="txt" style="flex-grow:1;">' + echap(r.note) + '</div></div>' +
-      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Document source :</div>' +
-        '<div style="display:flex; align-items:center; gap:8px;">' +
-        '<a href="#module" style="text-decoration:underline;">Écho. cervicale — IRIMED — 19/08/2026</a>' +
-        '<div class="sbtn" style="height:21px; padding:0 10px;">Ouvrir</div></div></div>';
-  }
-
-  /* --- boutons latéraux --- */
-
-  var jeuxBoutons = {
+function initialiser() {
+  compteur = 100;
+  favoris = { 'Coloscopie': 9, 'Mammographie': 8, 'Frottis cervico-utérin': 7,
+              'Consultation cardiologique': 5, 'Échographie cervicale': 4,
+              'Consultation gynécologique': 3, 'Doppler artériel': 2, 'Ostéodensitométrie': 1 };
+  Etat = {
+    onglet: 'examens',
+    selection: 3,
+    histOuvert: false,
+    relance: null,
+    modification: false,
+    tri: { col: 'due', sens: 1 },
+    nouveaux: [],
+    pisteSel: null,
+    marquage: null,
+    saisie: saisieInitiale(),
+    rappels: [
+      { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023' },
+      { id: 2, nom: 'Mammographie',           due: d(2026, 10, 4), rep: { n: 2, u: 'an(s)' }, note: 'dépistage organisé', auteur: 'M. ANEX', src: 'Mammographie — IRIMED — 04/10/2024' },
+      { id: 3, nom: 'Échographie cervicale',  due: d(2027, 8, 19), rep: { n: 1, u: 'an(s)', pendant: 5 }, note: 'nodule thyroïdien droit 14mm EU-TIRADS 3', auteur: 'M. ANEX', src: 'Écho. cervicale — IRIMED — 19/08/2026' },
+      { id: 4, nom: 'Coloscopie',             due: d(2031, 8, 15), rep: null, note: 'polype — contrôle à 5 ans', auteur: 'M. ANEX', src: 'CR coloscopie — CH Saint-Nazaire — 15/08/2026' }
+    ],
+    historique: [
+      { nom: 'Frottis cervico-utérin', due: d(2023, 3, 12), statut: 'fait',     le: d(2023, 3, 14) },
+      { nom: 'Mammographie',           due: d(2024, 10, 4), statut: 'fait',     le: d(2024, 10, 11) },
+      { nom: 'Coloscopie',             due: d(2026, 8, 15), statut: 'fait',     le: d(2026, 8, 15) },
+      { nom: 'Échographie cervicale',  due: d(2026, 8, 19), statut: 'fait',     le: d(2026, 8, 19) },
+      { nom: 'Consultation cardiologique', due: d(2025, 5, 20), statut: 'annulé', le: d(2025, 6, 2) },
+      { nom: 'Frottis cervico-utérin', due: d(2020, 3, 12), statut: 'remplacé', le: d(2023, 3, 14) }
+    ],
     vaccins: [
-      { id: '', txt: 'Ajouter' }, { id: '', txt: 'Lire QRCode' }, { id: '', txt: 'Supprimer' },
-      { sp: 1 },
-      { id: '', txt: 'Rappel' }, { id: '', txt: 'Aperçu' },
-      { sp: 1 },
-      { id: '', txt: 'Carnet de vaccination' }, { id: '', txt: 'Envoyer sur le DMP' },
-      { sp: 1 },
-      { id: '', txt: 'Ok' }, { off: 1, txt: 'Appliquer' }, { id: '', txt: 'Annuler' }
+      { id: 1, nom: 'REPEVAX SER 0,5ML', valence: 'DTCP', date: d(2010, 9, 15), rappel: d(2020, 9, 15), dmp: true, acteur: 'Matthieu ANEX' },
+      { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX' }
     ],
-    examens: [
-      { id: 'bAjouter', txt: 'Ajouter' }, { id: '', txt: 'Modifier' }, { id: 'bSupprimer', txt: 'Supprimer' },
-      { sp: 1 },
-      { id: 'bFait', txt: 'Fait', tick: 1 }, { id: 'bAnnulerRappel', txt: 'Annuler le rappel' },
-      { sp: 1 },
-      { id: '', txt: 'Ok' }, { off: 1, txt: 'Appliquer' },
-      { sp: 1 },
-      { id: '', txt: 'Aide' }, { id: '', txt: 'Annuler' }
-    ],
-    timeline: [
-      { id: '', txt: 'Imprimer la frise' }, { id: '', txt: 'Remettre au patient' },
-      { sp: 1 },
-      { id: 'bTlExamens', txt: 'Revenir à la liste' },
-      { sp: 1 },
-      { id: '', txt: 'Ok' }, { off: 1, txt: 'Appliquer' },
-      { sp: 1 },
-      { id: '', txt: 'Aide' }, { id: '', txt: 'Annuler' }
+    vaccinSel: 1,
+    episodes: [
+      { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie' },
+      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, note: 'mollet droit' },
+      { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit' }
     ]
   };
+}
 
-  function dessineBoutons() {
-    var hote = document.getElementById('mBoutons');
-    hote.innerHTML = '';
-    jeuxBoutons[onglet].forEach(function (b) {
-      var el = document.createElement('div');
-      if (b.sp) { el.className = 'spacer'; hote.appendChild(el); return; }
-      el.className = 'sbtn' + (b.off ? ' off' : '');
-      if (b.id) { el.id = b.id; }
-      el.innerHTML = (b.tick ? '<svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 5.6 L4.2 8.4 L9.5 2.2" fill="none" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') +
-        '<span>' + echap(b.txt) + '</span>';
-      hote.appendChild(el);
+/* ============================ chemins d'état ============================ */
+
+function get(p) { var t = p.split('.'), o = Etat, i; for (i = 0; i < t.length; i++) { o = o[t[i]]; } return o; }
+function set(p, v) { var t = p.split('.'), o = Etat, i; for (i = 0; i < t.length - 1; i++) { o = o[t[i]]; } o[t[t.length - 1]] = v; }
+
+/* ============================ briques d'interface ============================ */
+
+function combo(chemin, listeNom, largeur, desactive) {
+  return '<div class="combo' + (desactive ? ' dim' : '') + '"' +
+    (desactive ? '' : ' data-combo="' + listeNom + '" data-path="' + chemin + '"') +
+    ' style="' + (largeur ? 'width:' + largeur + 'px;' : 'flex-grow:1;') + '">' +
+    '<div class="v">' + e(get(chemin)) + '</div>' + SVG.arr + '</div>';
+}
+function champ(chemin, largeur, vide, desactive) {
+  return '<div class="txt' + (desactive ? ' dim' : ' ed') + '"' +
+    (desactive ? '' : ' contenteditable="true" data-edit="' + chemin + '" data-vide="' + e(vide || '') + '"') +
+    ' style="' + (largeur ? 'width:' + largeur + 'px;' : 'flex-grow:1;') + '">' + e(get(chemin)) + '</div>';
+}
+function caseAC(chemin, libelle, suffixe) {
+  return '<div class="check click' + (get(chemin) ? ' on' : '') + '" data-check="' + chemin + '">' +
+    '<span class="box">' + SVG.tick + '</span><span class="navy">' + e(libelle) + '</span>' +
+    (suffixe ? '<span class="grey">' + e(suffixe) + '</span>' : '') + '</div>';
+}
+function radio(chemin, valeur, libelle) {
+  var on = get(chemin) === valeur;
+  return '<span class="radio' + (on ? ' on' : '') + '" data-radio="' + chemin + '" data-val="' + valeur + '" style="cursor:pointer;">' + (on ? '<i></i>' : '') + '</span>' +
+    '<span data-radio="' + chemin + '" data-val="' + valeur + '" style="cursor:pointer;' + (on ? '' : 'color:#6b7075;') + '">' + e(libelle) + '</span>';
+}
+
+/* ---- listes déroulantes ---- */
+
+var ddOuverte = null;
+function fermerDD() { if (ddOuverte) { ddOuverte.remove(); ddOuverte = null; } }
+
+function ouvrirDD(cible) {
+  fermerDD();
+  var nom = cible.dataset.combo, chemin = cible.dataset.path;
+  var items = LISTES[nom] || [];
+  var courant = get(chemin);
+  var dd = document.createElement('div');
+  dd.className = 'dd';
+  dd.innerHTML = (items.length > 8 ? '<input class="ddq" placeholder="rechercher…">' : '') + '<div class="ddl"></div>';
+  cible.appendChild(dd);
+  ddOuverte = dd;
+  var boite = dd.querySelector('.ddl');
+  var q = dd.querySelector('.ddq');
+
+  function peindre() {
+    var f = q ? q.value.trim().toLowerCase() : '';
+    var vus = items.filter(function (x) { return !f || x.toLowerCase().indexOf(f) !== -1; });
+    boite.innerHTML = '';
+    if (!vus.length) {
+      var r = document.createElement('div'); r.className = 'rien'; r.textContent = 'aucun résultat';
+      boite.appendChild(r); return;
+    }
+    vus.forEach(function (x) {
+      var li = document.createElement('div');
+      li.textContent = x;
+      if (x === courant) { li.className = 'sel'; }
+      li.addEventListener('mousedown', function (ev) {
+        ev.preventDefault(); ev.stopPropagation();
+        set(chemin, x);
+        if (nom === 'suivi') { favoris[x] = (favoris[x] || 0) + 1; }
+        fermerDD();
+        rendreTout();
+      });
+      boite.appendChild(li);
     });
+  }
+  peindre();
+  if (q) { q.addEventListener('input', peindre); setTimeout(function () { q.focus(); }, 0); }
+}
 
-    var fait = document.getElementById('bFait');
-    if (fait) {
-      fait.addEventListener('click', function () {
-        var r = rappels.filter(function (x) { return x.id === selection; })[0];
-        if (!r) { return; }
-        historique.push({ nom: r.nom, due: r.due, statut: 'fait', le: AUJ });
-        rappels = rappels.filter(function (x) { return x.id !== selection; });
-        relance = r.rep ? { nom: r.nom, n: r.rep.n, due: plusAns(AUJ, r.rep.n), rep: r.rep, note: r.note } : null;
-        selection = rappels.length ? rappels[0].id : 0;
-        tout();
-      });
-    }
-    var annul = document.getElementById('bAnnulerRappel');
-    if (annul) {
-      annul.addEventListener('click', function () {
-        var r = rappels.filter(function (x) { return x.id === selection; })[0];
-        if (!r) { return; }
-        historique.push({ nom: r.nom, due: r.due, statut: 'annulé', le: AUJ });
-        rappels = rappels.filter(function (x) { return x.id !== selection; });
-        relance = null;
-        selection = rappels.length ? rappels[0].id : 0;
-        tout();
-      });
-    }
-    var supp = document.getElementById('bSupprimer');
-    if (supp) {
-      supp.addEventListener('click', function () {
-        rappels = rappels.filter(function (x) { return x.id !== selection; });
-        relance = null;
-        selection = rappels.length ? rappels[0].id : 0;
-        tout();
-      });
-    }
-    var ajout = document.getElementById('bAjouter');
-    if (ajout) {
-      ajout.addEventListener('click', function () {
-        compteur += 1;
-        rappels.push({ id: compteur, nom: 'Consultation cardiologique', due: plusAns(AUJ, 1), rep: null, note: 'à préciser', auteur: 'M. ANEX' });
-        selection = compteur;
-        relance = null;
-        tout();
-      });
-    }
-    var retour = document.getElementById('bTlExamens');
-    if (retour) {
-      retour.addEventListener('click', function () { onglet = 'examens'; tout(); });
-    }
+document.addEventListener('click', function () { fermerDD(); });
+
+/* ---- câblage générique ---- */
+
+function cabler(racine) {
+  racine.querySelectorAll('[data-combo]').forEach(function (el) {
+    el.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      if (el.contains(ddOuverte)) { fermerDD(); return; }
+      ouvrirDD(el);
+    });
+  });
+  racine.querySelectorAll('[data-edit]').forEach(function (el) {
+    el.addEventListener('input', function () { set(el.dataset.edit, el.textContent); });
+    el.addEventListener('blur', function () { rendreEpisodes(); rendreModule(); });
+    el.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); el.blur(); } });
+  });
+  racine.querySelectorAll('[data-check]').forEach(function (el) {
+    el.addEventListener('click', function (ev) { ev.stopPropagation(); set(el.dataset.check, !get(el.dataset.check)); rendreTout(); });
+  });
+  racine.querySelectorAll('[data-radio]').forEach(function (el) {
+    el.addEventListener('click', function (ev) { ev.stopPropagation(); set(el.dataset.radio, el.dataset.val); rendreTout(); });
+  });
+  racine.querySelectorAll('[data-act]').forEach(function (el) {
+    el.addEventListener('click', function (ev) { ev.stopPropagation(); actions(el.dataset.act, el.dataset.arg); });
+  });
+}
+
+/* ============================ fenêtre d'incorporation ============================ */
+
+function rendreFenetre() {
+  var s = Etat.saisie;
+  var h = '';
+
+  h += '<div class="body">';
+  h += '<div style="display:flex; gap:14px; align-items:flex-start;">' +
+       '<div style="flex-shrink:0; padding-top:2px;">' + SVG.question + '</div>' +
+       '<div style="flex-grow:1; padding-top:6px;">' +
+       '<div>XMed ne peut pas intégrer automatiquement les résultats HPRIM 1.</div>' +
+       '<div style="display:flex; flex-direction:column; gap:9px; margin-top:16px;">' +
+       caseAC('saisie.manuel', 'Incorporer des résultats manuellement') +
+       caseAC('saisie.fiche', 'Ouvrir la fiche patient') +
+       '</div></div></div>';
+
+  h += '<div class="row" style="margin-top:18px;"><div class="lbl" style="width:136px;">Intitulé du document :</div>' +
+       champ('saisie.intitule', 0, 'intitulé…') + '</div>';
+
+  h += '<div class="sep"></div>';
+  h += caseAC('saisie.marquer.on', 'Marquer le patient');
+  if (s.marquer.on) {
+    h += '<div class="panel"><div class="row"><div class="lbl" style="width:96px;">Note :</div>' +
+         champ('saisie.marquer.note', 0, 'motif du marquage…') + '</div></div>';
   }
 
-  /* --- frise chronologique --- */
-
-  function pos(x) {
-    var p = ((x - DEBUT) / (FIN - DEBUT)) * 100;
-    return Math.max(0, Math.min(100, p));
-  }
-
-  function pistes() {
-    var vues = [], out = [];
-    rappels.slice().sort(function (a, b) { return a.due - b.due; }).forEach(function (r) {
-      if (vues.indexOf(r.nom) === -1) { vues.push(r.nom); out.push({ nom: r.nom, points: [] }); }
-    });
-    historique.forEach(function (h) {
-      if (vues.indexOf(h.nom) === -1) { vues.push(h.nom); out.push({ nom: h.nom, points: [] }); }
-    });
-
-    out.forEach(function (p) {
-      historique.forEach(function (h) {
-        if (h.nom !== p.nom || h.statut !== 'fait') { return; }
-        p.points.push({ date: h.due, cle: 'fait', titre: p.nom + ' — réalisé le ' + fmt(h.le) });
-      });
-      rappels.forEach(function (r) {
-        if (r.nom !== p.nom) { return; }
-        occurrences(r).forEach(function (x, i) {
-          var e = etat(x);
-          p.points.push({
-            date: x,
-            cle: e.cle,
-            titre: p.nom + ' — ' + (i === 0 ? 'échéance ' : 'échéance projetée ') + fmt(x) + ' (' + e.lib.toLowerCase() + ')'
-          });
-        });
-      });
-      p.points.sort(function (a, b) { return a.date - b.date; });
-    });
-
-    out.push({
-      nom: vaccin.nom,
-      vaccin: true,
-      points: [
-        { date: vaccin.fait, cle: 'fait',    titre: vaccin.nom + ' — vaccination faite le ' + fmt(vaccin.fait) },
-        { date: vaccin.du,   cle: 'depasse', titre: vaccin.nom + ' — rappel dû le ' + fmt(vaccin.du) + ', jamais réalisé' }
-      ]
-    });
-    return out.filter(function (p) { return p.points.length > 0; });
-  }
-
-  function dessineFrise() {
-    var annees = document.getElementById('tlAnnees');
-    var grille = document.getElementById('tlGrille');
-    var noms = document.getElementById('tlNoms');
-    var lanes = document.getElementById('tlLanes');
-    annees.innerHTML = ''; grille.innerHTML = ''; noms.innerHTML = ''; lanes.innerHTML = '';
-
-    for (var a = 2023; a <= 2032; a++) {
-      var x = pos(d(a, 1, 1));
-      var et = document.createElement('div');
-      et.className = 'tl-annee'; et.style.left = x + '%'; et.textContent = a;
-      annees.appendChild(et);
-      var vl = document.createElement('div');
-      vl.className = 'tl-vline'; vl.style.left = x + '%';
-      grille.appendChild(vl);
-    }
-    var auj = document.createElement('div');
-    auj.className = 'tl-today';
-    auj.style.left = pos(AUJ) + '%';
-    auj.innerHTML = '<span>aujourd\'hui</span>';
-    grille.appendChild(auj);
-
-    pistes().forEach(function (p) {
-      var etiquette = document.createElement('div');
-      etiquette.className = 'tl-nom';
-      var pire = 'avenir';
-      p.points.forEach(function (pt) {
-        if (pt.cle === 'depasse') { pire = 'depasse'; }
-        else if (pt.cle === 'proche' && pire !== 'depasse') { pire = 'proche'; }
-      });
-      var teinte = pire === 'depasse' ? '#c0272d' : (pire === 'proche' ? '#e08a1e' : '#c3c7cb');
-      etiquette.innerHTML = '<i style="background:' + teinte + '"></i>' + echap(p.nom) +
-        (p.vaccin ? ' <span class="grey" style="margin-left:5px;">(vaccin)</span>' : '');
-      noms.appendChild(etiquette);
-
-      var piste = document.createElement('div');
-      piste.className = 'tl-lane';
-      var axe = document.createElement('div');
-      axe.className = 'tl-axe';
-      piste.appendChild(axe);
-
-      var visibles = p.points.filter(function (pt) { return pt.date >= DEBUT && pt.date <= FIN; });
-      if (visibles.length > 1) {
-        var a1 = pos(visibles[0].date), a2 = pos(visibles[visibles.length - 1].date);
-        var lien = document.createElement('div');
-        lien.className = 'tl-lien';
-        lien.style.left = a1 + '%';
-        lien.style.width = (a2 - a1) + '%';
-        piste.appendChild(lien);
+  h += '<div class="sep"></div>';
+  h += caseAC('saisie.prevention.on', 'Prévention');
+  if (s.prevention.on) {
+    h += '<div class="panel">';
+    var tops = Object.keys(favoris).sort(function (a, b) { return favoris[b] - favoris[a] || a.localeCompare(b); }).slice(0, 6);
+    s.prevention.blocs.forEach(function (b, i) {
+      var chem = 'saisie.prevention.blocs.' + i;
+      h += '<div class="bloc">';
+      if (s.prevention.blocs.length > 1) {
+        h += '<div style="display:flex; align-items:center; margin-bottom:6px;">' +
+             '<div class="grey" style="flex-grow:1;">Rappel ' + (i + 1) + '</div>' +
+             '<span class="x" data-act="retirerBloc" data-arg="' + i + '" title="retirer ce rappel">✕</span></div>';
       }
-
-      p.points.forEach(function (pt) {
-        var hors = pt.date < DEBUT;
-        var el = document.createElement('div');
-        el.className = 'tl-pt ' + pt.cle + (hors ? ' hors' : '');
-        el.style.left = hors ? '0%' : pos(pt.date) + '%';
-        el.title = pt.titre + (hors ? ' — hors du cadre affiché' : '');
-        el.addEventListener('click', function () {
-          document.getElementById('tlInfo').textContent = pt.titre + (hors ? ' (antérieur à 2023, épinglé au bord)' : '');
-        });
-        piste.appendChild(el);
+      h += '<div class="row" style="align-items:flex-start;"><div class="lbl" style="width:96px; padding-top:3px;">Favoris :</div>' +
+           '<div class="chips" style="flex-grow:1;">';
+      tops.forEach(function (f) {
+        h += '<span class="chip' + (f === b.suivi ? ' on' : '') + '" data-act="favori" data-arg="' + i + '|' + e(f) + '">' + e(f) + '</span>';
       });
-
-      lanes.appendChild(piste);
+      h += '</div></div>';
+      h += '<div class="row" style="margin-top:8px;"><div class="lbl" style="width:96px;">Élément de suivi :</div>' +
+           combo(chem + '.suivi', 'suivi', 0) +
+           '<div class="btn sq" data-act="ouvrirSuivi" data-arg="' + i + '" title="rechercher">' + SVG.loupe + '</div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Échéance :</div>' +
+           '<div style="display:flex; align-items:center; gap:6px;">' + radio(chem + '.mode', 'delai', 'dans') +
+           combo(chem + '.delai', 'delai', 96, b.mode !== 'delai') + '</div>' +
+           '<div style="display:flex; align-items:center; gap:6px; margin-left:14px;">' + radio(chem + '.mode', 'date', 'le') +
+           champ(chem + '.date', 96, 'jj/mm/aaaa', b.mode !== 'date') + '</div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Répéter :</div>' +
+           '<div style="display:flex; align-items:center; gap:6px;">' +
+           '<span class="check click' + (b.repeter ? ' on' : '') + '" data-check="' + chem + '.repeter" style="display:inline-flex;"><span class="box">' + SVG.tick + '</span></span>' +
+           '<span' + (b.repeter ? '' : ' class="grey"') + '>tous les</span>' +
+           champ(chem + '.repN', 38, '', !b.repeter) +
+           combo(chem + '.repU', 'unite', 88, !b.repeter) +
+           '<span' + (b.repeter ? '' : ' class="grey"') + '>pendant</span>' +
+           champ(chem + '.repPendant', 38, '', !b.repeter) +
+           '<span' + (b.repeter ? '' : ' class="grey"') + '>ans</span></div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
+           champ(chem + '.note', 0, 'motif du rappel…') + '</div>';
+      var apercu = echeance(b);
+      h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
+           (b.suivi ? (apercu ? '→ ' + e(b.suivi) + ' le ' + fmt(apercu) + (b.repeter ? ', puis ' + repTexte({ rep: repDe(b) }).toLowerCase() : '') : '→ date incomplète') : '→ aucun élément de suivi choisi') +
+           '</div>';
+      h += '</div>';
     });
+    h += '<div style="display:flex; justify-content:flex-end; margin-top:11px;">' +
+         '<div class="btn" style="height:22px;" data-act="ajouterBloc">' + SVG.plus + '<span>Ajouter un rappel</span></div></div>';
+    h += '</div>';
   }
 
-  /* --- onglets et rendu global --- */
+  h += '<div class="sep"></div>';
+  h += caseAC('saisie.episode.on', 'Création d’un épisode de soins');
+  if (s.episode.on) {
+    h += '<div class="panel">';
+    h += '<div class="row"><div class="lbl" style="width:96px;">Pathologie :</div>' +
+         combo('saisie.episode.patho', 'patho', 0) +
+         '<div class="btn sq" data-act="ouvrirPatho" title="rechercher">' + SVG.loupe + '</div></div>';
+    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Début :</div>' +
+         champ('saisie.episode.debut', 96, 'jj/mm/aaaa') +
+         '<div style="margin-left:18px;">' + caseAC('saisie.episode.ald', 'ALD', '— affection de longue durée') + '</div></div>';
+    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
+         champ('saisie.episode.note', 0, 'contexte…') + '</div>';
+    h += '</div>';
+  }
 
-  document.querySelectorAll('#mTabs .tab').forEach(function (t) {
-    t.addEventListener('click', function () { onglet = t.dataset.tab; tout(); });
+  h += '<div style="display:flex; gap:20px; margin-top:20px; align-items:center;">' +
+       '<div class="grey" style="flex-grow:1;">' + resume() + '</div>' +
+       '<div class="btn def" data-act="valider">Valider</div>' +
+       '<div class="btn" data-act="annulerSaisie">Annuler</div></div>';
+
+  h += '</div>';
+
+  var hote = document.getElementById('fenetreWF');
+  hote.innerHTML = chrome('Traitement des résultats H’', 660, h);
+  cabler(hote);
+}
+
+function repDe(b) {
+  if (!b.repeter) { return null; }
+  var n = parseInt(b.repN, 10);
+  if (!n || n < 1) { return null; }
+  var p = parseInt(b.repPendant, 10);
+  return { n: n, u: b.repU, pendant: p > 0 ? p : null };
+}
+
+function echeance(b) {
+  if (b.mode === 'date') { return lit(b.date); }
+  var m = /^(\d+)\s+(.+)$/.exec(b.delai);
+  if (!m) { return null; }
+  var u = /mois/.test(m[2]) ? 'mois' : 'an(s)';
+  return ajoute(AUJ, +m[1], u);
+}
+
+function resume() {
+  var s = Etat.saisie, bouts = [];
+  if (s.marquer.on) { bouts.push('marquage'); }
+  var n = s.prevention.on ? s.prevention.blocs.filter(function (b) { return b.suivi && echeance(b); }).length : 0;
+  if (n) { bouts.push(n + (n > 1 ? ' rappels' : ' rappel')); }
+  if (s.episode.on && s.episode.patho) { bouts.push('1 épisode'); }
+  return bouts.length ? 'À la validation : document classé, ' + bouts.join(', ') + '.' : 'À la validation : document classé.';
+}
+
+/* ============================ épisodes de soins ============================ */
+
+function rendreEpisodes() {
+  var h = '<div class="grid" style="margin-top:0;">' +
+    '<div class="ghead"><div style="width:280px;">Épisode</div><div style="width:100px;">Début</div>' +
+    '<div style="width:70px;">ALD</div><div style="width:300px;">Note</div><div style="width:110px;">Auteur</div></div>';
+  Etat.episodes.slice().sort(function (a, b) { return b.debut - a.debut; }).forEach(function (ep) {
+    h += '<div class="grow' + (Etat.nouveaux.indexOf('ep' + ep.id) !== -1 ? ' flash' : '') + '" data-act="rienEp">' +
+      '<div style="width:280px;">' + e(ep.nom) + '</div>' +
+      '<div style="width:100px;">' + fmt(ep.debut) + '</div>' +
+      '<div style="width:70px;">' + (ep.ald ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
+      '<div style="width:300px;">' + e(ep.note) + '</div>' +
+      '<div style="width:110px;">M. ANEX</div></div>';
+  });
+  h += '<div style="height:24px; background:#fff;"></div></div>';
+  var hote = document.getElementById('episodesWF');
+  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 880, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
+  cabler(hote);
+}
+
+/* ============================ module ============================ */
+
+function etat(x) {
+  if (x < AUJ)     { return { cle: 'depasse', lib: 'Dépassé', cls: 'red' }; }
+  if (x <= PROCHE) { return { cle: 'proche',  lib: 'Proche',  cls: 'orange' }; }
+  return { cle: 'avenir', lib: 'À venir', cls: 'soft' };
+}
+function repTexte(r) {
+  if (!r.rep) { return '—'; }
+  var n = r.rep.n, u = r.rep.u, mot;
+  if (u === 'an(s)')           { mot = n > 1 ? n + ' ans' : 'ans'; }
+  else if (u === 'mois')       { mot = n > 1 ? n + ' mois' : 'mois'; }
+  else if (u === 'semaine(s)') { mot = n > 1 ? n + ' semaines' : 'semaines'; }
+  else                         { mot = n > 1 ? n + ' jours' : 'jours'; }
+  return 'Tous les ' + mot + (r.rep.pendant ? ', pendant ' + r.rep.pendant + ' ans' : '');
+}
+function parAn(u) {
+  return u === 'an(s)' ? 1 : u === 'mois' ? 12 : u === 'semaine(s)' ? 52 : 365;
+}
+function occurrences(r) {
+  var out = [new Date(r.due.getTime())], x = r.due, i;
+  if (!r.rep) { return out; }
+  var max = r.rep.pendant ? Math.min(60, Math.max(0, Math.floor(r.rep.pendant * parAn(r.rep.u) / r.rep.n) - 1)) : 60;
+  for (i = 0; i < max; i++) {
+    x = ajoute(x, r.rep.n, r.rep.u);
+    if (x > FIN) { break; }
+    out.push(new Date(x.getTime()));
+  }
+  return out;
+}
+var pastille = {
+  depasse: '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#c0272d"/></svg>',
+  proche:  '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#e08a1e"/></svg>',
+  avenir:  '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="#8a9099" stroke-width="1"/></svg>'
+};
+
+function triees() {
+  var t = Etat.tri;
+  return Etat.rappels.slice().sort(function (a, b) {
+    var x, y;
+    if (t.col === 'nom')  { x = a.nom.toLowerCase(); y = b.nom.toLowerCase(); }
+    else if (t.col === 'note') { x = a.note.toLowerCase(); y = b.note.toLowerCase(); }
+    else { x = a.due; y = b.due; }
+    return (x < y ? -1 : x > y ? 1 : 0) * t.sens;
+  });
+}
+function fleche(col) {
+  if (Etat.tri.col !== col) { return ''; }
+  return Etat.tri.sens > 0
+    ? '<svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 4 L3.5 0 L7 4 Z" fill="#5a6068"/></svg>'
+    : '<svg width="7" height="4" viewBox="0 0 7 4"><path d="M0 0 L3.5 4 L7 0 Z" fill="#5a6068"/></svg>';
+}
+
+function paneExamens() {
+  var h = '<div class="pane" data-pane="examens"' + (Etat.onglet === 'examens' ? '' : ' hidden') + '>';
+  h += '<div class="grid"><div class="grouper"><div style="flex-grow:1;">Glisser/déposer ici des entêtes de colonne pour effectuer des regroupements</div>' +
+       '<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg></div>';
+  h += '<div class="ghead"><div class="c1">!</div>' +
+       '<div class="c2 tri" data-act="trier" data-arg="nom">Examen / consultation ' + fleche('nom') + '</div>' +
+       '<div class="c3 tri" data-act="trier" data-arg="due">Échéance ' + fleche('due') + '</div>' +
+       '<div class="c4">Répétition</div>' +
+       '<div class="c5 tri" data-act="trier" data-arg="note">Note ' + fleche('note') + '</div>' +
+       '<div class="c6">Statut</div><div class="c7">Créé par</div></div>';
+
+  triees().forEach(function (r) {
+    var s = etat(r.due);
+    h += '<div class="grow' + (r.id === Etat.selection ? ' sel' : '') + (Etat.nouveaux.indexOf('r' + r.id) !== -1 ? ' flash' : '') + '" data-act="selRappel" data-arg="' + r.id + '">' +
+      '<div class="c1">' + pastille[s.cle] + '</div>' +
+      '<div class="c2">' + e(r.nom) + '</div>' +
+      '<div class="c3 ' + s.cls + '">' + fmt(r.due) + '</div>' +
+      '<div class="c4">' + e(repTexte(r)) + '</div>' +
+      '<div class="c5">' + e(r.note) + '</div>' +
+      '<div class="c6 ' + s.cls + '">' + s.lib + '</div>' +
+      '<div class="c7">' + e(r.auteur) + '</div></div>';
+  });
+  h += '<div style="height:' + Math.max(0, 7 - Etat.rappels.length) * 24 + 'px; background:#fff;"></div>';
+  h += '<div class="histbar' + (Etat.histOuvert ? ' open' : '') + '" data-act="hist">' + SVG.chev +
+       '<span>Historique — ' + Etat.historique.length + ' rappels faits, annulés ou remplacés</span></div>';
+  if (Etat.histOuvert) {
+    Etat.historique.slice().sort(function (a, b) { return b.due - a.due; }).forEach(function (x) {
+      h += '<div class="grow hist"><div class="c1"></div><div class="c2">' + e(x.nom) + '</div>' +
+        '<div class="c3">' + fmt(x.due) + '</div><div class="c4">—</div>' +
+        '<div class="c5">' + (x.statut === 'fait' ? 'réalisé le ' + fmt(x.le) : x.statut + ' le ' + fmt(x.le)) + '</div>' +
+        '<div class="c6">' + x.statut.charAt(0).toUpperCase() + x.statut.slice(1) + '</div><div class="c7">M. ANEX</div></div>';
+    });
+  }
+  h += '</div>';
+
+  if (Etat.relance) {
+    h += '<div class="relance">' + SVG.horloge + '<div class="msg">' + e(Etat.relance.nom) +
+      ' marqué fait. Reposer le même rappel dans ' + Etat.relance.n + ' ' +
+      (Etat.relance.u === 'an(s)' ? (Etat.relance.n > 1 ? 'ans' : 'an') : Etat.relance.u) +
+      ' — le ' + fmt(Etat.relance.due) + ' ?</div>' +
+      '<div class="btn def" data-act="relanceOui">Oui</div><div class="btn" data-act="relanceNon">Non</div></div>';
+  }
+
+  h += '<div class="detail">' + detailRappel() + '</div>';
+  h += '</div>';
+  return h;
+}
+
+function detailRappel() {
+  var r = null, i;
+  for (i = 0; i < Etat.rappels.length; i++) { if (Etat.rappels[i].id === Etat.selection) { r = Etat.rappels[i]; } }
+  if (!r) { return '<div class="grey" style="padding:16px 0; text-align:center;">Aucun rappel sélectionné — cliquez une ligne de la liste.</div>'; }
+  var s = etat(r.due), m = Etat.modification, idx = Etat.rappels.indexOf(r);
+  var chem = 'rappels.' + idx;
+
+  function txt(v) { return '<div class="txt dim" style="color:#24211e;">' + e(v) + '</div>'; }
+
+  var h = '<div style="display:flex; gap:24px; align-items:center;">' +
+    '<div class="row" style="flex-grow:1;"><div class="lbl" style="width:104px;">Élément de suivi :</div>' +
+    (m ? combo(chem + '.nom', 'suivi', 0) : '<div class="combo dim" style="flex-grow:1;"><div class="v">' + e(r.nom) + '</div>' + SVG.arr + '</div>') +
+    '</div>' +
+    '<div class="row" style="width:330px; flex-shrink:0;"><div class="lbl" style="width:92px;">Créé par :</div>' +
+    '<div class="soft">Matthieu ANEX — le 19/08/2026</div></div></div>';
+
+  h += '<div style="display:flex; gap:24px; align-items:center; margin-top:9px;">' +
+    '<div class="row" style="flex-grow:1;"><div class="lbl" style="width:104px;">Échéance :</div>' +
+    (m ? '<div class="txt ed" contenteditable="true" data-edit="' + chem + '.dueTexte" style="width:110px;">' + fmt(r.due) + '</div>'
+       : '<div class="txt dim" style="width:110px; color:#24211e;">' + fmt(r.due) + '</div>') +
+    (m ? '<span class="grey">jj/mm/aaaa</span>' : '') + '</div>' +
+    '<div class="row" style="width:330px; flex-shrink:0;"><div class="lbl" style="width:92px;">Statut :</div>' +
+    '<div class="' + s.cls + '">' + s.lib + '</div></div></div>';
+
+  h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Répétition :</div>' +
+    '<div class="txt dim" style="width:220px; color:#24211e;">' + e(repTexte(r)) + '</div></div>';
+
+  h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Note :</div>' +
+    (m ? '<div class="txt ed" contenteditable="true" data-edit="' + chem + '.note" style="flex-grow:1;">' + e(r.note) + '</div>'
+       : txt(r.note)) + '</div>';
+
+  h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Document source :</div>' +
+    '<div style="display:flex; align-items:center; gap:8px;">' +
+    '<a href="#module" data-act="voirDoc" data-arg="' + r.id + '" style="text-decoration:underline;">' + e(r.src) + '</a>' +
+    '<div class="sbtn" style="min-height:21px; padding:0 10px;" data-act="voirDoc" data-arg="' + r.id + '">Ouvrir</div></div></div>';
+  return h;
+}
+
+function paneVaccins() {
+  var h = '<div class="pane" data-pane="vaccins"' + (Etat.onglet === 'vaccins' ? '' : ' hidden') + '>';
+  h += '<div class="grid"><div class="grouper"><div style="flex-grow:1;">Glisser/déposer ici des entêtes de colonne pour effectuer des regroupements</div>' +
+       '<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg></div>';
+  h += '<div class="ghead"><div class="c1">!</div><div style="width:90px;">Date</div><div style="width:48px;">DMP</div>' +
+       '<div style="width:250px;">Nom commercial</div><div style="width:90px;">Valence</div>' +
+       '<div style="width:96px;">Rappel</div><div style="width:80px;">Statut</div><div style="width:122px;">Acteur</div></div>';
+  Etat.vaccins.forEach(function (v) {
+    var s = etat(v.rappel);
+    h += '<div class="grow' + (v.id === Etat.vaccinSel ? ' sel' : '') + (Etat.nouveaux.indexOf('v' + v.id) !== -1 ? ' flash' : '') + '" data-act="selVaccin" data-arg="' + v.id + '">' +
+      '<div class="c1">' + (s.cle === 'depasse' ? SVG.alerte : pastille[s.cle]) + '</div>' +
+      '<div style="width:90px;">' + fmt(v.date) + '</div>' +
+      '<div style="width:48px;"><span class="box">' + (v.dmp ? SVG.tick.replace('class="tick"', 'style="display:block"') : '') + '</span></div>' +
+      '<div style="width:250px;">' + e(v.nom) + '</div><div style="width:90px;">' + e(v.valence) + '</div>' +
+      '<div style="width:96px;" class="' + s.cls + '">' + fmt(v.rappel) + '</div>' +
+      '<div style="width:80px;" class="' + s.cls + '">' + s.lib + '</div>' +
+      '<div style="width:122px;">' + e(v.acteur) + '</div></div>';
+  });
+  h += '<div style="height:' + Math.max(0, 6 - Etat.vaccins.length) * 24 + 'px; background:#fff;"></div></div>';
+  var v = null, i;
+  for (i = 0; i < Etat.vaccins.length; i++) { if (Etat.vaccins[i].id === Etat.vaccinSel) { v = Etat.vaccins[i]; } }
+  h += '<div class="detail">';
+  if (v) {
+    var s2 = etat(v.rappel);
+    h += '<div style="display:flex; gap:24px;"><div style="flex-grow:1;">' +
+      '<div class="row"><div class="lbl" style="width:104px;">Date :</div><div class="txt dim" style="width:120px; color:#24211e;">' + fmt(v.date) + '</div></div>' +
+      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Nom commercial :</div>' +
+      '<div class="combo dim" style="flex-grow:1;"><div class="v">' + e(v.nom) + '</div>' + SVG.arr + '</div></div>' +
+      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Valence :</div><div class="txt dim" style="width:200px; color:#24211e;">' + e(v.valence) + '</div></div>' +
+      '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Date de rappel :</div>' +
+      '<div class="txt dim" style="width:120px; color:#24211e;">' + fmt(v.rappel) + '</div>' +
+      '<div class="' + s2.cls + '" style="margin-left:10px;">' + s2.lib + '</div></div>' +
+      '</div><div style="width:300px; flex-shrink:0; color:#6b7075; border-left:1px solid #e6e9ec; padding-left:16px;">' +
+      'Cet onglet est l’écran Vaccinations d’aujourd’hui, sans modification : mêmes colonnes, mêmes champs, mêmes échanges avec le DMP. Il est reproduit ici en abrégé.' +
+      '</div></div>';
+  }
+  h += '</div></div>';
+  return h;
+}
+
+function paneTimeline() {
+  return '<div class="pane" data-pane="timeline"' + (Etat.onglet === 'timeline' ? '' : ' hidden') + '>' +
+    '<div class="grid"><div class="tl">' +
+    '<div class="tl-legende">' +
+    '<div class="tl-leg"><span class="tl-pt depasse" style="position:static; transform:none;"></span> dépassée</div>' +
+    '<div class="tl-leg"><span class="tl-pt proche" style="position:static; transform:none;"></span> proche</div>' +
+    '<div class="tl-leg"><span class="tl-pt avenir" style="position:static; transform:none;"></span> à venir</div>' +
+    '<div class="tl-leg"><span class="tl-pt fait" style="position:static; transform:none;"></span> déjà fait</div>' +
+    '<div class="tl-leg" style="margin-left:auto;">Échéances répétées projetées jusqu’en 2032.</div></div>' +
+    '<div class="tl-head"><div class="tl-noms"></div><div class="tl-plot"><div class="tl-annees" id="tlAnnees"></div></div></div>' +
+    '<div class="tl-corps"><div class="tl-noms" id="tlNoms"></div>' +
+    '<div class="tl-plot"><div class="tl-grille" id="tlGrille"></div><div id="tlLanes"></div></div></div>' +
+    '<div class="tl-info" id="tlInfo">Cliquez un point de la frise pour en afficher le détail.</div>' +
+    '</div></div></div>';
+}
+
+var JEUX = {
+  vaccins: [['Ajouter', 'ajoutVaccin'], ['Lire QRCode', ''], ['Supprimer', 'suppVaccin'], ['sp'],
+            ['Rappel', ''], ['Aperçu', ''], ['sp'],
+            ['Carnet de vaccination', ''], ['Envoyer sur le DMP', 'dmp'], ['sp'],
+            ['Ok', ''], ['Appliquer', 'off'], ['Annuler', '']],
+  examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['Supprimer', 'suppRappel'], ['sp'],
+            ['Fait', 'fait'], ['Annuler le rappel', 'annulRappel'], ['sp'],
+            ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
+  timeline: [['Imprimer la frise', 'imprimer'], ['Remettre au patient', 'imprimer'], ['sp'],
+             ['Revenir à la liste', 'versExamens'], ['sp'],
+             ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']]
+};
+
+function rendreModule() {
+  var pastilleOng = {
+    vaccins: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg>',
+    examens: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' +
+      (Etat.rappels.some(function (r) { return r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
+    timeline: '<svg width="11" height="9" viewBox="0 0 11 9"><path d="M0.5 7.5 H10.5" stroke="#5a6068" stroke-width="1"/><circle cx="3" cy="4" r="2" fill="#7a8087"/><circle cx="8" cy="4" r="2" fill="#7a8087"/></svg>'
+  };
+
+  var h = '<div style="padding:8px;"><div style="display:flex; gap:8px; align-items:flex-start;">' +
+    '<div style="flex-grow:1; min-width:0;">';
+  h += '<div class="tabs">' +
+    '<div class="tab' + (Etat.onglet === 'vaccins' ? ' act' : '') + '" data-act="onglet" data-arg="vaccins">' + pastilleOng.vaccins + '<span>Vaccins</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'examens' ? ' act' : '') + '" data-act="onglet" data-arg="examens">' + pastilleOng.examens + '<span>Examens &amp; consultations</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span></div>' +
+    '</div>';
+  h += paneVaccins() + paneExamens() + paneTimeline();
+  h += '</div><div class="sidebtns">';
+  JEUX[Etat.onglet].forEach(function (b) {
+    if (b[0] === 'sp') { h += '<div class="spacer"></div>'; return; }
+    var off = b[1] === 'off';
+    var actif = (b[1] === 'modifier' && Etat.modification);
+    h += '<div class="sbtn' + (off ? ' off' : '') + (actif ? ' act' : '') + '"' +
+      (off || !b[1] ? '' : ' data-act="' + b[1] + '"') + '><span>' + e(actif ? 'Terminer' : b[0]) + '</span></div>';
+  });
+  h += '</div></div></div>';
+
+  var hote = document.getElementById('moduleWF');
+  hote.innerHTML = chrome('Prévention — MARTIN Claire (45 ans)', 1160, h, '#f0f0f0');
+  cabler(hote);
+  if (Etat.onglet === 'timeline') { rendreFrise(); }
+}
+
+/* ============================ frise ============================ */
+
+function pos(x) { return Math.max(0, Math.min(100, ((x - DEBUT) / (FIN - DEBUT)) * 100)); }
+
+function pistes() {
+  var vus = [], out = [];
+  triees().forEach(function (r) { if (vus.indexOf(r.nom) === -1) { vus.push(r.nom); out.push({ nom: r.nom, points: [] }); } });
+  Etat.historique.forEach(function (x) { if (vus.indexOf(x.nom) === -1) { vus.push(x.nom); out.push({ nom: x.nom, points: [] }); } });
+
+  out.forEach(function (p) {
+    Etat.historique.forEach(function (x) {
+      if (x.nom !== p.nom || x.statut !== 'fait') { return; }
+      p.points.push({ date: x.due, cle: 'fait', titre: p.nom + ' — réalisé le ' + fmt(x.le) });
+    });
+    Etat.rappels.forEach(function (r) {
+      if (r.nom !== p.nom) { return; }
+      occurrences(r).forEach(function (x, i) {
+        var s = etat(x);
+        p.points.push({ date: x, cle: s.cle, titre: p.nom + ' — ' + (i === 0 ? 'échéance ' : 'échéance projetée ') + fmt(x) + ' (' + s.lib.toLowerCase() + ')' });
+      });
+    });
+    p.points.sort(function (a, b) { return a.date - b.date; });
   });
 
-  document.getElementById('mHistBar').addEventListener('click', function () {
-    histOuvert = !histOuvert; tout();
+  Etat.vaccins.forEach(function (v) {
+    out.push({ nom: v.nom + ' (vaccin)', vaccin: true, points: [
+      { date: v.date, cle: 'fait', titre: v.nom + ' — vaccination faite le ' + fmt(v.date) },
+      { date: v.rappel, cle: etat(v.rappel).cle, titre: v.nom + ' — rappel dû le ' + fmt(v.rappel) + ' (' + etat(v.rappel).lib.toLowerCase() + ')' }
+    ] });
   });
 
-  function dessineOnglets() {
-    document.querySelectorAll('#mTabs .tab').forEach(function (t) {
-      t.className = 'tab' + (t.dataset.tab === onglet ? ' act' : '');
+  return out.filter(function (p) { return p.points.length > 0; });
+}
+
+function rendreFrise() {
+  var annees = document.getElementById('tlAnnees'), grille = document.getElementById('tlGrille');
+  var noms = document.getElementById('tlNoms'), lanes = document.getElementById('tlLanes');
+  if (!annees) { return; }
+  annees.innerHTML = ''; grille.innerHTML = ''; noms.innerHTML = ''; lanes.innerHTML = '';
+
+  for (var a = 2023; a <= 2032; a++) {
+    var x = pos(d(a, 1, 1));
+    var et = document.createElement('div'); et.className = 'tl-annee'; et.style.left = x + '%'; et.textContent = a;
+    annees.appendChild(et);
+    var vl = document.createElement('div'); vl.className = 'tl-vline'; vl.style.left = x + '%';
+    grille.appendChild(vl);
+  }
+  var auj = document.createElement('div');
+  auj.className = 'tl-today'; auj.style.left = pos(AUJ) + '%';
+  auj.innerHTML = '<span>aujourd’hui</span>';
+  grille.appendChild(auj);
+
+  pistes().forEach(function (p, i) {
+    var pire = 'avenir';
+    p.points.forEach(function (pt) {
+      if (pt.cle === 'depasse') { pire = 'depasse'; }
+      else if (pt.cle === 'proche' && pire !== 'depasse') { pire = 'proche'; }
     });
-    document.querySelectorAll('.pane').forEach(function (p) {
-      p.hidden = p.dataset.pane !== onglet;
+    var teinte = pire === 'depasse' ? '#c0272d' : (pire === 'proche' ? '#e08a1e' : '#c3c7cb');
+
+    var et = document.createElement('div');
+    et.className = 'tl-nom' + (Etat.pisteSel === i ? ' sel' : '');
+    et.innerHTML = '<i style="background:' + teinte + '"></i>' + e(p.nom);
+    et.addEventListener('click', function () { Etat.pisteSel = (Etat.pisteSel === i ? null : i); rendreFrise(); });
+    noms.appendChild(et);
+
+    var piste = document.createElement('div');
+    piste.className = 'tl-lane' + (Etat.pisteSel === i ? ' sel' : '');
+    var axe = document.createElement('div'); axe.className = 'tl-axe'; piste.appendChild(axe);
+
+    var vis = p.points.filter(function (pt) { return pt.date >= DEBUT && pt.date <= FIN; });
+    if (vis.length > 1) {
+      var a1 = pos(vis[0].date), a2 = pos(vis[vis.length - 1].date);
+      var lien = document.createElement('div'); lien.className = 'tl-lien';
+      lien.style.left = a1 + '%'; lien.style.width = (a2 - a1) + '%';
+      piste.appendChild(lien);
+    }
+    p.points.forEach(function (pt) {
+      var hors = pt.date < DEBUT;
+      var el = document.createElement('div');
+      el.className = 'tl-pt ' + pt.cle + (hors ? ' hors' : '');
+      el.style.left = hors ? '0%' : pos(pt.date) + '%';
+      el.title = pt.titre + (hors ? ' — hors du cadre affiché' : '');
+      el.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        Etat.pisteSel = i;
+        document.getElementById('tlInfo').textContent = pt.titre + (hors ? ' (antérieur à 2023, épinglé au bord gauche)' : '');
+        rendreFrise();
+      });
+      piste.appendChild(el);
     });
+    lanes.appendChild(piste);
+  });
+}
+
+/* ============================ modales ============================ */
+
+function modale(html) {
+  var m = document.getElementById('modale');
+  m.innerHTML = '<div class="wf">' + html + '</div>';
+  m.hidden = false;
+  cabler(m);
+  m.addEventListener('click', function (ev) { if (ev.target === m) { fermerModale(); } }, { once: true });
+}
+function fermerModale() { var m = document.getElementById('modale'); m.hidden = true; m.innerHTML = ''; }
+
+function modaleValidation(bilan) {
+  var corps = '<div class="body"><div style="display:flex; gap:14px; align-items:flex-start;">' +
+    '<div style="flex-shrink:0;">' + SVG.ok + '</div><div style="flex-grow:1;">' +
+    '<div style="font-weight:600; margin-bottom:8px;">Document classé dans le dossier.</div>' +
+    '<div class="grey" style="margin-bottom:12px;">' + e(Etat.saisie.intitule) + '</div>' +
+    '<div style="display:flex; flex-direction:column; gap:7px;">';
+  bilan.forEach(function (l) { corps += '<div>' + SVG.faitv + ' ' + l + '</div>'; });
+  if (!bilan.length) { corps += '<div class="grey">Aucune suite enregistrée.</div>'; }
+  corps += '</div></div></div>' +
+    '<div style="display:flex; gap:14px; justify-content:flex-end; margin-top:20px;">' +
+    '<div class="btn def" data-act="voirDossier">Voir dans le dossier</div>' +
+    '<div class="btn" data-act="fermerModale">Fermer</div></div></div>';
+  modale(chrome('Incorporation terminée', 560, corps));
+}
+
+function modaleDocument(r) {
+  var corps = '<div class="body"><div style="display:flex; gap:14px; align-items:flex-start;">' +
+    '<div style="flex-shrink:0;">' + SVG.doc + '</div>' +
+    '<div class="doc" style="flex-grow:1;">' +
+    '<h4>' + e(r.src) + '</h4>' +
+    '<div class="grey" style="font-family:\'Segoe UI\',sans-serif; font-size:12px;">MARTIN Claire — née le 07/06/1981 (45 ans) — patiente et document fictifs</div>' +
+    '<div class="bloc"><strong>Indication.</strong> ' + e(r.note) + '</div>' +
+    '<div class="bloc"><strong>Conclusion.</strong> Contrôle proposé le ' + fmt(r.due) + '. ' +
+    (r.rep ? repTexte(r) + '.' : 'Pas de périodicité définie.') + '</div>' +
+    '<div class="bloc grey" style="font-family:\'Segoe UI\',sans-serif; font-size:12px;">' +
+    'Depuis le rappel, on rouvre le compte rendu qui l’a motivé sans avoir à le rechercher dans le dossier.</div>' +
+    '</div></div>' +
+    '<div style="display:flex; justify-content:flex-end; margin-top:18px;">' +
+    '<div class="btn def" data-act="fermerModale">Fermer</div></div></div>';
+  modale(chrome('Document source', 560, corps));
+}
+
+function modaleInfo(titre, texte) {
+  modale(chrome(titre, 460, '<div class="body"><div style="display:flex; gap:14px; align-items:flex-start;">' +
+    '<div style="flex-shrink:0;">' + SVG.question + '</div><div style="flex-grow:1; padding-top:4px;">' + e(texte) + '</div></div>' +
+    '<div style="display:flex; justify-content:flex-end; margin-top:20px;">' +
+    '<div class="btn def" data-act="fermerModale">Fermer</div></div></div>'));
+}
+
+/* ============================ actions ============================ */
+
+function flash(cles) {
+  Etat.nouveaux = cles;
+  setTimeout(function () { Etat.nouveaux = []; rendreEpisodes(); rendreModule(); }, 2200);
+}
+
+function actions(nom, arg) {
+  var i, r, v;
+
+  if (nom === 'valider') {
+    var s = Etat.saisie, bilan = [], cles = [];
+    if (s.marquer.on) {
+      Etat.marquage = { note: s.marquer.note };
+      bilan.push('Patient marqué' + (s.marquer.note ? ' — « ' + e(s.marquer.note) + ' »' : '') + '.');
+    }
+    if (s.prevention.on) {
+      var faits = 0;
+      s.prevention.blocs.forEach(function (b) {
+        var due = echeance(b);
+        if (!b.suivi || !due) { return; }
+        compteur += 1;
+        var nr = { id: compteur, nom: b.suivi, due: due, rep: repDe(b), note: b.note, auteur: 'M. ANEX', src: s.intitule };
+        var anciens = Etat.rappels.filter(function (x) { return x.nom === nr.nom; });
+        anciens.forEach(function (x) {
+          Etat.historique.push({ nom: x.nom, due: x.due, statut: 'remplacé', le: AUJ });
+          Etat.rappels.splice(Etat.rappels.indexOf(x), 1);
+        });
+        Etat.rappels.push(nr);
+        Etat.selection = nr.id;
+        cles.push('r' + nr.id);
+        faits += 1;
+        bilan.push('Rappel « ' + e(nr.nom) + ' » posé au ' + fmt(due) +
+          (nr.rep ? ', ' + repTexte(nr).toLowerCase() : '') + '.' +
+          (anciens.length ? ' <span class="grey">(l’ancien rappel du même examen passe en « remplacé »)</span>' : ''));
+      });
+      if (!faits && s.prevention.blocs.length) { bilan.push('<span class="grey">Aucun rappel : élément de suivi ou échéance manquant.</span>'); }
+    }
+    if (s.episode.on && s.episode.patho) {
+      compteur += 1;
+      var deb = lit(s.episode.debut) || AUJ;
+      Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald, note: s.episode.note });
+      cles.push('ep' + compteur);
+      bilan.push('Épisode de soins « ' + e(s.episode.patho) + ' » ouvert au ' + fmt(deb) +
+        (s.episode.ald ? ' <strong>en ALD</strong>.' : '.'));
+    }
+    Etat.saisie = saisieInitiale();
+    Etat.relance = null;
+    rendreTout();
+    flash(cles);
+    rendreEpisodes(); rendreModule();
+    modaleValidation(bilan);
+    return;
   }
 
-  function tout() {
-    dessineOnglets();
-    dessineLignes();
-    dessineHistorique();
-    dessineRelance();
-    dessineDetail();
-    dessineBoutons();
-    dessineFrise();
+  if (nom === 'annulerSaisie') { Etat.saisie = saisieInitiale(); rendreTout(); return; }
+  if (nom === 'ajouterBloc')   { Etat.saisie.prevention.blocs.push(blocVide()); rendreFenetre(); return; }
+  if (nom === 'retirerBloc')   { Etat.saisie.prevention.blocs.splice(+arg, 1); if (!Etat.saisie.prevention.blocs.length) { Etat.saisie.prevention.blocs.push(blocVide()); } rendreFenetre(); return; }
+  if (nom === 'favori') {
+    var p = arg.split('|');
+    Etat.saisie.prevention.blocs[+p[0]].suivi = p[1];
+    favoris[p[1]] = (favoris[p[1]] || 0) + 1;
+    rendreFenetre(); return;
+  }
+  if (nom === 'ouvrirSuivi') {
+    var c = document.querySelector('[data-path="saisie.prevention.blocs.' + arg + '.suivi"]');
+    if (c) { ouvrirDD(c); } return;
+  }
+  if (nom === 'ouvrirPatho') {
+    var cp = document.querySelector('[data-path="saisie.episode.patho"]');
+    if (cp) { ouvrirDD(cp); } return;
   }
 
-  tout();
+  if (nom === 'onglet')      { Etat.onglet = arg; Etat.modification = false; rendreModule(); return; }
+  if (nom === 'versExamens') { Etat.onglet = 'examens'; rendreModule(); return; }
+  if (nom === 'hist')        { Etat.histOuvert = !Etat.histOuvert; rendreModule(); return; }
+  if (nom === 'selRappel')   { Etat.selection = +arg; Etat.modification = false; rendreModule(); return; }
+  if (nom === 'selVaccin')   { Etat.vaccinSel = +arg; rendreModule(); return; }
+  if (nom === 'trier') {
+    if (Etat.tri.col === arg) { Etat.tri.sens = -Etat.tri.sens; } else { Etat.tri = { col: arg, sens: 1 }; }
+    rendreModule(); return;
+  }
+  if (nom === 'modifier') {
+    if (Etat.modification) {
+      for (i = 0; i < Etat.rappels.length; i++) {
+        r = Etat.rappels[i];
+        if (r.dueTexte) { var nd = lit(r.dueTexte); if (nd) { r.due = nd; } delete r.dueTexte; }
+      }
+    } else {
+      for (i = 0; i < Etat.rappels.length; i++) { Etat.rappels[i].dueTexte = fmt(Etat.rappels[i].due); }
+    }
+    Etat.modification = !Etat.modification;
+    rendreModule(); return;
+  }
+  if (nom === 'fait') {
+    r = Etat.rappels.filter(function (x) { return x.id === Etat.selection; })[0];
+    if (!r) { return; }
+    Etat.historique.push({ nom: r.nom, due: r.due, statut: 'fait', le: AUJ });
+    Etat.rappels.splice(Etat.rappels.indexOf(r), 1);
+    Etat.relance = r.rep ? { nom: r.nom, n: r.rep.n, u: r.rep.u, due: ajoute(AUJ, r.rep.n, r.rep.u), rep: r.rep, note: r.note, src: r.src } : null;
+    Etat.selection = Etat.rappels.length ? Etat.rappels[0].id : 0;
+    Etat.modification = false;
+    rendreModule(); return;
+  }
+  if (nom === 'relanceOui') {
+    compteur += 1;
+    var q = Etat.relance;
+    Etat.rappels.push({ id: compteur, nom: q.nom, due: q.due, rep: q.rep, note: q.note, auteur: 'M. ANEX', src: q.src });
+    Etat.selection = compteur; Etat.relance = null;
+    rendreModule(); flash(['r' + compteur]); return;
+  }
+  if (nom === 'relanceNon')  { Etat.relance = null; rendreModule(); return; }
+  if (nom === 'annulRappel') {
+    r = Etat.rappels.filter(function (x) { return x.id === Etat.selection; })[0];
+    if (!r) { return; }
+    Etat.historique.push({ nom: r.nom, due: r.due, statut: 'annulé', le: AUJ });
+    Etat.rappels.splice(Etat.rappels.indexOf(r), 1);
+    Etat.selection = Etat.rappels.length ? Etat.rappels[0].id : 0;
+    Etat.relance = null; rendreModule(); return;
+  }
+  if (nom === 'suppRappel') {
+    r = Etat.rappels.filter(function (x) { return x.id === Etat.selection; })[0];
+    if (!r) { return; }
+    Etat.rappels.splice(Etat.rappels.indexOf(r), 1);
+    Etat.selection = Etat.rappels.length ? Etat.rappels[0].id : 0;
+    rendreModule(); return;
+  }
+  if (nom === 'ajoutRappel') {
+    compteur += 1;
+    Etat.rappels.push({ id: compteur, nom: 'Consultation cardiologique', due: ajoute(AUJ, 1, 'an(s)'), rep: null, note: 'à préciser', auteur: 'M. ANEX', src: 'saisie directe — 19/08/2026' });
+    Etat.selection = compteur; Etat.modification = true;
+    rendreModule(); flash(['r' + compteur]); return;
+  }
+  if (nom === 'voirDoc') {
+    r = Etat.rappels.filter(function (x) { return x.id === +arg; })[0];
+    if (r) { modaleDocument(r); } return;
+  }
+  if (nom === 'ajoutVaccin') {
+    compteur += 1;
+    Etat.vaccins.push({ id: compteur, nom: 'REVAXIS', valence: 'DTP', date: AUJ, rappel: ajoute(AUJ, 20, 'an(s)'), dmp: false, acteur: 'Matthieu ANEX' });
+    Etat.vaccinSel = compteur; rendreModule(); flash(['v' + compteur]); return;
+  }
+  if (nom === 'suppVaccin') {
+    v = Etat.vaccins.filter(function (x) { return x.id === Etat.vaccinSel; })[0];
+    if (!v) { return; }
+    Etat.vaccins.splice(Etat.vaccins.indexOf(v), 1);
+    Etat.vaccinSel = Etat.vaccins.length ? Etat.vaccins[0].id : 0;
+    rendreModule(); return;
+  }
+  if (nom === 'dmp') {
+    v = Etat.vaccins.filter(function (x) { return x.id === Etat.vaccinSel; })[0];
+    if (!v) { return; }
+    v.dmp = true; rendreModule();
+    modaleInfo('DMP', 'Vaccination « ' + v.nom + ' » transmise au DMP. Les rappels de prévention, eux, ne partent jamais au DMP : les deux registres restent séparés.');
+    return;
+  }
+  if (nom === 'imprimer') {
+    modaleInfo('Frise imprimable', 'Dans XMED, ce bouton produirait la frise sur une page A4 à remettre au patient. La vue existant déjà à l’écran, l’impression n’en est qu’un prolongement.');
+    return;
+  }
+  if (nom === 'voirDossier') {
+    fermerModale();
+    Etat.onglet = 'examens';
+    rendreModule();
+    document.getElementById('module').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  if (nom === 'fermerModale') { fermerModale(); return; }
+}
+
+/* ============================ rendu global ============================ */
+
+function rendreTout() { rendreFenetre(); rendreEpisodes(); rendreModule(); }
+
+document.getElementById('reinit').addEventListener('click', function (ev) {
+  ev.preventDefault();
+  initialiser();
+  rendreTout();
+  document.getElementById('fenetre').scrollIntoView({ behavior: 'smooth' });
+});
+
+document.addEventListener('keydown', function (ev) {
+  if (ev.key === 'Escape') { fermerDD(); fermerModale(); }
+});
+
+initialiser();
+rendreTout();
+
 })();
 </script>
 
