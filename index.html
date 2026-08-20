@@ -160,27 +160,27 @@
   .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
   .wf .vert { color: #2a6b34; font-weight: 600; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
-  .wf .pi-barre { display: flex; align-items: center; gap: 16px; padding: 7px 10px; background: #fbf6df; border-bottom: 1px solid #e8dfbe; }
-  .wf .pi-zone { border-bottom: 1px solid #eee5c9; }
-  .wf .pi-zone:last-child { border-bottom: none; }
-  .wf .pi-tete { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; background: linear-gradient(#fffef8,#fbf5e0); cursor: pointer; user-select: none; }
-  .wf .pi-tete:hover { background: #f8f0d6; }
-  .wf .pi-tete .t { font-weight: 600; color: #2a2f35; }
-  .wf .pi-tete .n { color: #6b7075; }
-  .wf .pi-tete .o { margin-left: auto; color: #9aa0a6; font-size: 11px; }
-  .wf .pi-tete svg.ch { transition: transform .12s; }
-  .wf .pi-tete.open svg.ch { transform: rotate(90deg); }
-  .wf .pi-corps { padding: 8px 10px 10px 28px; }
-  .wf .pi-item { display: flex; align-items: flex-start; gap: 8px; padding: 3px 0; }
-  .wf .pi-item .pt { padding-top: 3px; flex-shrink: 0; }
-  .wf .pi-item .tx { flex-grow: 1; }
-  .wf .pi-item .sous { color: #8a9099; }
-  .wf .pi-act { display: flex; gap: 6px; flex-shrink: 0; }
-  .wf .pi-mini { height: 19px; display: inline-flex; align-items: center; padding: 0 8px; border: 1px solid #cdd7e2; border-radius: 2px; background: #fbfcfe; cursor: pointer; color: #1a5fb4; }
-  .wf .pi-mini:hover { background: #e2edf9; }
-  .wf .pi-jaune { background: #fcf7a0; border: 1px solid #ddd370; min-height: 62px; padding: 7px 9px; white-space: pre-wrap; outline: none; }
-  .wf .pi-jaune:focus { border-color: #b9c8d8; box-shadow: inset 0 0 0 1px #cfe0f2; }
-  .wf .pi-vide { color: #9aa0a6; padding: 2px 0 4px; }
+  .wf .pi-barre { display: flex; align-items: center; gap: 18px; padding: 8px 10px; background: #f0f0f0; border-bottom: 1px solid #d0d4d8; }
+  .wf .pi-impr { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #a8b0b8; background: linear-gradient(#fdfdfd,#eceef0); }
+  .wf .pi-lab { display: flex; align-items: center; gap: 8px; margin: 10px 0 3px; padding: 0 2px; cursor: pointer; user-select: none; }
+  .wf .pi-lab:hover .t { color: #1a5fb4; }
+  .wf .pi-lab .t { color: #24211e; }
+  .wf .pi-lab .n { color: #6b7075; }
+  .wf .pi-lab .o { margin-left: auto; color: #9aa0a6; font-size: 11px; }
+  .wf .pi-lab svg.ch { transition: transform .12s; flex-shrink: 0; }
+  .wf .pi-lab.open svg.ch { transform: rotate(90deg); }
+  .wf .pi-grille { border: 1px solid #b8bcc0; background: #fffdf0; }
+  .wf .pi-grille .ghead { background: linear-gradient(#fdfdfd,#eceef0); border-bottom: 1px solid #c3c7cb; }
+  .wf .pi-grille .grow { border-bottom: 1px solid #f0eddc; background: transparent; height: 22px; }
+  .wf .pi-grille .grow:hover { background: #fdf7d0; }
+  .wf .pi-grille .vide { padding: 5px 8px; color: #9aa0a6; }
+  .wf .pi-grille .ghead > div, .wf .pi-grille .grow > div { flex-shrink: 0; }
+  .wf .pi-cur { width: 14px; display: flex; align-items: center; justify-content: center; color: #5a6068; }
+  .wf .pi-zone-txt { border: 1px solid #b8bcc0; background: #ffffe0; padding: 5px 7px; height: 74px; overflow-y: auto; white-space: pre-wrap; }
+  .wf .pi-notes { border: 1px solid #b8bcc0; background: #fdfd52; padding: 5px 7px; height: 92px; overflow-y: auto; white-space: pre-wrap; outline: none; }
+  .wf .pi-notes:focus { border-color: #1a5fb4; }
+  .wf .pi-mini { height: 18px; display: inline-flex; align-items: center; padding: 0 8px; border: 1px solid #a8b0b8; background: linear-gradient(#fdfdfd,#eceef0); cursor: pointer; color: #24211e; }
+  .wf .pi-mini:hover { border-color: #1a5fb4; background: linear-gradient(#fdfdfd,#e2edf9); }
   .wf .pi-inter { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; margin-left: auto; }
   .wf .pi-sw { width: 30px; height: 15px; border-radius: 8px; background: #c3c7cb; position: relative; transition: background .12s; }
   .wf .pi-sw i { position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: #fff; transition: left .12s; }
@@ -294,7 +294,7 @@
 
     <div class="version">
       <span class="v-lab">Version de la démo</span>
-      <span class="v-num">v9</span>
+      <span class="v-num">v10</span>
       <span class="v-date">20 août 2026</span>
     </div>
 
@@ -997,104 +997,141 @@ function piPrevention() {
   Etat.rappels.forEach(function (r) {
     var s = etat(r.due);
     if (s.cle === 'avenir') { return; }
-    out.push({ cle: s.cle, quoi: r.nom,
-      quand: s.cle === 'depasse' ? 'échéance dépassée depuis le ' + fmt(r.due) : 'échéance proche, le ' + fmt(r.due),
+    out.push({ cle: s.cle, quoi: r.nom, type: 'Examen',
+      quand: s.cle === 'depasse' ? 'dépassée depuis le ' + fmt(r.due) : 'proche, le ' + fmt(r.due),
       motif: r.refuse ? 'refusé par la patiente' : (r.propose ? 'proposé, en attente' : ''),
       tri: r.due });
   });
   Etat.vaccins.forEach(function (v) {
     var s = etat(v.rappel);
     if (s.cle === 'avenir') { return; }
-    out.push({ cle: s.cle, quoi: v.valence + ' (' + v.nom + ')',
-      quand: s.cle === 'depasse' ? 'rappel dépassé depuis le ' + fmt(v.rappel) : 'rappel proche, le ' + fmt(v.rappel),
+    out.push({ cle: s.cle, quoi: v.valence + ' (' + v.nom + ')', type: 'Vaccin',
+      quand: s.cle === 'depasse' ? 'dépassée depuis le ' + fmt(v.rappel) : 'proche, le ' + fmt(v.rappel),
       motif: v.refuse ? 'refusé par la patiente' : (v.propose ? 'proposé, en attente' : ''),
       tri: v.rappel });
   });
   return out.sort(function (a, b) { return a.tri - b.tri; });
 }
 
-function piZone(cle, icone, titre, compte, origine, corps) {
+function piZone(cle, titre, compte, origine, corps) {
   var ouvert = Etat.pi[cle];
-  var h = '<div class="pi-zone">';
-  h += '<div class="pi-tete' + (ouvert ? ' open' : '') + '" data-act="piZone" data-arg="' + cle + '">' +
+  var h = '<div class="pi-lab' + (ouvert ? ' open' : '') + '" data-act="piZone" data-arg="' + cle + '">' +
        '<svg class="ch" width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>' +
-       icone + '<span class="t">' + e(titre) + '</span>' +
-       (compte === null ? '' : compte ? '<span class="n">— ' + e(compte) + '</span>' : '<span class="n">— rien à signaler</span>') +
+       '<span class="t">' + e(titre) + ' :</span>' +
+       (compte === null ? '' : compte ? '<span class="n">' + e(compte) + '</span>' : '<span class="n">rien à signaler</span>') +
        '<span class="o">' + e(origine) + '</span></div>';
-  if (ouvert) { h += '<div class="pi-corps">' + corps + '</div>'; }
-  h += '</div>';
+  if (ouvert) { h += corps; }
   return h;
+}
+
+function piLigne(cols, cur) {
+  var h = '<div class="grow" style="cursor:default;"><div class="pi-cur">' + (cur ? '&#9654;' : '') + '</div>';
+  cols.forEach(function (c) {
+    h += '<div style="width:' + c[1] + 'px;"' + (c[2] ? ' class="' + c[2] + '"' : '') + '>' + c[0] + '</div>';
+  });
+  return h + '</div>';
+}
+
+function piEntete(cols, queue) {
+  var h = '<div class="ghead"><div class="pi-cur"></div>';
+  cols.forEach(function (c) { h += '<div style="width:' + c[1] + 'px;">' + e(c[0]) + '</div>'; });
+  return h + '<div style="width:' + (queue || 0) + 'px;"></div></div>';
 }
 
 function rendrePostit() {
   var h = '';
 
-  /* barre d'outils */
   h += '<div class="pi-barre">' +
-       '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="4" y="1.5" width="8" height="4" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="1.5" y="5.5" width="13" height="6" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="4" y="10" width="8" height="4.5" fill="#fff" stroke="#4a5058" stroke-width="1.1"/></svg>' +
-       '<span class="grey">Imprimer :</span>' +
+       '<span class="pi-impr"><svg width="15" height="15" viewBox="0 0 16 16"><rect x="4" y="1.5" width="8" height="4" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="1.5" y="5.5" width="13" height="6" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="4" y="10" width="8" height="4.5" fill="#fff" stroke="#4a5058" stroke-width="1.1"/></svg></span>' +
+       '<span>Imprimer :</span>' +
        caseAC('piImpr.marq', 'Marquage') + caseAC('piImpr.prev', 'Prévention') +
        caseAC('piImpr.notes', 'Notes') + caseAC('piImpr.tach', 'Tâches') +
        '<span class="pi-inter" data-act="piMarquer"><span class="pi-sw' + (Etat.piMarquer ? ' on' : '') + '"><i></i></span>' +
        '<span>Marquer ce patient</span></span>' +
        '</div>';
 
+  h += '<div style="padding: 2px 10px 12px;">';
+
   /* 1 - marquage */
-  var m = Etat.marquages.map(function (x) {
-    return '<div class="pi-item"><div class="pt">' + SVG.marque + '</div>' +
-      '<div class="tx"><div>' + e(x.note || 'marqué, sans motif') + '</div>' +
-      '<div class="sous">' + fmt(x.le) + ' · ' + e(x.src) + ' · ' + e(x.qui) + '</div></div>' +
-      '<div class="pi-act"><span class="pi-mini" data-act="piVoirDoc">Ouvrir</span>' +
-      '<span class="pi-mini" data-act="piTraite" data-arg="' + x.id + '">Traité</span></div></div>';
-  }).join('');
-  h += piZone('marq', SVG.marque, 'Marquage', Etat.marquages.length ? Etat.marquages.length + (Etat.marquages.length > 1 ? ' documents à reprendre' : ' document à reprendre') : '',
-    'posé à l’incorporation', m || '<div class="pi-vide">Aucun document en attente de reprise.</div>');
+  var corps = '<div class="pi-grille">' +
+    piEntete([['Date', 80], ['Motif', 285], ['Document', 290], ['Auteur', 70]], 112);
+  if (Etat.marquages.length) {
+    Etat.marquages.forEach(function (x, i) {
+      corps += '<div class="grow" style="cursor:default;"><div class="pi-cur">' + (i === 0 ? '&#9654;' : '') + '</div>' +
+        '<div style="width:80px;">' + fmt(x.le) + '</div>' +
+        '<div style="width:285px;" class="red">' + e(x.note || 'marqué, sans motif') + '</div>' +
+        '<div style="width:290px;">' + e(x.src) + '</div>' +
+        '<div style="width:70px;">' + e(x.qui) + '</div>' +
+        '<div class="pi-act" style="width:112px; display:flex; gap:5px; justify-content:flex-end; padding-right:6px;">' +
+        '<span class="pi-mini" data-act="piVoirDoc">Ouvrir</span>' +
+        '<span class="pi-mini" data-act="piTraite" data-arg="' + x.id + '">Traité</span></div></div>';
+    });
+  } else { corps += '<div class="vide">Aucun document en attente de reprise.</div>'; }
+  corps += '</div>';
+  h += piZone('marq', 'Marquage',
+    Etat.marquages.length ? Etat.marquages.length + (Etat.marquages.length > 1 ? ' documents à reprendre' : ' document à reprendre') : '',
+    'posé à l’incorporation', corps);
 
   /* 2 - prevention */
   var pv = piPrevention();
   var dep = pv.filter(function (x) { return x.cle === 'depasse'; }).length;
   var pro = pv.length - dep;
-  var lignes = pv.map(function (x) {
-    return '<div class="pi-item"><div class="pt">' + pastille[x.cle] + '</div>' +
-      '<div class="tx"><span class="' + (x.cle === 'depasse' ? 'red' : 'orange') + '">' + e(x.quoi) + '</span> — ' + e(x.quand) +
-      (x.motif ? ' <span class="sous">· ' + e(x.motif) + '</span>' : '') + '</div>' +
-      '<div class="pi-act"><span class="pi-mini" data-act="piVersModule">Voir</span></div></div>';
-  }).join('');
+  corps = '<div class="pi-grille">' +
+    piEntete([['Type', 72], ['Libellé', 290], ['Échéance', 205], ['Statut', 220]], 50);
+  if (pv.length) {
+    pv.forEach(function (x, i) {
+      var c = x.cle === 'depasse' ? 'red' : 'orange';
+      corps += '<div class="grow" style="cursor:default;"><div class="pi-cur">' + (i === 0 ? '&#9654;' : '') + '</div>' +
+        '<div style="width:72px;" class="' + c + '">' + e(x.type) + '</div>' +
+        '<div style="width:290px;" class="' + c + '">' + e(x.quoi) + '</div>' +
+        '<div style="width:205px;" class="' + c + '">' + e(x.quand) + '</div>' +
+        '<div style="width:220px;">' + e(x.motif || '—') + '</div>' +
+        '<div style="width:50px; display:flex; justify-content:flex-end; padding-right:6px;">' +
+        '<span class="pi-mini" data-act="piVersModule">Voir</span></div></div>';
+    });
+  } else { corps += '<div class="vide">Rien de dépassé ni de proche.</div>'; }
+  corps += '</div>';
   var xf = fmtContexte(), nbf = 0;
   FMT.forEach(function (i) { if (i.t(xf) === 'oui' && (FMT_ETAT[i.n] || {}).st !== 'valide') { nbf += 1; } });
   var nbr = aHTA() ? Etat.rosp.filter(function (r) { return rospEtat(r).cle === 'alerte'; }).length : 0;
   if (nbf || nbr) {
-    lignes += '<div class="pi-item" style="margin-top:5px; border-top:1px dashed #e0e3e6; padding-top:6px;">' +
-      '<div class="pt"></div><div class="tx sous">' +
+    corps += '<div class="pi-zone-txt" style="height:auto; margin-top:5px;">' +
       (nbf ? 'Forfait médecin traitant : ' + nbf + ' indicateur' + (nbf > 1 ? 's' : '') + ' à faire.' : '') +
-      (nbf && nbr ? ' ' : '') +
+      (nbf && nbr ? '\n' : '') +
       (nbr ? 'Ex-ROSP : ' + nbr + ' examen' + (nbr > 1 ? 's manquants' : ' manquant') + ' chez cette hypertendue.' : '') +
-      '</div></div>';
+      '</div>';
   }
-  h += piZone('prev', SVG.calendrier, 'Prévention',
+  h += piZone('prev', 'Prévention',
     pv.length ? (dep ? dep + (dep > 1 ? ' dépassées' : ' dépassée') : '') + (dep && pro ? ', ' : '') + (pro ? pro + ' proche' + (pro > 1 ? 's' : '') : '') : '',
-    'module Prévention',
-    lignes || '<div class="pi-vide">Rien de dépassé ni de proche.</div>');
+    'module Prévention', corps);
 
   /* 3 - notes personnelles */
-  h += piZone('notes', SVG.crayon, 'Notes personnelles',
-    String(Etat.notesPerso).trim() ? null : '', 'saisie libre',
-    '<div class="pi-jaune" contenteditable="true" data-edit="notesPerso">' + e(Etat.notesPerso) + '</div>');
+  h += piZone('notes', 'Notes', String(Etat.notesPerso).trim() ? null : '', 'saisie libre',
+    '<div class="pi-notes" contenteditable="true" data-edit="notesPerso">' + e(Etat.notesPerso) + '</div>');
 
   /* 4 - taches secretariat */
-  var tc = Etat.taches.map(function (x) {
-    return '<div class="pi-item"><div class="pt">' + SVG.liste + '</div>' +
-      '<div class="tx"><div><b>' + e(x.pour) + '</b> · ' + e(x.quoi) + '</div>' +
-      '<div class="sous">posée le ' + fmt(x.le) + ' · ' + e(x.etat) + '</div></div>' +
-      '<div class="pi-act"><span class="pi-mini" data-act="piFaite" data-arg="' + x.id + '">Faite</span></div></div>';
-  }).join('');
-  h += piZone('tach', SVG.liste, 'Tâches secrétariat',
-    Etat.taches.length ? Etat.taches.length + ' en attente' : '', 'posées à l’incorporation',
-    tc || '<div class="pi-vide">Aucune tâche en cours.</div>');
+  corps = '<div class="pi-grille">' +
+    piEntete([['Pour', 92], ['Tâche', 440], ['Depuis', 86], ['État', 164]], 55);
+  if (Etat.taches.length) {
+    Etat.taches.forEach(function (x, i) {
+      corps += '<div class="grow" style="cursor:default;"><div class="pi-cur">' + (i === 0 ? '&#9654;' : '') + '</div>' +
+        '<div style="width:92px;">' + e(x.pour) + '</div>' +
+        '<div style="width:440px;">' + e(x.quoi) + '</div>' +
+        '<div style="width:86px;">' + fmt(x.le) + '</div>' +
+        '<div style="width:164px;">' + e(x.etat) + '</div>' +
+        '<div style="width:55px; display:flex; justify-content:flex-end; padding-right:6px;">' +
+        '<span class="pi-mini" data-act="piFaite" data-arg="' + x.id + '">Faite</span></div></div>';
+    });
+  } else { corps += '<div class="vide">Aucune tâche en cours.</div>'; }
+  corps += '</div>';
+  h += piZone('tach', 'Tâches secrétariat',
+    Etat.taches.length ? Etat.taches.length + ' en attente' : '', 'posées à l’incorporation', corps);
+
+  h += '</div>';
 
   var hote = document.getElementById('postitWF');
   if (!hote) { return; }
-  hote.innerHTML = chrome('Post-It — MARTIN Claire (45 ans)', 720, h, '#fffdf1');
+  hote.innerHTML = chrome('Post-It', 875, h, '#f5f5f5');
   cabler(hote);
 }
 
