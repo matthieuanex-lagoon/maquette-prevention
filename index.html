@@ -45,6 +45,13 @@
   .meta { margin-top: 28px; font-size: 14px; color: var(--ink-soft); }
   .valide { margin-top: 26px; padding: 10px 0 10px 15px; border-left: 3px solid var(--accent); font-size: 15px; color: var(--ink); max-width: 62ch; }
   .valide strong { font-weight: 600; }
+  .phases { display: flex; gap: 0; margin-top: 26px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); overflow: hidden; }
+  .phases .ph { flex: 1; padding: 12px 16px; border-right: 1px solid var(--rule); }
+  .phases .ph:last-child { border-right: none; }
+  .phases .ph:first-child { background: #fbf7f5; }
+  .phases .ph-t { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .phases .ph-c { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+  @media (max-width: 820px) { .phases { flex-direction: column; } .phases .ph { border-right: none; border-bottom: 1px solid var(--rule); } }
   .version { display: inline-flex; align-items: baseline; gap: 12px; margin-top: 20px; padding: 8px 16px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
   .version .v-lab { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-soft); }
   .version .v-num { font-family: Georgia, serif; font-size: 21px; font-weight: 600; line-height: 1; color: var(--accent); }
@@ -110,6 +117,8 @@
   .wf .grey { color: #6b7075; }
   .wf .check { display: flex; align-items: center; gap: 7px; }
   .wf .check .ico { display: inline-flex; align-items: center; margin-left: -2px; flex-shrink: 0; }
+  .wf .etape { font-size: 10px; line-height: 13px; letter-spacing: .03em; text-transform: uppercase; color: #5a6068; background: #eceef0; border: 1px solid #d0d4d8; border-radius: 2px; padding: 0 4px; margin-left: 5px; flex-shrink: 0; }
+  .wf .tab.act .etape { background: #fff; }
   .wf .beta { font-size: 10px; line-height: 14px; letter-spacing: .04em; text-transform: uppercase; color: #8a5a00; background: #fdf3d8; border: 1px solid #e8d49a; border-radius: 2px; padding: 0 4px; flex-shrink: 0; }
   .wf .check.click { cursor: pointer; user-select: none; }
   .wf .check .tick { display: none; }
@@ -290,11 +299,31 @@
   <div class="hero">
     <h1>Poser le rappel là où la décision se prend</h1>
     <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Les écrans de cette page ne sont pas des images : ils fonctionnent. Remplissez la fenêtre d'incorporation, validez, et voyez le rappel apparaître dans le module.</p>
+    <p class="wide" style="margin-top:18px;">La page montre l'ensemble du dispositif. <strong>Elle ne demande pas qu'il soit livré d'un bloc</strong> : l'ordre retenu après le retour de l'équipe est rappelé ci-dessous, et chaque écran porte l'étape à laquelle il appartient.</p>
     <div class="valide"><strong>Version modifiée et validée par AMEDULO</strong></div>
+
+    <div class="phases">
+      <div class="ph">
+        <div class="ph-t">Premier lot</div>
+        <div class="ph-c">La fenêtre d'incorporation — marquage, épisode de soins, prévention.<br>
+        Le module à deux onglets : Vaccins, Examens &amp; consultations, avec Proposé / Refusé.<br>
+        Le post-it actuel, enrichi des échéances proches et dépassées.<br>
+        La Timeline si la vérification technique passe.</div>
+      </div>
+      <div class="ph">
+        <div class="ph-t">Ensuite</div>
+        <div class="ph-c">Les onglets d'analyse : SCORE2, Prévention MT, ex ROSP.<br>
+        La refonte du post-it en quatre zones.</div>
+      </div>
+      <div class="ph">
+        <div class="ph-t">Plus tard</div>
+        <div class="ph-c">La tâche pour le secrétariat, qui demande de décider d'abord où vont les tâches.</div>
+      </div>
+    </div>
 
     <div class="version">
       <span class="v-lab">Version de la démo</span>
-      <span class="v-num">v10</span>
+      <span class="v-num">v11</span>
       <span class="v-date">20 août 2026</span>
     </div>
 
@@ -318,7 +347,7 @@
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
       <li><strong>Épisode de soins</strong> — deux gestes sous une même case, au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et les cases <strong>ALD</strong> et <strong>AT/MP</strong> lorsque l'affection y ouvre droit — un épisode ouvert au titre d'un accident du travail ou d'une maladie professionnelle relève d'une prise en charge à part, et c'est au moment où on l'ouvre qu'on le sait. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
       <li><strong>Prévention</strong> — l'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
-      <li><strong>Ajouter une tâche secrétaire</strong> <span class="beta">Bêta</span> — la secrétaire à qui l'on confie la suite, et ce qu'il y a à faire : rappeler la patiente, programmer le contrôle, réclamer un compte rendu qui manque. Le rappel dit <em>quand</em> ; la tâche dit <em>qui s'en occupe</em>. C'est la troisième idée qu'Olaqin plaçait en réserve, figurée ici pour en juger sur pièce — la grille de to-do list qui recevrait ces tâches reste à définir.</li>
+      <li><strong>Ajouter une tâche secrétaire</strong> <span class="beta">Bêta</span> — la secrétaire à qui l'on confie la suite, et ce qu'il y a à faire : rappeler la patiente, programmer le contrôle, réclamer un compte rendu qui manque. Le rappel dit <em>quand</em> ; la tâche dit <em>qui s'en occupe</em>. C'est la troisième idée qu'Olaqin plaçait en réserve, figurée ici pour en juger sur pièce. Elle ne fait pas partie du premier lot : la destination des tâches demande d'être décidée d'abord. Au cabinet, les secrétaires suivent aujourd'hui ce qu'on leur confie dans une messagerie interne hébergée sur le serveur, avec ses signets — chaque cabinet ayant sa méthode. XMED porte déjà une liste de tâches, et la fonction est au fond très proche du marquage : c'est ce rapprochement-là qu'il faudra instruire avant de dessiner l'écran.</li>
     </ul>
 
     <p class="wide"><strong>L'ordre de ces sections n'est pas indifférent : les trois premières suivent celui du temps.</strong> On marque en premier, parce qu'un résultat anormal réclame quelque chose de moi tout de suite et que je veux le garder de côté avant toute autre chose. On rattache ensuite, parce que le document appartient à une histoire déjà ouverte, et que c'est ce geste-là qui tient le dossier en ordre. Le rappel de prévention vient après, parce qu'il ne porte ni sur aujourd'hui ni sur le dossier tel qu'il est, mais sur une échéance à venir. Descendre la fenêtre, c'est parcourir le présent, puis le suivi en cours, puis l'avenir — dans l'ordre même où les questions se posent à la lecture du compte rendu. La tâche secrétaire ferme la série pour une autre raison : elle ne répond pas à <em>quand</em>, mais à <em>qui s'en charge</em>, et elle ne se pose qu'une fois le reste décidé.</p>
@@ -377,7 +406,7 @@
     <figure class="shot" id="epFigure" style="margin-top:28px;">
       <figcaption>Dossier patient — cadre « Épisodes de soins »</figcaption>
       <div class="wf" id="episodesWF"></div>
-      <div class="hint">Ce cadre existe déjà dans la fiche patient. La fenêtre ci-dessus l'alimente sans qu'on ait à l'ouvrir — soit en y ajoutant une ligne, soit en accrochant le document à une ligne existante. La colonne « Documents » est une proposition : elle rend le rattachement visible, et donne la mesure de ce qu'un épisode a accumulé.</div>
+      <div class="hint">Ce cadre existe déjà dans la fiche patient. La fenêtre ci-dessus l'alimente sans qu'on ait à l'ouvrir — soit en y ajoutant une ligne, soit en accrochant le document à une ligne existante.</div>
     </figure>
   </section>
 
@@ -399,13 +428,14 @@
     <p class="wide">SCORE2 estime le risque de survenue d'un accident cardiovasculaire dans les dix ans. Ce n'est pas un examen à programmer : c'est la mesure qui commande une bonne partie de ce qu'on programmera ensuite — le bilan lipidique, la consultation de cardiologie, l'aide au sevrage. Il a donc sa place dans le module qui porte la prévention, plutôt que dans un écran à part.</p>
     <p class="wide"><strong>Ce que cet onglet démontre tient en une phrase : le calcul ne demande aucune saisie.</strong> L'âge et le sexe sont dans la fiche patient, le tabagisme dans les facteurs de risque, la pression dans les constantes, le bilan lipidique dans les résultats de biologie. XMED détient déjà les cinq variables et sait dater chacune d'elles. Le score peut donc être présenté d'emblée, avec la provenance de chaque valeur en regard — ce qui permet de voir d'un coup d'œil si le chiffre repose sur une biologie de l'an dernier ou du mois dernier. Les champs restent modifiables à l'écran pour simuler, sans rien écrire au dossier.</p>
     <p class="wide">Deux usages en découlent. Le premier est le <strong>suivi dans le temps</strong> : un score isolé ne dit pas grand-chose, une trajectoire si — d'où les scores enregistrés, en bas du cadre. Le second est la <strong>simulation devant le patient</strong> : afficher ce que deviendrait le risque à l'arrêt du tabac transforme un conseil en argument chiffré, et c'est cette ligne-là qui sert en consultation.</p>
+    <p class="wide"><strong>Une question de rangement, à rouvrir.</strong> SCORE2 est un calcul, au même titre que l'indice de masse corporelle ou une clairance. Sa place la plus juste n'est peut-être pas un onglet du module Prévention, mais le cadre <em>Éléments de suivi</em> ou celui des <em>Facteurs de risque</em>, là où vivent déjà les valeurs calculées. L'onglet ci-dessus montre ce que le calcul doit donner à voir ; où il finira par se loger reste à décider.</p>
     <p class="wide">Deux réserves, énoncées ici pour qu'elles ne se perdent pas. La maquette ne contient pas l'algorithme : le chiffre affiché réagit aux données pour montrer l'écran, rien de plus — les tables officielles, la région de risque applicable à la France et les seuils par tranche d'âge sont à vérifier et à intégrer. Et un score affiché à l'écran oriente une décision thérapeutique : il faudra déterminer avec Olaqin ce que cela implique quant au statut réglementaire de la fonction, et prévoir l'affichage de la source et de sa date de mise à jour.</p>
 
     <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet Prévention MT (CPAM)</h3>
     <p class="wide">Le volet prévention du forfait médecin traitant repose sur quinze indicateurs — six vaccinations, cinq dépistages, quatre suivis — dont chacun vise une population précise : une tranche d'âge, un sexe, parfois une pathologie. La difficulté n'est pas de connaître la liste, elle est ailleurs : <strong>devant un patient donné, la plupart de ces quinze indicateurs ne le concernent pas</strong>, et ceux qui le concernent changent avec l'âge. Consulter la liste complète à chaque consultation n'a aucun sens.</p>
     <p class="wide">D'où le parti pris de cet onglet : <strong>ne montrer que ce qui s'applique à ce patient-là, aujourd'hui</strong>. En haut, ce qui le concerne, avec son statut. Replié en dessous, ce qui l'attend bientôt — utile pour l'anticiper. Replié plus bas encore, tout le reste, chaque ligne portant la raison pour laquelle elle ne s'applique pas : hors tranche d'âge, concerne le nourrisson, aucune maladie cardiovasculaire au dossier. On sait ainsi pourquoi un indicateur n'apparaît pas, ce qu'une liste filtrée sans explication ne dit jamais.</p>
     <p class="wide">Le tri ne demande aucune saisie non plus : il se calcule depuis l'âge, le sexe et les épisodes de soins, tous déjà au dossier. Cela produit un effet qu'il vaut la peine de signaler à l'éditeur — <strong>ouvrir un épisode de soins fait apparaître les indicateurs correspondants</strong>. Créez « Diabète de type 2 » depuis la fenêtre d'incorporation, plus haut dans cette page, puis revenez ici : le suivi de l'HbA1c s'est ajouté à la liste. Le dossier tenu à jour se paie tout seul.</p>
-    <p class="wide">Deux réserves. La liste des indicateurs, leurs populations cibles et le montant de cinq euros par indicateur validé sont repris de la page de l'Assurance Maladie consultée le 20 août 2026 : ils sont à vérifier à la source avant tout développement, et les critères exacts derrière « patient à risque » et « maladie cardiovasculaire » restent à préciser. Et le montant, affiché ici pour montrer le mécanisme, n'a pas nécessairement sa place sur un écran qu'on tourne parfois vers le patient : prévoir de pouvoir le masquer.</p>
+    <p class="wide">Trois réserves, dont deux ont été levées depuis. La liste des indicateurs, leurs populations cibles et le montant de cinq euros par indicateur validé sont repris de la page de l'Assurance Maladie consultée le 20 août 2026 ; l'équipe a vérifié à la source et les a confirmés, en signalant un point décisif : <strong>l'Assurance Maladie n'a publié que trois indicateurs sur les quinze</strong>, et c'est elle qui les calcule, depuis les remboursements. Cet écran ne pourra donc jamais être le décompte officiel — au mieux un tableau de bord indicatif, ce qui reste utile mais doit être dit. Les critères exacts derrière « patient à risque » et « maladie cardiovasculaire » restent à préciser. Et le montant, affiché ici pour montrer le mécanisme, n'a pas nécessairement sa place sur un écran qu'on tourne parfois vers le patient : prévoir de pouvoir le masquer.</p>
 
     <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet ex ROSP</h3>
     <p class="wide">Le passage au forfait médecin traitant a fait disparaître des indicateurs que le cabinet suivait depuis des années. Trois d'entre eux concernent le même sujet — le suivi rénal du patient hypertendu : recherche annuelle de micro-albuminurie ou de protéinurie, créatininémie, débit de filtration glomérulaire. Ils ne sont plus rémunérés ; ils n'ont pas cessé d'être utiles pour autant.</p>
@@ -423,6 +453,7 @@
     <h2>Le post-it</h2>
     <p>Le troisième lieu du dispositif. On saisit dans H', on consulte dans le module — mais c'est ici qu'on est <em>rattrapé</em>, sans avoir rien demandé.</p>
     <p class="wide">Le post-it d'aujourd'hui empile deux choses de nature différente : un plan de soins calculé, qui déroule le risque cardiovasculaire et les indicateurs ROSP en manque, et une zone jaune de notes libres. Le tout arrive d'un bloc, sans hiérarchie, et l'on prend vite l'habitude de fermer la fenêtre avant de l'avoir lue. C'est le sort ordinaire d'un rappel qui s'affiche toujours, y compris quand il n'a rien à dire.</p>
+    <p class="wide"><strong>Le premier lot ne touche pas à cet écran.</strong> Il s'y ajoute seulement les échéances proches et dépassées, examens et vaccins — jamais les « à prévoir », qui resteraient illisibles dans une fenêtre qu'on parcourt en une seconde. Le plan de soins, le marquage et les notes gardent leur place actuelle. La refonte décrite ci-dessous vient ensuite.</p>
     <p class="wide">La proposition le découpe en <strong>quatre zones</strong>, chacune avec une origine distincte, un titre, un compteur et une mention discrète de sa provenance. Chaque zone se replie ; celle qui est vide se réduit à sa ligne de titre et annonce « rien à signaler ». Le post-it d'un patient sans rien en cours tient alors en quatre lignes.</p>
 
     <ul class="plain">
@@ -453,6 +484,12 @@
     <p>Réponses aux six points soumis dans l'ébauche du 19 août, plus la question de la périodicité.</p>
     <table class="decisions">
       <tr><th>Point</th><th>Réponse</th></tr>
+      <tr><td>Frise et vaccins</td><td>Les rappels annulés et les vaccinations refusées sortent de la frise.</td></tr>
+      <tr><td>Frise remise au patient</td><td>Simple impression, sans classement au dossier.</td></tr>
+      <tr><td>Supprimer ou annuler</td><td>On garde « Annuler » seul. Le bouton « Supprimer » disparaît du module.</td></tr>
+      <tr><td>Un refus</td><td>Adouci : visible et daté, il n'allume plus rien et ne compte plus — mais il porte une <strong>date de reproposition</strong>, à laquelle la ligne reprend sa couleur. Comme pour les vaccins.</td></tr>
+      <tr><td>Un seul rappel actif par examen</td><td>Confirmé, à condition que le remplacement <strong>conserve le rythme de répétition</strong> — « tous les X pendant Y » ne doit pas se perdre en route.</td></tr>
+      <tr><td>SCORE2 et l'ampoule</td><td>Un risque élevé n'allume pas l'ampoule : elle dit « quelque chose est en retard », pas « ce patient est à risque ».</td></tr>
       <tr><td>Liste des examens</td><td>Le listing existant du cadre « Éléments de suivi » — pas de seconde liste à maintenir.</td></tr>
       <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
       <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
@@ -633,7 +670,7 @@ function initialiser() {
     pisteSel: null,
     saisie: saisieInitiale(),
     rappels: [
-      { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023', propose: true, refuse: true },
+      { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023', propose: true, refuse: true, refuseLe: d(2026, 3, 12), reprop: d(2027, 3, 12) },
       { id: 2, nom: 'Mammographie',           due: d(2026, 10, 4), rep: { n: 2, u: 'an(s)' }, note: 'dépistage organisé', auteur: 'M. ANEX', src: 'Mammographie — IRIMED — 04/10/2024', propose: true, refuse: false },
       { id: 3, nom: 'Échographie cervicale',  due: d(2027, 8, 19), rep: { n: 1, u: 'an(s)', pendant: 5 }, note: 'nodule thyroïdien droit 14mm EU-TIRADS 3', auteur: 'M. ANEX', src: 'Écho. cervicale — IRIMED — 19/08/2026' },
       { id: 4, nom: 'Coloscopie',             due: d(2031, 8, 15), rep: null, note: 'polype — contrôle à 5 ans', auteur: 'M. ANEX', src: 'CR coloscopie — CH Saint-Nazaire — 15/08/2026' }
@@ -647,7 +684,7 @@ function initialiser() {
       { nom: 'Frottis cervico-utérin', due: d(2020, 3, 12), statut: 'remplacé', le: d(2023, 3, 14) }
     ],
     vaccins: [
-      { id: 1, nom: 'REPEVAX SER 0,5ML', valence: 'DTCP', date: d(2010, 9, 15), rappel: d(2020, 9, 15), dmp: true, acteur: 'Matthieu ANEX', propose: true, refuse: true },
+      { id: 1, nom: 'REPEVAX SER 0,5ML', valence: 'DTCP', date: d(2010, 9, 15), rappel: d(2020, 9, 15), dmp: true, acteur: 'Matthieu ANEX', propose: true, refuse: true, refuseLe: d(2020, 10, 6), reprop: d(2026, 10, 6) },
       { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX', propose: true, refuse: false }
     ],
     vaccinSel: 1,
@@ -676,9 +713,9 @@ function initialiser() {
       ]
     },
     episodes: [
-      { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie', docs: 4 },
-      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, atmp: true, note: 'mollet droit — chute au travail', docs: 2 },
-      { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit', docs: 6 }
+      { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie' },
+      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, atmp: true, note: 'mollet droit — chute au travail' },
+      { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit' }
     ]
   };
 }
@@ -832,8 +869,7 @@ function rendreFenetre() {
            champ('saisie.episode.note', 0, 'précision sur le rattachement…') + '</div>';
       var epc = epLie();
       h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
-           (epc ? '→ le document rejoint « ' + e(epc.nom) + ' », ouvert le ' + fmt(epc.debut) +
-                  ' — ' + ((epc.docs || 0) + 1) + ' documents rattachés'
+           (epc ? '→ le document rejoint « ' + e(epc.nom) + ' », ouvert le ' + fmt(epc.debut)
                 : '→ aucun épisode choisi') + '</div>';
     } else {
       h += '<div class="row"><div class="lbl" style="width:96px;">Pathologie :</div>' +
@@ -913,7 +949,7 @@ function rendreFenetre() {
        '<span class="box">' + SVG.tick + '</span>' +
        '<span class="navy">Ajouter une tâche secrétaire</span>' +
        '<span class="ico">' + SVG.liste + '</span>' +
-       '<span class="beta">Bêta</span></div>';
+       '<span class="beta">Plus tard</span></div>';
   if (s.tache.on) {
     h += '<div class="panel">';
     h += '<div class="row"><div class="lbl" style="width:96px;">Pour :</div>' +
@@ -921,7 +957,7 @@ function rendreFenetre() {
     h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Tâche :</div>' +
          champ('saisie.tache.note', 0, 'ce qu’il y a à faire…') + '</div>';
     h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
-         '→ <span class="beta">Bêta</span> ajouterait une tâche dans une grille de to-do list</div>';
+         '→ <span class="beta">Plus tard</span> hors du premier lot : la destination des tâches reste à définir</div>';
     h += '</div>';
   }
 
@@ -972,21 +1008,19 @@ function rendreEpisodes() {
   var h = '<div class="grid" style="margin-top:0;">' +
     '<div class="ghead"><div style="width:280px;">Épisode</div><div style="width:100px;">Début</div>' +
     '<div style="width:70px;">ALD</div><div style="width:70px;">AT/MP</div>' +
-    '<div style="width:92px;">Documents</div>' +
-    '<div style="width:230px;">Note</div><div style="width:110px;">Auteur</div></div>';
+    '<div style="width:290px;">Note</div><div style="width:110px;">Auteur</div></div>';
   Etat.episodes.slice().sort(function (a, b) { return b.debut - a.debut; }).forEach(function (ep) {
     h += '<div class="grow' + (Etat.nouveaux.indexOf('ep' + ep.id) !== -1 ? ' flash' : '') + '" data-act="rienEp">' +
       '<div style="width:280px;">' + e(ep.nom) + '</div>' +
       '<div style="width:100px;">' + fmt(ep.debut) + '</div>' +
       '<div style="width:70px;">' + (ep.ald ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
       '<div style="width:70px;">' + (ep.atmp ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
-      '<div style="width:92px;">' + (ep.docs ? e(String(ep.docs)) : '<span class="grey">—</span>') + '</div>' +
-      '<div style="width:230px;">' + e(ep.note) + '</div>' +
+      '<div style="width:290px;">' + e(ep.note) + '</div>' +
       '<div style="width:110px;">M. ANEX</div></div>';
   });
   h += '<div style="height:24px; background:#fff;"></div></div>';
   var hote = document.getElementById('episodesWF');
-  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 970, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
+  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 940, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
   cabler(hote);
 }
 
@@ -995,19 +1029,21 @@ function rendreEpisodes() {
 function piPrevention() {
   var out = [];
   Etat.rappels.forEach(function (r) {
+    if (enSourdine(r)) { return; }
     var s = etat(r.due);
     if (s.cle === 'avenir') { return; }
     out.push({ cle: s.cle, quoi: r.nom, type: 'Examen',
       quand: s.cle === 'depasse' ? 'dépassée depuis le ' + fmt(r.due) : 'proche, le ' + fmt(r.due),
-      motif: r.refuse ? 'refusé par la patiente' : (r.propose ? 'proposé, en attente' : ''),
+      motif: r.refuse ? 'refus échu, à reproposer' : (r.propose ? 'proposé, en attente' : ''),
       tri: r.due });
   });
   Etat.vaccins.forEach(function (v) {
+    if (enSourdine(v)) { return; }
     var s = etat(v.rappel);
     if (s.cle === 'avenir') { return; }
     out.push({ cle: s.cle, quoi: v.valence + ' (' + v.nom + ')', type: 'Vaccin',
       quand: s.cle === 'depasse' ? 'dépassée depuis le ' + fmt(v.rappel) : 'proche, le ' + fmt(v.rappel),
-      motif: v.refuse ? 'refusé par la patiente' : (v.propose ? 'proposé, en attente' : ''),
+      motif: v.refuse ? 'refus échu, à reproposer' : (v.propose ? 'proposé, en attente' : ''),
       tri: v.rappel });
   });
   return out.sort(function (a, b) { return a.tri - b.tri; });
@@ -1142,6 +1178,17 @@ function etat(x) {
   if (x <= PROCHE) { return { cle: 'proche',  lib: 'Proche',  cls: 'orange' }; }
   return { cle: 'avenir', lib: 'À venir', cls: 'soft' };
 }
+
+/* Un refus met la ligne en sourdine jusqu'à la date où on se propose de le reposer.
+   Passé cette date, elle reprend sa couleur et recompte comme les autres. */
+function enSourdine(r) { return !!(r.refuse && r.reprop && r.reprop > AUJ); }
+
+function etatAvecRefus(r, echeance) {
+  if (enSourdine(r)) {
+    return { cle: 'refus', lib: 'Refusé', cls: 'grey' };
+  }
+  return etat(echeance);
+}
 function repTexte(r) {
   if (!r.rep) { return '—'; }
   var n = r.rep.n, u = r.rep.u, mot;
@@ -1205,10 +1252,10 @@ function paneExamens() {
        '<div class="c7">Créé par</div></div>';
 
   triees().forEach(function (r) {
-    var s = etat(r.due);
+    var s = etatAvecRefus(r, r.due);
     h += '<div class="grow' + (r.id === Etat.selection ? ' sel' : '') + (Etat.nouveaux.indexOf('r' + r.id) !== -1 ? ' flash' : '') + '" data-act="selRappel" data-arg="' + r.id + '">' +
-      '<div class="c1">' + pastille[s.cle] + '</div>' +
-      '<div class="c2">' + e(r.nom) + '</div>' +
+      '<div class="c1">' + (pastille[s.cle] || pastille.avenir) + '</div>' +
+      '<div class="c2' + (s.cle === 'refus' ? ' grey' : '') + '">' + e(r.nom) + '</div>' +
       '<div class="c3 ' + s.cls + '">' + fmt(r.due) + '</div>' +
       '<div class="c4">' + e(repTexte(r)) + '</div>' +
       '<div class="c5">' + e(r.note) + '</div>' +
@@ -1248,7 +1295,7 @@ function detailRappel() {
   var r = null, i;
   for (i = 0; i < Etat.rappels.length; i++) { if (Etat.rappels[i].id === Etat.selection) { r = Etat.rappels[i]; } }
   if (!r) { return '<div class="grey" style="padding:16px 0; text-align:center;">Aucun rappel sélectionné — cliquez une ligne de la liste.</div>'; }
-  var s = etat(r.due), m = Etat.modification, idx = Etat.rappels.indexOf(r);
+  var s = etatAvecRefus(r, r.due), m = Etat.modification, idx = Etat.rappels.indexOf(r);
   var chem = 'rappels.' + idx;
 
   function txt(v) { return '<div class="txt dim" style="color:#24211e;">' + e(v) + '</div>'; }
@@ -1275,6 +1322,14 @@ function detailRappel() {
     (m ? '<div class="txt ed" contenteditable="true" data-edit="' + chem + '.note" style="flex-grow:1;">' + e(r.note) + '</div>'
        : txt(r.note)) + '</div>';
 
+  if (r.refuse) {
+    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Refus :</div>' +
+      '<div class="soft">refusé le ' + (r.refuseLe ? fmt(r.refuseLe) : '—') +
+      (r.reprop ? ' — à reproposer le ' + fmt(r.reprop) +
+        (enSourdine(r) ? ' <span class="grey">(en sourdine jusque-là)</span>'
+                       : ' <span class="red">(échue : la ligne a repris sa couleur)</span>') : '') +
+      '</div></div>';
+  }
   h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:104px;">Document source :</div>' +
     '<div style="display:flex; align-items:center; gap:8px;">' +
     '<a href="#module" data-act="voirDoc" data-arg="' + r.id + '" style="text-decoration:underline;">' + e(r.src) + '</a>' +
@@ -1292,9 +1347,9 @@ function paneVaccins() {
        '<div class="c8">Proposé</div><div class="c9">Refusé</div>' +
        '<div style="width:122px;">Acteur</div></div>';
   Etat.vaccins.forEach(function (v) {
-    var s = etat(v.rappel);
+    var s = etatAvecRefus(v, v.rappel);
     h += '<div class="grow' + (v.id === Etat.vaccinSel ? ' sel' : '') + (Etat.nouveaux.indexOf('v' + v.id) !== -1 ? ' flash' : '') + '" data-act="selVaccin" data-arg="' + v.id + '">' +
-      '<div class="c1">' + (s.cle === 'depasse' ? SVG.alerte : pastille[s.cle]) + '</div>' +
+      '<div class="c1">' + (s.cle === 'depasse' ? SVG.alerte : (pastille[s.cle] || pastille.avenir)) + '</div>' +
       '<div style="width:90px;">' + fmt(v.date) + '</div>' +
       '<div style="width:48px;"><span class="box">' + (v.dmp ? SVG.tick.replace('class="tick"', 'style="display:block"') : '') + '</span></div>' +
       '<div style="width:250px;">' + e(v.nom) + '</div><div style="width:90px;">' + e(v.valence) + '</div>' +
@@ -1576,7 +1631,7 @@ var JEUX = {
             ['Rappel', ''], ['Aperçu', ''], ['sp'],
             ['Carnet de vaccination', ''], ['Envoyer sur le DMP', 'dmp'], ['sp'],
             ['Ok', ''], ['Appliquer', 'off'], ['Annuler', '']],
-  examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['Supprimer', 'suppRappel'], ['sp'],
+  examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['sp'],
             ['Fait', 'fait'], ['Annuler le rappel', 'annulRappel'], ['sp'],
             ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
   rosp: [['Prescrire le bilan', ''], ['sp'],
@@ -1598,7 +1653,7 @@ function rendreModule() {
   var pastilleOng = {
     vaccins: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg>',
     examens: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' +
-      (Etat.rappels.some(function (r) { return r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
+      (Etat.rappels.some(function (r) { return !enSourdine(r) && r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return !enSourdine(r) && r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
     rosp: (function () {
       if (!aHTA()) { return '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c3c7cb"/></svg>'; }
       var al = Etat.rosp.filter(function (r) { return rospEtat(r).cle === 'alerte'; }).length;
@@ -1623,10 +1678,10 @@ function rendreModule() {
   h += '<div class="tabs">' +
     '<div class="tab' + (Etat.onglet === 'vaccins' ? ' act' : '') + '" data-act="onglet" data-arg="vaccins">' + pastilleOng.vaccins + '<span>Vaccins</span></div>' +
     '<div class="tab' + (Etat.onglet === 'examens' ? ' act' : '') + '" data-act="onglet" data-arg="examens">' + pastilleOng.examens + '<span>Examens &amp; consultations</span></div>' +
-    '<div class="tab' + (Etat.onglet === 'score2' ? ' act' : '') + '" data-act="onglet" data-arg="score2">' + pastilleOng.score2 + '<span>SCORE2</span></div>' +
-    '<div class="tab' + (Etat.onglet === 'fmt' ? ' act' : '') + '" data-act="onglet" data-arg="fmt">' + pastilleOng.fmt + '<span>Prévention MT (CPAM)</span></div>' +
-    '<div class="tab' + (Etat.onglet === 'rosp' ? ' act' : '') + '" data-act="onglet" data-arg="rosp">' + pastilleOng.rosp + '<span>ex ROSP</span></div>' +
-    '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'score2' ? ' act' : '') + '" data-act="onglet" data-arg="score2">' + pastilleOng.score2 + '<span>SCORE2</span><span class="etape">étape 2</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'fmt' ? ' act' : '') + '" data-act="onglet" data-arg="fmt">' + pastilleOng.fmt + '<span>Prévention MT (CPAM)</span><span class="etape">étape 2</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'rosp' ? ' act' : '') + '" data-act="onglet" data-arg="rosp">' + pastilleOng.rosp + '<span>ex ROSP</span><span class="etape">étape 2</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span><span class="etape">étape 1 si possible</span></div>' +
     '</div>';
   h += paneVaccins() + paneExamens() + paneScore() + paneFmt() + paneRosp() + paneTimeline();
   h += '</div><div class="sidebtns">';
@@ -1649,6 +1704,8 @@ function rendreModule() {
 
 function pos(x) { return Math.max(0, Math.min(100, ((x - DEBUT) / (FIN - DEBUT)) * 100)); }
 
+/* La frise ne porte ni les refus en sourdine ni les rappels annulés :
+   elle répond à « qu'est-ce qui a été négligé », un refus n'est pas un oubli. */
 function pistes() {
   var vus = [], out = [];
   triees().forEach(function (r) { if (vus.indexOf(r.nom) === -1) { vus.push(r.nom); out.push({ nom: r.nom, points: [] }); } });
@@ -1662,6 +1719,7 @@ function pistes() {
     Etat.rappels.forEach(function (r) {
       if (r.nom !== p.nom) { return; }
       occurrences(r).forEach(function (x, i) {
+        if (enSourdine(r) && x < r.reprop) { return; }
         var s = etat(x);
         p.points.push({ date: x, cle: s.cle, titre: p.nom + ' — ' + (i === 0 ? 'échéance ' : 'échéance projetée ') + fmt(x) + ' (' + s.lib.toLowerCase() + ')' });
       });
@@ -1670,10 +1728,11 @@ function pistes() {
   });
 
   Etat.vaccins.forEach(function (v) {
-    out.push({ nom: v.nom + ' (vaccin)', vaccin: true, points: [
-      { date: v.date, cle: 'fait', titre: v.nom + ' — vaccination faite le ' + fmt(v.date) },
-      { date: v.rappel, cle: etat(v.rappel).cle, titre: v.nom + ' — rappel dû le ' + fmt(v.rappel) + ' (' + etat(v.rappel).lib.toLowerCase() + ')' }
-    ] });
+    var pts = [{ date: v.date, cle: 'fait', titre: v.nom + ' — vaccination faite le ' + fmt(v.date) }];
+    if (!enSourdine(v)) {
+      pts.push({ date: v.rappel, cle: etat(v.rappel).cle, titre: v.nom + ' — rappel dû le ' + fmt(v.rappel) + ' (' + etat(v.rappel).lib.toLowerCase() + ')' });
+    }
+    out.push({ nom: v.nom + ' (vaccin)', vaccin: true, points: pts });
   });
 
   return out.filter(function (p) { return p.points.length > 0; });
@@ -1811,10 +1870,8 @@ function actions(nom, arg) {
     if (s.episode.on && s.episode.mode === 'lier') {
       var epl = epLie();
       if (epl) {
-        epl.docs = (epl.docs || 0) + 1;
         cles.push('ep' + epl.id);
-        bilan.push('Document rattaché à l’épisode « ' + e(epl.nom) + ' », ouvert le ' + fmt(epl.debut) +
-          ' — ' + epl.docs + ' documents rattachés.' +
+        bilan.push('Document rattaché à l’épisode « ' + e(epl.nom) + ' », ouvert le ' + fmt(epl.debut) + '.' +
           (s.episode.note ? ' <span class="grey">« ' + e(s.episode.note) + ' »</span>' : ''));
       } else {
         bilan.push('<span class="grey">Aucun rattachement : épisode non choisi.</span>');
@@ -1823,7 +1880,7 @@ function actions(nom, arg) {
       compteur += 1;
       var deb = lit(s.episode.debut) || AUJ;
       Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald,
-        atmp: !!s.episode.atmp, note: s.episode.note, docs: 1 });
+        atmp: !!s.episode.atmp, note: s.episode.note });
       cles.push('ep' + compteur);
       bilan.push('Épisode de soins « ' + e(s.episode.patho) + ' » ouvert au ' + fmt(deb) +
         (s.episode.ald ? ' <strong>en ALD</strong>' : '') +
@@ -1903,15 +1960,25 @@ function actions(nom, arg) {
   if (nom === 'fmtNon')      { Etat.fmtNon = !Etat.fmtNon; rendreModule(); return; }
   if (nom === 'selRappel')   { Etat.selection = +arg; Etat.modification = false; rendreModule(); return; }
   if (nom === 'selVaccin')   { Etat.vaccinSel = +arg; rendreModule(); return; }
+  function bascule(x, cle) {
+    x[cle] = !x[cle];
+    if (cle === 'refuse') {
+      if (x.refuse) {
+        x.refuseLe = AUJ;
+        x.propose = true;
+        x.reprop = x.rep ? ajoute(AUJ, x.rep.n, x.rep.u) : ajoute(AUJ, 1, 'an(s)');
+      } else { x.refuseLe = null; x.reprop = null; }
+    }
+  }
   if (nom === 'proposer' || nom === 'refuser') {
     var cle = nom === 'proposer' ? 'propose' : 'refuse';
-    Etat.rappels.forEach(function (x) { if (x.id === +arg) { x[cle] = !x[cle]; } });
-    rendreModule(); return;
+    Etat.rappels.forEach(function (x) { if (x.id === +arg) { bascule(x, cle); } });
+    rendreTout(); return;
   }
   if (nom === 'proposerV' || nom === 'refuserV') {
     var cv = nom === 'proposerV' ? 'propose' : 'refuse';
-    Etat.vaccins.forEach(function (x) { if (x.id === +arg) { x[cv] = !x[cv]; } });
-    rendreModule(); return;
+    Etat.vaccins.forEach(function (x) { if (x.id === +arg) { bascule(x, cv); } });
+    rendreTout(); return;
   }
   if (nom === 'trier') {
     if (Etat.tri.col === arg) { Etat.tri.sens = -Etat.tri.sens; } else { Etat.tri = { col: arg, sens: 1 }; }
