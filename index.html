@@ -681,9 +681,8 @@ function rendreFenetre() {
            '<div class="btn sq" data-act="ouvrirPatho" title="rechercher">' + SVG.loupe + '</div></div>';
       h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Début :</div>' +
            champ('saisie.episode.debut', 96, 'jj/mm/aaaa') +
-           '<div style="margin-left:18px;">' + caseAC('saisie.episode.ald', 'ALD', '— affection de longue durée') + '</div></div>';
-      h += '<div class="row" style="margin-top:7px; padding-left:210px;">' +
-           caseAC('saisie.episode.atmp', 'AT/MP', '— accident du travail ou maladie professionnelle') + '</div>';
+           '<div style="margin-left:22px;">' + caseAC('saisie.episode.ald', 'ALD') + '</div>' +
+           '<div style="margin-left:20px;">' + caseAC('saisie.episode.atmp', 'AT/MP') + '</div></div>';
       h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
            champ('saisie.episode.note', 0, 'contexte…') + '</div>';
       var deja = null;
