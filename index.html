@@ -242,7 +242,7 @@
   <section id="fenetre">
     <div class="sec-num">02</div>
     <h2>La fenêtre d'incorporation</h2>
-    <p class="wide">La fenêtre garde ses options actuelles — intitulé du document, incorporation manuelle, ouvrir la fiche patient — et gagne trois sections repliables. Chacune est une case à cocher : décochée, elle n'occupe qu'une ligne ; cochée, elle déplie son mini-menu. Les trois décochées, on retrouve exactement la fenêtre d'aujourd'hui.</p>
+    <p class="wide">La fenêtre garde ses options actuelles — intitulé du document, incorporation manuelle, ouvrir la fiche patient — et gagne trois sections repliables. Chacune est une case à cocher : décochée, elle n'occupe qu'une ligne ; cochée, elle déplie son mini-menu. Les trois décochées — c'est l'état dans lequel elle s'ouvre — on retrouve la fenêtre d'aujourd'hui, augmentée de ces trois lignes.</p>
 
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
@@ -253,7 +253,7 @@
     <p class="wide"><strong>L'ordre de ces trois sections n'est pas indifférent : c'est celui du temps.</strong> On marque en premier, parce qu'un résultat anormal réclame quelque chose de moi tout de suite et que je veux le garder de côté avant toute autre chose. On rattache ensuite, parce que le document appartient à une histoire déjà ouverte, et que c'est ce geste-là qui tient le dossier en ordre. Le rappel de prévention vient en dernier, parce qu'il ne porte ni sur aujourd'hui ni sur le dossier tel qu'il est, mais sur une échéance à venir. Descendre la fenêtre, c'est parcourir le présent, puis le suivi en cours, puis l'avenir — dans l'ordre même où les questions se posent à la lecture du compte rendu.</p>
 
     <div class="essayez">Tout répond — essayez</div>
-    <p class="wide" style="margin-top:0;">Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
+    <p class="wide" style="margin-top:0;">Cochez une case pour la déplier — la saisie s'ouvre déjà remplie, sur l'exemple de l'échographie cervicale. Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
 
     <div class="shots">
       <figure class="shot is-now">
@@ -299,6 +299,7 @@
       <figure class="shot">
         <figcaption>Proposé</figcaption>
         <div class="wf" id="fenetreWF"></div>
+        <div class="hint">À l'ouverture, les trois cases sont décochées et n'occupent qu'une ligne chacune — la fenêtre de gauche, augmentée de trois lignes. Cochez-en une, elle déplie sa saisie ; décochez-la, elle se replie. Rien n'est imposé à qui incorpore un document sans suite à donner.</div>
       </figure>
     </div>
 
@@ -474,9 +475,9 @@ function saisieInitiale() {
   return {
     manuel: false, fiche: false,
     intitule: 'Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir',
-    marquer: { on: true, note: 'à rappeler — commenter le résultat' },
-    prevention: { on: true, blocs: [blocInitial()] },
-    episode: { on: true, mode: 'creer', lien: '', patho: 'Nodule thyroïdien',
+    marquer: { on: false, note: 'à rappeler — commenter le résultat' },
+    prevention: { on: false, blocs: [blocInitial()] },
+    episode: { on: false, mode: 'creer', lien: '', patho: 'Nodule thyroïdien',
                debut: '19/08/2026', ald: false, atmp: false,
                note: 'découvert sur écho. cervicale du 19/08/2026' }
   };
