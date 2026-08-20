@@ -224,7 +224,7 @@
   <div class="hero">
     <h1>Poser le rappel là où la décision se prend</h1>
     <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Les écrans de cette page ne sont pas des images : ils fonctionnent. Remplissez la fenêtre d'incorporation, validez, et voyez le rappel apparaître dans le module.</p>
-    <div class="meta">Dr Matthieu ANEX — 19 août 2026 · Démonstration d'ergonomie : aucune base de données derrière, tout vit dans la page et se remet à zéro au rechargement. Les données sont fictives.</div>
+    <div class="meta">Dr Matthieu ANEX — 19 août 2026, complétée le 20 août · Démonstration d'ergonomie : aucune base de données derrière, tout vit dans la page et se remet à zéro au rechargement. Les données sont fictives.</div>
   </div>
 
   <section id="principe">
@@ -243,7 +243,7 @@
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
       <li><strong>Prévention</strong> — l'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
-      <li><strong>Création d'un épisode de soins</strong> — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsque l'affection y ouvre droit.</li>
+      <li><strong>Épisode de soins</strong> — deux gestes sous une même case, au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsqu'elle y ouvre droit. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
     </ul>
 
     <div class="essayez">Tout répond — essayez</div>
@@ -299,7 +299,7 @@
     <figure class="shot" id="epFigure" style="margin-top:28px;">
       <figcaption>Dossier patient — cadre « Épisodes de soins »</figcaption>
       <div class="wf" id="episodesWF"></div>
-      <div class="hint">Ce cadre existe déjà dans la fiche patient. La fenêtre ci-dessus l'alimente sans qu'on ait à l'ouvrir.</div>
+      <div class="hint">Ce cadre existe déjà dans la fiche patient. La fenêtre ci-dessus l'alimente sans qu'on ait à l'ouvrir — soit en y ajoutant une ligne, soit en accrochant le document à une ligne existante. La colonne « Documents » est une proposition : elle rend le rattachement visible, et donne la mesure de ce qu'un épisode a accumulé.</div>
     </figure>
   </section>
 
@@ -337,7 +337,7 @@
       <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
-      <tr><td>Épisode de soins</td><td>Ajout : pathologie, date de début, case ALD — créés depuis le même document.</td></tr>
+      <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, case ALD. Le rattachement est le cas le plus fréquent.</td></tr>
       <tr><td>Timeline</td><td>Ajout : troisième onglet, vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
   </section>
@@ -354,7 +354,7 @@
   </section>
 
   <footer>
-    Maquette d'intention, redessinée d'après des captures d'écran de XMED. Les dimensions, les teintes et les libellés sont approchés : ils servent à montrer la disposition et l'enchaînement, non à spécifier le rendu. La démonstration n'a aucune base de données : tout ce que vous saisissez vit dans votre navigateur et disparaît au rechargement. Patiente, praticiens, documents et résultats sont fictifs. Dr Matthieu ANEX — 19 août 2026.
+    Maquette d'intention, redessinée d'après des captures d'écran de XMED. Les dimensions, les teintes et les libellés sont approchés : ils servent à montrer la disposition et l'enchaînement, non à spécifier le rendu. La démonstration n'a aucune base de données : tout ce que vous saisissez vit dans votre navigateur et disparaît au rechargement. Patiente, praticiens, documents et résultats sont fictifs. Dr Matthieu ANEX — 19 août 2026, complétée le 20 août 2026.
   </footer>
 
 </main>
@@ -434,8 +434,21 @@ var LISTES = {
     'Maladie de Parkinson', 'Migraine', 'Nodule thyroïdien', 'Obésité',
     'Polyarthrite rhumatoïde', 'Sclérose en plaques', 'Syndrome anxieux', 'Tabagisme'],
   vaccin: ['BOOSTRIX TETRA', 'ENGERIX B 20', 'GARDASIL 9', 'INFLUVAC TETRA', 'PNEUMOVAX',
-    'PREVENAR 13', 'REPEVAX SER 0,5ML', 'REVAXIS', 'SHINGRIX', 'VAXIGRIP TETRA']
+    'PREVENAR 13', 'REPEVAX SER 0,5ML', 'REVAXIS', 'SHINGRIX', 'VAXIGRIP TETRA'],
+  episode: function () {
+    return Etat.episodes.slice()
+      .sort(function (a, b) { return b.debut - a.debut; })
+      .map(libEpisode);
+  }
 };
+
+function libEpisode(ep) { return ep.nom + ' — depuis le ' + fmt(ep.debut); }
+
+function epLie() {
+  var l = Etat.saisie.episode.lien, out = null;
+  Etat.episodes.forEach(function (ep) { if (libEpisode(ep) === l) { out = ep; } });
+  return out;
+}
 
 /* ============================ état ============================ */
 
@@ -456,7 +469,8 @@ function saisieInitiale() {
     intitule: 'Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir',
     marquer: { on: true, note: 'à rappeler — commenter le résultat' },
     prevention: { on: true, blocs: [blocInitial()] },
-    episode: { on: true, patho: 'Nodule thyroïdien', debut: '19/08/2026', ald: false,
+    episode: { on: true, mode: 'creer', lien: '', patho: 'Nodule thyroïdien',
+               debut: '19/08/2026', ald: false,
                note: 'découvert sur écho. cervicale du 19/08/2026' }
   };
 }
@@ -497,9 +511,9 @@ function initialiser() {
     ],
     vaccinSel: 1,
     episodes: [
-      { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie' },
-      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, note: 'mollet droit' },
-      { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit' }
+      { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie', docs: 4 },
+      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, note: 'mollet droit', docs: 2 },
+      { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit', docs: 6 }
     ]
   };
 }
@@ -541,7 +555,7 @@ function fermerDD() { if (ddOuverte) { ddOuverte.remove(); ddOuverte = null; } }
 function ouvrirDD(cible) {
   fermerDD();
   var nom = cible.dataset.combo, chemin = cible.dataset.path;
-  var items = LISTES[nom] || [];
+  var items = typeof LISTES[nom] === 'function' ? LISTES[nom]() : (LISTES[nom] || []);
   var courant = get(chemin);
   var dd = document.createElement('div');
   dd.className = 'dd';
@@ -681,17 +695,47 @@ function rendreFenetre() {
   }
 
   h += '<div class="sep"></div>';
-  h += caseAC('saisie.episode.on', 'Création d’un épisode de soins');
+  h += caseAC('saisie.episode.on', 'Épisode de soins');
   if (s.episode.on) {
     h += '<div class="panel">';
-    h += '<div class="row"><div class="lbl" style="width:96px;">Pathologie :</div>' +
-         combo('saisie.episode.patho', 'patho', 0) +
-         '<div class="btn sq" data-act="ouvrirPatho" title="rechercher">' + SVG.loupe + '</div></div>';
-    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Début :</div>' +
-         champ('saisie.episode.debut', 96, 'jj/mm/aaaa') +
-         '<div style="margin-left:18px;">' + caseAC('saisie.episode.ald', 'ALD', '— affection de longue durée') + '</div></div>';
-    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
-         champ('saisie.episode.note', 0, 'contexte…') + '</div>';
+    h += '<div class="row" style="margin-bottom:10px;">' +
+         '<div style="display:flex; align-items:center; gap:6px;">' +
+         radio('saisie.episode.mode', 'lier', 'Rattacher à un épisode existant') + '</div>' +
+         '<div style="display:flex; align-items:center; gap:6px; margin-left:24px;">' +
+         radio('saisie.episode.mode', 'creer', 'Créer un nouvel épisode') + '</div></div>';
+
+    if (s.episode.mode === 'lier') {
+      h += '<div class="row"><div class="lbl" style="width:96px;">Épisode :</div>' +
+           '<div class="combo" data-combo="episode" data-path="saisie.episode.lien" style="flex-grow:1;">' +
+           '<div class="v"' + (s.episode.lien ? '' : ' style="color:#8a9099;"') + '>' +
+           e(s.episode.lien || '— choisir un épisode ouvert —') + '</div>' + SVG.arr + '</div>' +
+           '<div class="btn sq" data-act="ouvrirEpisode" title="rechercher">' + SVG.loupe + '</div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
+           champ('saisie.episode.note', 0, 'précision sur le rattachement…') + '</div>';
+      var epc = epLie();
+      h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
+           (epc ? '→ le document rejoint « ' + e(epc.nom) + ' », ouvert le ' + fmt(epc.debut) +
+                  ' — ' + ((epc.docs || 0) + 1) + ' documents rattachés'
+                : '→ aucun épisode choisi') + '</div>';
+    } else {
+      h += '<div class="row"><div class="lbl" style="width:96px;">Pathologie :</div>' +
+           combo('saisie.episode.patho', 'patho', 0) +
+           '<div class="btn sq" data-act="ouvrirPatho" title="rechercher">' + SVG.loupe + '</div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Début :</div>' +
+           champ('saisie.episode.debut', 96, 'jj/mm/aaaa') +
+           '<div style="margin-left:18px;">' + caseAC('saisie.episode.ald', 'ALD', '— affection de longue durée') + '</div></div>';
+      h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
+           champ('saisie.episode.note', 0, 'contexte…') + '</div>';
+      var deja = null;
+      Etat.episodes.forEach(function (ep) { if (ep.nom === s.episode.patho) { deja = ep; } });
+      h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
+           (s.episode.patho
+              ? (deja ? '→ « ' + e(deja.nom) + ' » est déjà ouvert depuis le ' + fmt(deja.debut) +
+                        ' — le rattachement est sans doute préférable'
+                      : '→ nouvel épisode « ' + e(s.episode.patho) + ' » ouvert le ' +
+                        fmt(lit(s.episode.debut) || AUJ) + (s.episode.ald ? ', en ALD' : ''))
+              : '→ aucune pathologie choisie') + '</div>';
+    }
     h += '</div>';
   }
 
@@ -728,7 +772,10 @@ function resume() {
   if (s.marquer.on) { bouts.push('marquage'); }
   var n = s.prevention.on ? s.prevention.blocs.filter(function (b) { return b.suivi && echeance(b); }).length : 0;
   if (n) { bouts.push(n + (n > 1 ? ' rappels' : ' rappel')); }
-  if (s.episode.on && s.episode.patho) { bouts.push('1 épisode'); }
+  if (s.episode.on) {
+    if (s.episode.mode === 'lier') { if (epLie()) { bouts.push('1 rattachement'); } }
+    else if (s.episode.patho) { bouts.push('1 épisode'); }
+  }
   return bouts.length ? 'À la validation : document classé, ' + bouts.join(', ') + '.' : 'À la validation : document classé.';
 }
 
@@ -737,18 +784,20 @@ function resume() {
 function rendreEpisodes() {
   var h = '<div class="grid" style="margin-top:0;">' +
     '<div class="ghead"><div style="width:280px;">Épisode</div><div style="width:100px;">Début</div>' +
-    '<div style="width:70px;">ALD</div><div style="width:300px;">Note</div><div style="width:110px;">Auteur</div></div>';
+    '<div style="width:70px;">ALD</div><div style="width:92px;">Documents</div>' +
+    '<div style="width:260px;">Note</div><div style="width:110px;">Auteur</div></div>';
   Etat.episodes.slice().sort(function (a, b) { return b.debut - a.debut; }).forEach(function (ep) {
     h += '<div class="grow' + (Etat.nouveaux.indexOf('ep' + ep.id) !== -1 ? ' flash' : '') + '" data-act="rienEp">' +
       '<div style="width:280px;">' + e(ep.nom) + '</div>' +
       '<div style="width:100px;">' + fmt(ep.debut) + '</div>' +
       '<div style="width:70px;">' + (ep.ald ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
-      '<div style="width:300px;">' + e(ep.note) + '</div>' +
+      '<div style="width:92px;">' + (ep.docs ? e(String(ep.docs)) : '<span class="grey">—</span>') + '</div>' +
+      '<div style="width:260px;">' + e(ep.note) + '</div>' +
       '<div style="width:110px;">M. ANEX</div></div>';
   });
   h += '<div style="height:24px; background:#fff;"></div></div>';
   var hote = document.getElementById('episodesWF');
-  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 880, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
+  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 930, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
   cabler(hote);
 }
 
@@ -1175,13 +1224,24 @@ function actions(nom, arg) {
       });
       if (!faits && s.prevention.blocs.length) { bilan.push('<span class="grey">Aucun rappel : élément de suivi ou échéance manquant.</span>'); }
     }
-    if (s.episode.on && s.episode.patho) {
+    if (s.episode.on && s.episode.mode === 'lier') {
+      var epl = epLie();
+      if (epl) {
+        epl.docs = (epl.docs || 0) + 1;
+        cles.push('ep' + epl.id);
+        bilan.push('Document rattaché à l’épisode « ' + e(epl.nom) + ' », ouvert le ' + fmt(epl.debut) +
+          ' — ' + epl.docs + ' documents rattachés.' +
+          (s.episode.note ? ' <span class="grey">« ' + e(s.episode.note) + ' »</span>' : ''));
+      } else {
+        bilan.push('<span class="grey">Aucun rattachement : épisode non choisi.</span>');
+      }
+    } else if (s.episode.on && s.episode.patho) {
       compteur += 1;
       var deb = lit(s.episode.debut) || AUJ;
-      Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald, note: s.episode.note });
+      Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald, note: s.episode.note, docs: 1 });
       cles.push('ep' + compteur);
       bilan.push('Épisode de soins « ' + e(s.episode.patho) + ' » ouvert au ' + fmt(deb) +
-        (s.episode.ald ? ' <strong>en ALD</strong>.' : '.'));
+        (s.episode.ald ? ' <strong>en ALD</strong>' : '') + ', le document lui est rattaché.');
     }
     Etat.saisie = saisieInitiale();
     Etat.relance = null;
@@ -1208,6 +1268,10 @@ function actions(nom, arg) {
   if (nom === 'ouvrirPatho') {
     var cp = document.querySelector('[data-path="saisie.episode.patho"]');
     if (cp) { ouvrirDD(cp); } return;
+  }
+  if (nom === 'ouvrirEpisode') {
+    var ce = document.querySelector('[data-path="saisie.episode.lien"]');
+    if (ce) { ouvrirDD(ce); } return;
   }
 
   if (nom === 'onglet')      { Etat.onglet = arg; Etat.modification = false; rendreModule(); return; }
