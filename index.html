@@ -45,6 +45,10 @@
   .meta { margin-top: 28px; font-size: 14px; color: var(--ink-soft); }
   .valide { margin-top: 26px; padding: 10px 0 10px 15px; border-left: 3px solid var(--accent); font-size: 15px; color: var(--ink); max-width: 62ch; }
   .valide strong { font-weight: 600; }
+  .version { display: inline-flex; align-items: baseline; gap: 12px; margin-top: 20px; padding: 8px 16px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+  .version .v-lab { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-soft); }
+  .version .v-num { font-family: Georgia, serif; font-size: 21px; font-weight: 600; line-height: 1; color: var(--accent); }
+  .version .v-date { font-size: 13px; color: var(--ink-soft); }
 
   section { padding: 56px 0 0; }
   .sec-num { font-size: 13px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
@@ -260,6 +264,12 @@
     <h1>Poser le rappel là où la décision se prend</h1>
     <p class="lede">Maquette d'intention pour le futur module Prévention de XMED, en réponse à l'ébauche fonctionnelle du 19 août 2026. Les écrans de cette page ne sont pas des images : ils fonctionnent. Remplissez la fenêtre d'incorporation, validez, et voyez le rappel apparaître dans le module.</p>
     <div class="valide"><strong>Version modifiée et validée par AMEDULO</strong>, les médecins du cabinet.</div>
+
+    <div class="version">
+      <span class="v-lab">Version de la démo</span>
+      <span class="v-num">v2</span>
+      <span class="v-date">20 août 2026</span>
+    </div>
 
     <div class="meta">Dr Matthieu ANEX — 19 août 2026, complétée le 20 août · Démonstration d'ergonomie : aucune base de données derrière, tout vit dans la page et se remet à zéro au rechargement. Les données sont fictives.</div>
   </div>
