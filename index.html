@@ -154,6 +154,7 @@
   .wf .c8 { width: 70px; } .wf .c9 { width: 64px; }
   .wf .c8, .wf .c9 { display: flex; align-items: center; justify-content: center; }
   .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
+  .wf .vert { color: #2a6b34; font-weight: 600; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
   .wf .fmt-tete { display: flex; align-items: center; gap: 20px; padding: 10px 14px; background: #fbfcfd; border-bottom: 1px solid #dfe3e6; }
   .wf .fmt-kpi { display: flex; align-items: baseline; gap: 7px; }
@@ -346,7 +347,7 @@
   <section id="module">
     <div class="sec-num">03</div>
     <h2>Le module Prévention</h2>
-    <p class="wide">Le module Vaccinations devient « Prévention », à cinq onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Prévention MT (CPAM)</strong> montre où en est ce patient au regard du volet prévention du forfait médecin traitant. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
+    <p class="wide">Le module Vaccinations devient « Prévention », à six onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Prévention MT (CPAM)</strong> montre où en est ce patient au regard du volet prévention du forfait médecin traitant. <strong>ex ROSP</strong> conserve les anciens indicateurs que le forfait n'a pas repris. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
 
     <div class="essayez">Manipulable</div>
     <p class="wide" style="margin-top:0;">Triez en cliquant les entêtes, sélectionnez une ligne, passez le détail en modification, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, ouvrez le document d'origine, dépliez l'historique, cliquez un point de la frise.</p>
@@ -369,6 +370,11 @@
     <p class="wide">Le tri ne demande aucune saisie non plus : il se calcule depuis l'âge, le sexe et les épisodes de soins, tous déjà au dossier. Cela produit un effet qu'il vaut la peine de signaler à l'éditeur — <strong>ouvrir un épisode de soins fait apparaître les indicateurs correspondants</strong>. Créez « Diabète de type 2 » depuis la fenêtre d'incorporation, plus haut dans cette page, puis revenez ici : le suivi de l'HbA1c s'est ajouté à la liste. Le dossier tenu à jour se paie tout seul.</p>
     <p class="wide">Deux réserves. La liste des indicateurs, leurs populations cibles et le montant de cinq euros par indicateur validé sont repris de la page de l'Assurance Maladie consultée le 20 août 2026 : ils sont à vérifier à la source avant tout développement, et les critères exacts derrière « patient à risque » et « maladie cardiovasculaire » restent à préciser. Et le montant, affiché ici pour montrer le mécanisme, n'a pas nécessairement sa place sur un écran qu'on tourne parfois vers le patient : prévoir de pouvoir le masquer.</p>
 
+    <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet ex ROSP</h3>
+    <p class="wide">Le passage au forfait médecin traitant a fait disparaître des indicateurs que le cabinet suivait depuis des années. Trois d'entre eux concernent le même sujet — le suivi rénal du patient hypertendu : recherche annuelle de micro-albuminurie ou de protéinurie, créatininémie, débit de filtration glomérulaire. Ils ne sont plus rémunérés ; ils n'ont pas cessé d'être utiles pour autant.</p>
+    <p class="wide">Cet onglet les conserve, et il se lit <strong>en creux</strong> : la ligne s'allume quand l'examen <em>manque</em>. Ici encore le tri se fait tout seul — sans hypertension au dossier, les trois lignes sont sans objet et le disent. Ouvrez un épisode « Hypertension artérielle » depuis la fenêtre d'incorporation et elles s'activent : la micro-albuminurie n'a jamais été dosée, la créatininémie et le DFG datent de la biologie du 12 juillet. Une alerte sur trois, et l'on sait immédiatement quoi prescrire.</p>
+    <p class="wide">L'onglet est volontairement séparé du précédent : mêlerait-on ces lignes aux indicateurs du forfait qu'on ne saurait plus lesquelles sont rémunérées et lesquelles ne le sont plus. Il reste ouvert à d'autres anciens items ROSP, si l'on souhaite en reprendre.</p>
+
     <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet Timeline</h3>
     <p class="wide">C'est la seule pièce entièrement nouvelle. Elle ne saisit rien : elle donne à voir. Chaque ligne de prévention devient une piste sur un axe du temps, les échéances répétées y sont projetées, les examens déjà faits figurent en clair à gauche, et un trait rouge marque aujourd'hui. Un coup d'œil suffit alors pour répondre à deux questions qu'un tableau ne montre jamais bien : <em>qu'est-ce qui a été négligé</em>, et <em>qu'est-ce qui arrive ensemble</em> — un patient dont trois échéances tombent dans le même trimestre gagne à ce qu'on les regroupe en une seule consultation.</p>
     <p class="wide">Les vaccins y figurent au même titre que les examens : c'est ce que le module à onglet unique permet, et c'est l'argument le plus concret en faveur du regroupement Vaccins + Examens sous un seul toit. Dans l'exemple ci-dessus, le rappel DTP dépassé depuis 2020 se voit immédiatement, alors qu'il est aujourd'hui rangé dans un autre écran.</p>
@@ -385,7 +391,7 @@
       <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
       <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
       <tr><td>Marquage</td><td>Case et note dans la fenêtre, <em>en plus</em> de la colonne « Marquer » actuelle, qui ne bouge pas.</td></tr>
-      <tr><td>Module</td><td>Un seul module « Prévention ». Cinq onglets plutôt que deux : SCORE2, Prévention MT et la Timeline s'ajoutent aux deux prévus.</td></tr>
+      <tr><td>Module</td><td>Un seul module « Prévention ». Six onglets plutôt que deux : SCORE2, Prévention MT, ex ROSP et la Timeline s'ajoutent aux deux prévus.</td></tr>
       <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
@@ -394,6 +400,7 @@
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
       <tr><td>Prévention MT (CPAM)</td><td>Ajout, au stade bêta : les quinze indicateurs du volet prévention du forfait médecin traitant, triés selon qu'ils concernent ou non le patient ouvert.</td></tr>
+      <tr><td>ex ROSP</td><td>Ajout : les anciens indicateurs ROSP non repris par le forfait, à commencer par le suivi rénal de l'hypertendu.</td></tr>
       <tr><td>Timeline</td><td>Ajout : vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
   </section>
@@ -577,6 +584,11 @@ function initialiser() {
     ],
     vaccinSel: 1,
     fmtBientot: false, fmtNon: false,
+    rosp: [
+      { n: 'ROSP HTA sans (micro)albuminurie ou protéinurie depuis 1 an', le: null,          val: 'jamais dosée' },
+      { n: 'ROSP HTA sans créatininémie depuis 1 an',                     le: d(2026, 7, 12), val: '8,4 mg/L' },
+      { n: 'ROSP HTA sans DFG depuis 1 an',                               le: d(2026, 7, 12), val: '92 mL/min/1,73 m²' }
+    ],
     score: {
       age: '45', sexe: 'Féminin', tabac: 'Fumeur', pas: '138', ct: '2,35', hdl: '0,55',
       sansTabac: false,
@@ -1154,6 +1166,53 @@ function fmtContexte() {
   };
 }
 
+function aHTA() {
+  return Etat.episodes.some(function (x) { return x.nom.toLowerCase().indexOf('hypertension') !== -1; });
+}
+
+function rospEtat(r) {
+  if (!aHTA()) { return { cle: 'sans', lib: 'Sans objet', cls: 'grey' }; }
+  if (!r.le) { return { cle: 'alerte', lib: 'En alerte', cls: 'red' }; }
+  var limite = new Date(AUJ.getTime()); limite.setFullYear(limite.getFullYear() - 1);
+  return r.le < limite ? { cle: 'alerte', lib: 'En alerte', cls: 'red' }
+                       : { cle: 'ok', lib: 'Conforme', cls: 'vert' };
+}
+
+function paneRosp() {
+  var hta = aHTA();
+  var alertes = Etat.rosp.filter(function (r) { return rospEtat(r).cle === 'alerte'; }).length;
+  var h = '<div class="pane" data-pane="rosp"' + (Etat.onglet === 'rosp' ? '' : ' hidden') + '>';
+  h += '<div class="grid">';
+
+  h += '<div class="fmt-tete">' +
+       (hta
+         ? '<div class="fmt-kpi"><div class="n"' + (alertes ? ' style="color:#c0272d;"' : ' style="color:#2a6b34;"') + '>' +
+           alertes + '</div><div class="l">indicateur' + (alertes > 1 ? 's' : '') + ' en alerte sur 3</div></div>' +
+           '<div class="grey">Hypertension artérielle au dossier — les trois indicateurs s’appliquent.</div>'
+         : '<div class="grey">Aucune hypertension artérielle au dossier : les trois indicateurs sont sans objet pour ce patient.</div>') +
+       '</div>';
+
+  h += '<div class="ghead"><div class="k1">!</div><div style="width:470px;">Indicateur</div>' +
+       '<div style="width:120px;">Statut</div><div style="width:150px;">Dernier dosage</div>' +
+       '<div style="width:182px;">Résultat</div></div>';
+
+  Etat.rosp.forEach(function (r) {
+    var s = rospEtat(r);
+    var pic = s.cle === 'alerte' ? SVG.alerte : s.cle === 'ok' ? SVG.faitv : '';
+    h += '<div class="grow" style="cursor:default;">' +
+      '<div class="k1">' + pic + '</div>' +
+      '<div style="width:470px;"' + (s.cle === 'sans' ? ' class="grey"' : '') + '>' + e(r.n) + '</div>' +
+      '<div style="width:120px;" class="' + s.cls + '">' + s.lib + '</div>' +
+      '<div style="width:150px;" class="grey">' + (r.le ? fmt(r.le) : '—') + '</div>' +
+      '<div style="width:182px;" class="grey">' + e(r.val) + '</div></div>';
+  });
+
+  h += '<div style="height:24px; background:#fff;"></div></div>';
+  h += '<div class="sc-avert" style="margin:12px 14px; border-left-color:#8a9099;"><b>Ex-ROSP.</b> Ces trois indicateurs ne figurent plus au forfait depuis janvier 2026, mais ils restent le repérage le plus direct du suivi rénal de l’hypertendu. Ils se lisent en creux : la ligne s’allume quand l’examen <em>manque</em>. Les regrouper dans un onglet à part évite de perdre l’outil en même temps que la rémunération qui le portait — et laisse la place à d’autres anciens items ROSP, si l’on veut en reprendre.</div>';
+  h += '</div>';
+  return h;
+}
+
 function paneFmt() {
   var x = fmtContexte();
   var oui = [], bientot = [], non = [];
@@ -1293,6 +1352,9 @@ var JEUX = {
   examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['Supprimer', 'suppRappel'], ['sp'],
             ['Fait', 'fait'], ['Annuler le rappel', 'annulRappel'], ['sp'],
             ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
+  rosp: [['Prescrire le bilan', ''], ['sp'],
+         ['Poser un rappel', 'versExamens'], ['sp'],
+         ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
   fmt: [['Ouvrir espace pro ameli', ''], ['sp'],
         ['Poser un rappel', 'versExamens'], ['sp'],
         ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
@@ -1310,6 +1372,11 @@ function rendreModule() {
     vaccins: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg>',
     examens: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' +
       (Etat.rappels.some(function (r) { return r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
+    rosp: (function () {
+      if (!aHTA()) { return '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c3c7cb"/></svg>'; }
+      var al = Etat.rosp.filter(function (r) { return rospEtat(r).cle === 'alerte'; }).length;
+      return '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' + (al ? '#c0272d' : '#2a6b34') + '"/></svg>';
+    })(),
     fmt: (function () {
       var xx = fmtContexte(), nb = 0;
       FMT.forEach(function (i) { if (i.t(xx) === 'oui' && (FMT_ETAT[i.n] || {}).st !== 'valide') { nb += 1; } });
@@ -1331,9 +1398,10 @@ function rendreModule() {
     '<div class="tab' + (Etat.onglet === 'examens' ? ' act' : '') + '" data-act="onglet" data-arg="examens">' + pastilleOng.examens + '<span>Examens &amp; consultations</span></div>' +
     '<div class="tab' + (Etat.onglet === 'score2' ? ' act' : '') + '" data-act="onglet" data-arg="score2">' + pastilleOng.score2 + '<span>SCORE2</span></div>' +
     '<div class="tab' + (Etat.onglet === 'fmt' ? ' act' : '') + '" data-act="onglet" data-arg="fmt">' + pastilleOng.fmt + '<span>Prévention MT (CPAM)</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'rosp' ? ' act' : '') + '" data-act="onglet" data-arg="rosp">' + pastilleOng.rosp + '<span>ex ROSP</span></div>' +
     '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span></div>' +
     '</div>';
-  h += paneVaccins() + paneExamens() + paneScore() + paneFmt() + paneTimeline();
+  h += paneVaccins() + paneExamens() + paneScore() + paneFmt() + paneRosp() + paneTimeline();
   h += '</div><div class="sidebtns">';
   JEUX[Etat.onglet].forEach(function (b) {
     if (b[0] === 'sp') { h += '<div class="spacer"></div>'; return; }
