@@ -155,6 +155,16 @@
   .wf .c8, .wf .c9 { display: flex; align-items: center; justify-content: center; }
   .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
+  .wf .fmt-tete { display: flex; align-items: center; gap: 20px; padding: 10px 14px; background: #fbfcfd; border-bottom: 1px solid #dfe3e6; }
+  .wf .fmt-kpi { display: flex; align-items: baseline; gap: 7px; }
+  .wf .fmt-kpi .n { font-size: 22px; font-weight: 600; line-height: 1; }
+  .wf .fmt-kpi .l { color: #4a5058; }
+  .wf .fmt-eur { margin-left: auto; color: #6b7075; }
+  .wf .fmt-eur b { color: #2a2f35; font-weight: 600; }
+  .wf .k1 { width: 34px; display: flex; align-items: center; justify-content: center; }
+  .wf .k2 { width: 290px; } .wf .k3 { width: 96px; } .wf .k4 { width: 300px; }
+  .wf .k5 { width: 130px; } .wf .k6 { width: 106px; }
+  .wf .fmt-pourquoi { color: #8a9099; }
   .wf .sc { padding: 12px 14px; background: #fff; }
   .wf .sc-cols { display: flex; gap: 16px; align-items: flex-start; }
   .wf .sc-bloc { border: 1px solid #dfe3e6; background: #fbfcfd; padding: 10px 12px; }
@@ -336,7 +346,7 @@
   <section id="module">
     <div class="sec-num">03</div>
     <h2>Le module Prévention</h2>
-    <p class="wide">Le module Vaccinations devient « Prévention », à quatre onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
+    <p class="wide">Le module Vaccinations devient « Prévention », à cinq onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Prévention MT (CPAM)</strong> montre où en est ce patient au regard du volet prévention du forfait médecin traitant. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
 
     <div class="essayez">Manipulable</div>
     <p class="wide" style="margin-top:0;">Triez en cliquant les entêtes, sélectionnez une ligne, passez le détail en modification, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, ouvrez le document d'origine, dépliez l'historique, cliquez un point de la frise.</p>
@@ -352,6 +362,12 @@
     <p class="wide"><strong>Ce que cet onglet démontre tient en une phrase : le calcul ne demande aucune saisie.</strong> L'âge et le sexe sont dans la fiche patient, le tabagisme dans les facteurs de risque, la pression dans les constantes, le bilan lipidique dans les résultats de biologie. XMED détient déjà les cinq variables et sait dater chacune d'elles. Le score peut donc être présenté d'emblée, avec la provenance de chaque valeur en regard — ce qui permet de voir d'un coup d'œil si le chiffre repose sur une biologie de l'an dernier ou du mois dernier. Les champs restent modifiables à l'écran pour simuler, sans rien écrire au dossier.</p>
     <p class="wide">Deux usages en découlent. Le premier est le <strong>suivi dans le temps</strong> : un score isolé ne dit pas grand-chose, une trajectoire si — d'où les scores enregistrés, en bas du cadre. Le second est la <strong>simulation devant le patient</strong> : afficher ce que deviendrait le risque à l'arrêt du tabac transforme un conseil en argument chiffré, et c'est cette ligne-là qui sert en consultation.</p>
     <p class="wide">Deux réserves, énoncées ici pour qu'elles ne se perdent pas. La maquette ne contient pas l'algorithme : le chiffre affiché réagit aux données pour montrer l'écran, rien de plus — les tables officielles, la région de risque applicable à la France et les seuils par tranche d'âge sont à vérifier et à intégrer. Et un score affiché à l'écran oriente une décision thérapeutique : il faudra déterminer avec Olaqin ce que cela implique quant au statut réglementaire de la fonction, et prévoir l'affichage de la source et de sa date de mise à jour.</p>
+
+    <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet Prévention MT (CPAM)</h3>
+    <p class="wide">Le volet prévention du forfait médecin traitant repose sur quinze indicateurs — six vaccinations, cinq dépistages, quatre suivis — dont chacun vise une population précise : une tranche d'âge, un sexe, parfois une pathologie. La difficulté n'est pas de connaître la liste, elle est ailleurs : <strong>devant un patient donné, la plupart de ces quinze indicateurs ne le concernent pas</strong>, et ceux qui le concernent changent avec l'âge. Consulter la liste complète à chaque consultation n'a aucun sens.</p>
+    <p class="wide">D'où le parti pris de cet onglet : <strong>ne montrer que ce qui s'applique à ce patient-là, aujourd'hui</strong>. En haut, ce qui le concerne, avec son statut. Replié en dessous, ce qui l'attend bientôt — utile pour l'anticiper. Replié plus bas encore, tout le reste, chaque ligne portant la raison pour laquelle elle ne s'applique pas : hors tranche d'âge, concerne le nourrisson, aucune maladie cardiovasculaire au dossier. On sait ainsi pourquoi un indicateur n'apparaît pas, ce qu'une liste filtrée sans explication ne dit jamais.</p>
+    <p class="wide">Le tri ne demande aucune saisie non plus : il se calcule depuis l'âge, le sexe et les épisodes de soins, tous déjà au dossier. Cela produit un effet qu'il vaut la peine de signaler à l'éditeur — <strong>ouvrir un épisode de soins fait apparaître les indicateurs correspondants</strong>. Créez « Diabète de type 2 » depuis la fenêtre d'incorporation, plus haut dans cette page, puis revenez ici : le suivi de l'HbA1c s'est ajouté à la liste. Le dossier tenu à jour se paie tout seul.</p>
+    <p class="wide">Deux réserves. La liste des indicateurs, leurs populations cibles et le montant de cinq euros par indicateur validé sont repris de la page de l'Assurance Maladie consultée le 20 août 2026 : ils sont à vérifier à la source avant tout développement, et les critères exacts derrière « patient à risque » et « maladie cardiovasculaire » restent à préciser. Et le montant, affiché ici pour montrer le mécanisme, n'a pas nécessairement sa place sur un écran qu'on tourne parfois vers le patient : prévoir de pouvoir le masquer.</p>
 
     <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet Timeline</h3>
     <p class="wide">C'est la seule pièce entièrement nouvelle. Elle ne saisit rien : elle donne à voir. Chaque ligne de prévention devient une piste sur un axe du temps, les échéances répétées y sont projetées, les examens déjà faits figurent en clair à gauche, et un trait rouge marque aujourd'hui. Un coup d'œil suffit alors pour répondre à deux questions qu'un tableau ne montre jamais bien : <em>qu'est-ce qui a été négligé</em>, et <em>qu'est-ce qui arrive ensemble</em> — un patient dont trois échéances tombent dans le même trimestre gagne à ce qu'on les regroupe en une seule consultation.</p>
@@ -369,7 +385,7 @@
       <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
       <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
       <tr><td>Marquage</td><td>Case et note dans la fenêtre, <em>en plus</em> de la colonne « Marquer » actuelle, qui ne bouge pas.</td></tr>
-      <tr><td>Module</td><td>Un seul module « Prévention ». Quatre onglets plutôt que deux : SCORE2 et la Timeline s'ajoutent aux deux prévus.</td></tr>
+      <tr><td>Module</td><td>Un seul module « Prévention ». Cinq onglets plutôt que deux : SCORE2, Prévention MT et la Timeline s'ajoutent aux deux prévus.</td></tr>
       <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
@@ -377,6 +393,7 @@
       <tr><td>Tâche secrétariat</td><td>Sortie de réserve, au stade bêta : une secrétaire, une tâche, depuis la même fenêtre. Reste à définir la grille de to-do list qui les reçoit.</td></tr>
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
+      <tr><td>Prévention MT (CPAM)</td><td>Ajout, au stade bêta : les quinze indicateurs du volet prévention du forfait médecin traitant, triés selon qu'ils concernent ou non le patient ouvert.</td></tr>
       <tr><td>Timeline</td><td>Ajout : vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
   </section>
@@ -439,6 +456,7 @@ var SVG = {
   loupe: '<svg width="13" height="13" viewBox="0 0 13 13"><circle cx="5.5" cy="5.5" r="4" fill="none" stroke="#3a3a3a" stroke-width="1.3"/><path d="M8.6 8.6 L12 12" stroke="#3a3a3a" stroke-width="1.5" stroke-linecap="round"/></svg>',
   plus: '<svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1 V9 M1 5 H9" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round"/></svg>',
   faitv: '<svg width="11" height="11" viewBox="0 0 11 11"><path d="M1.5 5.6 L4.2 8.4 L9.5 2.2" fill="none" stroke="#2a6b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  rien: '<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2.2 2.2 L7.8 7.8 M7.8 2.2 L2.2 7.8" stroke="#9aa0a6" stroke-width="1.5" stroke-linecap="round"/></svg>',
   chev: '<svg width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>',
   alerte: '<svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1 L11 10 H1 Z" fill="#c0272d"/><path d="M6 4.4 V7.2" stroke="#fff" stroke-width="1.2"/><circle cx="6" cy="8.6" r="0.7" fill="#fff"/></svg>',
   horloge: '<svg width="15" height="15" viewBox="0 0 15 15" style="flex-shrink:0;"><circle cx="7.5" cy="7.5" r="6.6" fill="none" stroke="#b08a1e" stroke-width="1.3"/><path d="M7.5 4 V8 L10 9.4" fill="none" stroke="#b08a1e" stroke-width="1.3" stroke-linecap="round"/></svg>',
@@ -558,6 +576,7 @@ function initialiser() {
       { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX' }
     ],
     vaccinSel: 1,
+    fmtBientot: false, fmtNon: false,
     score: {
       age: '45', sexe: 'Féminin', tabac: 'Fumeur', pas: '138', ct: '2,35', hdl: '0,55',
       sansTabac: false,
@@ -1072,6 +1091,7 @@ function paneVaccins() {
    l'algorithme officiel. Formule monotone servant a faire vivre l'ecran, a remplacer
    par les tables ESC 2021 (region a risque faible pour la France). */
 function nombre(x) { return parseFloat(String(x).replace(',', '.')); }
+function e_(s) { return e(s); }
 function virg(x) { return String(x).replace('.', ','); }
 
 function score2(sansTabac) {
@@ -1091,6 +1111,103 @@ function classeRisque(pct, age) {
   if (pct >= s[1]) { return { cls: 'tres', lib: 'Risque très élevé', seuils: s, tranche: lib }; }
   if (pct >= s[0]) { return { cls: 'haut', lib: 'Risque élevé', seuils: s, tranche: lib }; }
   return { cls: 'bas', lib: 'Risque faible à modéré', seuils: s, tranche: lib };
+}
+
+/* Forfait medecin traitant - volet prevention. Les 15 indicateurs, leurs
+   populations cibles et le montant unitaire sont repris de la page ameli.fr
+   consultee le 20/08/2026 : a verifier a la source avant tout developpement. */
+var FMT = [
+  { c: 'Vaccination', n: 'Grippe',                    cible: '65 ans et plus, ou patient à risque', t: function (x) { return x.age >= 65 || x.risque ? 'oui' : (x.age >= 60 ? 'bientot' : 'non'); }, pq: 'moins de 65 ans, sans facteur de risque identifié' },
+  { c: 'Vaccination', n: 'Covid-19',                  cible: '65 ans et plus, ou patient à risque', t: function (x) { return x.age >= 65 || x.risque ? 'oui' : (x.age >= 60 ? 'bientot' : 'non'); }, pq: 'moins de 65 ans, sans facteur de risque identifié' },
+  { c: 'Vaccination', n: 'Pneumocoque',               cible: '65 ans et plus, ou patient à risque', t: function (x) { return x.age >= 65 || x.risque ? 'oui' : (x.age >= 60 ? 'bientot' : 'non'); }, pq: 'moins de 65 ans, sans facteur de risque identifié' },
+  { c: 'Vaccination', n: 'ROR',                       cible: 'enfant de 16 à 35 mois',             t: function () { return 'non'; }, pq: 'concerne le nourrisson' },
+  { c: 'Vaccination', n: 'Méningocoque ACWY',         cible: 'enfant de 6 à 23 mois',              t: function () { return 'non'; }, pq: 'concerne le nourrisson' },
+  { c: 'Vaccination', n: 'Papillomavirus (HPV)',      cible: 'enfant de 11 à 15 ans',              t: function () { return 'non'; }, pq: 'concerne l’adolescent' },
+  { c: 'Dépistage',   n: 'Cancer du sein',            cible: 'femme de 50 à 74 ans',               t: function (x) { return x.femme && x.age >= 50 && x.age <= 74 ? 'oui' : (x.femme && x.age >= 45 && x.age < 50 ? 'bientot' : 'non'); }, pq: 'hors tranche d’âge, ou ne concerne pas ce patient' },
+  { c: 'Dépistage',   n: 'Cancer du col de l’utérus', cible: 'femme de 25 à 65 ans',               t: function (x) { return x.femme && x.age >= 25 && x.age <= 65 ? 'oui' : 'non'; }, pq: 'hors tranche d’âge, ou ne concerne pas ce patient' },
+  { c: 'Dépistage',   n: 'Cancer colorectal',         cible: '50 à 74 ans',                        t: function (x) { return x.age >= 50 && x.age <= 74 ? 'oui' : (x.age >= 45 && x.age < 50 ? 'bientot' : 'non'); }, pq: 'hors tranche d’âge' },
+  { c: 'Dépistage',   n: 'Diabète — glycémie',        cible: '45 ans et plus, avec maladie cardiovasculaire', t: function (x) { return x.age >= 45 && x.mcv ? 'oui' : 'non'; }, pq: 'aucune maladie cardiovasculaire au dossier' },
+  { c: 'Dépistage',   n: 'Maladie rénale chronique',  cible: '18 ans et plus, avec maladie cardiovasculaire', t: function (x) { return x.age >= 18 && x.mcv ? 'oui' : 'non'; }, pq: 'aucune maladie cardiovasculaire au dossier' },
+  { c: 'Suivi',       n: 'HbA1c du diabétique',       cible: 'patient diabétique',                 t: function (x) { return x.diabete ? 'oui' : 'non'; }, pq: 'aucun diabète au dossier' },
+  { c: 'Suivi',       n: 'Certificat du 9e mois',     cible: 'enfant de 8 à 21 mois',              t: function () { return 'non'; }, pq: 'concerne le nourrisson' },
+  { c: 'Suivi',       n: 'Certificat du 24e mois',    cible: 'enfant de 22 à 37 mois',             t: function () { return 'non'; }, pq: 'concerne le nourrisson' },
+  { c: 'Suivi',       n: 'Suivi bucco-dentaire',      cible: '3 à 24 ans',                         t: function (x) { return x.age >= 3 && x.age <= 24 ? 'oui' : 'non'; }, pq: 'hors tranche d’âge' }
+];
+
+/* etat de realisation - valeurs de demonstration, coherentes avec l'onglet Examens */
+var FMT_ETAT = {
+  'Cancer du col de l’utérus': { st: 'refus', le: 'proposé le 12/03/2026, refusé' },
+  'Cancer du sein':            { st: 'afaire', le: '—' },
+  'Cancer colorectal':         { st: 'afaire', le: '—' }
+};
+
+function fmtContexte() {
+  var age = nombre(Etat.score.age);
+  var noms = Etat.episodes.map(function (e) { return e.nom.toLowerCase(); }).join(' | ');
+  var cv = ['hypertension', 'insuffisance cardiaque', 'fibrillation', 'artériopathie', 'coronar'];
+  return {
+    age: age,
+    femme: Etat.score.sexe === 'Féminin',
+    diabete: noms.indexOf('diabète') !== -1,
+    mcv: cv.some(function (m) { return noms.indexOf(m) !== -1; }),
+    risque: Etat.episodes.some(function (e) { return e.ald; })
+  };
+}
+
+function paneFmt() {
+  var x = fmtContexte();
+  var oui = [], bientot = [], non = [];
+  FMT.forEach(function (i) {
+    var r = i.t(x);
+    (r === 'oui' ? oui : r === 'bientot' ? bientot : non).push(i);
+  });
+  var valides = oui.filter(function (i) { return (FMT_ETAT[i.n] || {}).st === 'valide'; }).length;
+  var refus = oui.filter(function (i) { return (FMT_ETAT[i.n] || {}).st === 'refus'; }).length;
+
+  var h = '<div class="pane" data-pane="fmt"' + (Etat.onglet === 'fmt' ? '' : ' hidden') + '>';
+  h += '<div class="grid">';
+
+  h += '<div class="fmt-tete">' +
+       '<div class="fmt-kpi"><div class="n">' + oui.length + '</div><div class="l">indicateur' + (oui.length > 1 ? 's concernent' : ' concerne') + ' ce patient</div></div>' +
+       '<div class="fmt-kpi"><div class="n" style="color:#2a6b34;">' + valides + '</div><div class="l">validé' + (valides > 1 ? 's' : '') + '</div></div>' +
+       '<div class="fmt-kpi"><div class="n" style="color:#b06a06;">' + (oui.length - valides - refus) + '</div><div class="l">à faire</div></div>' +
+       (refus ? '<div class="fmt-kpi"><div class="n" style="color:#8a9099;">' + refus + '</div><div class="l">refusé' + (refus > 1 ? 's' : '') + '</div></div>' : '') +
+       '<div class="fmt-eur">Part variable estimée : <b>' + (valides * 5) + ' €</b> sur ' + (oui.length * 5) + ' € atteignables</div>' +
+       '</div>';
+
+  h += '<div class="ghead"><div class="k1">!</div><div class="k2">Indicateur</div><div class="k3">Catégorie</div>' +
+       '<div class="k4">Population cible</div><div class="k5">Statut</div><div class="k6">Dernier acte</div></div>';
+
+  function ligne(i, mode) {
+    var e = FMT_ETAT[i.n] || {};
+    var st = mode === 'oui' ? (e.st || 'afaire') : mode;
+    var lib = st === 'valide' ? 'Validé' : st === 'refus' ? 'Refusé' : st === 'bientot' ? 'Bientôt' : st === 'non' ? '—' : 'À faire';
+    var cls = st === 'valide' ? 'style="color:#2a6b34; font-weight:600;"' : st === 'afaire' ? 'class="orange"' : 'class="grey"';
+    var pic = st === 'valide' ? SVG.faitv : st === 'afaire' ? pastille.proche : st === 'refus' ? SVG.rien : pastille.avenir;
+    return '<div class="grow" style="cursor:default;">' +
+      '<div class="k1">' + (mode === 'non' ? '' : pic) + '</div>' +
+      '<div class="k2"' + (mode === 'non' ? ' class="grey"' : '') + '>' + e_(i.n) + '</div>' +
+      '<div class="k3 grey">' + e_(i.c) + '</div>' +
+      '<div class="k4 fmt-pourquoi">' + e_(mode === 'non' ? i.pq : i.cible) + '</div>' +
+      '<div class="k5" ' + cls + '>' + lib + '</div>' +
+      '<div class="k6 grey">' + e_(mode === 'oui' ? (e.le || '—') : '') + '</div></div>';
+  }
+
+  oui.forEach(function (i) { h += ligne(i, 'oui'); });
+  if (!oui.length) { h += '<div class="grow" style="cursor:default;"><div class="grey" style="padding-left:14px;">Aucun indicateur ne concerne ce patient aujourd’hui.</div></div>'; }
+
+  h += '<div class="histbar' + (Etat.fmtBientot ? ' open' : '') + '" data-act="fmtBientot">' + SVG.chev +
+       '<span>Bientôt — ' + bientot.length + ' indicateur' + (bientot.length > 1 ? 's' : '') + ' à l’approche</span></div>';
+  if (Etat.fmtBientot) { bientot.forEach(function (i) { h += ligne(i, 'bientot'); }); }
+
+  h += '<div class="histbar' + (Etat.fmtNon ? ' open' : '') + '" data-act="fmtNon">' + SVG.chev +
+       '<span>Ne s’applique pas — ' + non.length + ' indicateur' + (non.length > 1 ? 's' : '') + '</span></div>';
+  if (Etat.fmtNon) { non.forEach(function (i) { h += ligne(i, 'non'); }); }
+
+  h += '</div>';
+  h += '<div class="sc-avert" style="margin:12px 14px;"><b>Bêta.</b> Les quinze indicateurs, leurs populations cibles et le montant de 5 € par indicateur validé sont repris de la page ameli.fr consultée le 20 août 2026 : <b>à vérifier à la source</b> avant tout développement. Le tri est calculé ici depuis l’âge, le sexe et les épisodes de soins du dossier — les critères exacts retenus par l’Assurance Maladie (notamment « patient à risque » et « maladie cardiovasculaire ») restent à préciser.</div>';
+  h += '</div>';
+  return h;
 }
 
 function paneScore() {
@@ -1176,6 +1293,9 @@ var JEUX = {
   examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['Supprimer', 'suppRappel'], ['sp'],
             ['Fait', 'fait'], ['Annuler le rappel', 'annulRappel'], ['sp'],
             ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
+  fmt: [['Ouvrir espace pro ameli', ''], ['sp'],
+        ['Poser un rappel', 'versExamens'], ['sp'],
+        ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
   score2: [['Recalculer', ''], ['Enregistrer le score', ''], ['sp'],
            ['Poser un rappel', 'versExamens'], ['sp'],
            ['Imprimer', ''], ['sp'],
@@ -1190,6 +1310,11 @@ function rendreModule() {
     vaccins: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg>',
     examens: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' +
       (Etat.rappels.some(function (r) { return r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
+    fmt: (function () {
+      var xx = fmtContexte(), nb = 0;
+      FMT.forEach(function (i) { if (i.t(xx) === 'oui' && (FMT_ETAT[i.n] || {}).st !== 'valide') { nb += 1; } });
+      return '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' + (nb ? '#e08a1e' : '#2a6b34') + '"/></svg>';
+    })(),
     score2: (function () {
       var rr = score2(false), aa = nombre(Etat.score.age);
       var cc = (rr && aa >= 40 && aa <= 89) ? classeRisque(rr.pct, aa).cls : null;
@@ -1205,9 +1330,10 @@ function rendreModule() {
     '<div class="tab' + (Etat.onglet === 'vaccins' ? ' act' : '') + '" data-act="onglet" data-arg="vaccins">' + pastilleOng.vaccins + '<span>Vaccins</span></div>' +
     '<div class="tab' + (Etat.onglet === 'examens' ? ' act' : '') + '" data-act="onglet" data-arg="examens">' + pastilleOng.examens + '<span>Examens &amp; consultations</span></div>' +
     '<div class="tab' + (Etat.onglet === 'score2' ? ' act' : '') + '" data-act="onglet" data-arg="score2">' + pastilleOng.score2 + '<span>SCORE2</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'fmt' ? ' act' : '') + '" data-act="onglet" data-arg="fmt">' + pastilleOng.fmt + '<span>Prévention MT (CPAM)</span></div>' +
     '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span></div>' +
     '</div>';
-  h += paneVaccins() + paneExamens() + paneScore() + paneTimeline();
+  h += paneVaccins() + paneExamens() + paneScore() + paneFmt() + paneTimeline();
   h += '</div><div class="sidebtns">';
   JEUX[Etat.onglet].forEach(function (b) {
     if (b[0] === 'sp') { h += '<div class="spacer"></div>'; return; }
@@ -1467,6 +1593,8 @@ function actions(nom, arg) {
   if (nom === 'onglet')      { Etat.onglet = arg; Etat.modification = false; rendreModule(); return; }
   if (nom === 'versExamens') { Etat.onglet = 'examens'; rendreModule(); return; }
   if (nom === 'hist')        { Etat.histOuvert = !Etat.histOuvert; rendreModule(); return; }
+  if (nom === 'fmtBientot')  { Etat.fmtBientot = !Etat.fmtBientot; rendreModule(); return; }
+  if (nom === 'fmtNon')      { Etat.fmtNon = !Etat.fmtNon; rendreModule(); return; }
   if (nom === 'selRappel')   { Etat.selection = +arg; Etat.modification = false; rendreModule(); return; }
   if (nom === 'selVaccin')   { Etat.vaccinSel = +arg; rendreModule(); return; }
   if (nom === 'proposer' || nom === 'refuser') {
