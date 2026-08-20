@@ -155,6 +155,23 @@
   .wf .c8, .wf .c9 { display: flex; align-items: center; justify-content: center; }
   .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
+  .wf .sc { padding: 12px 14px; background: #fff; }
+  .wf .sc-cols { display: flex; gap: 16px; align-items: flex-start; }
+  .wf .sc-bloc { border: 1px solid #dfe3e6; background: #fbfcfd; padding: 10px 12px; }
+  .wf .sc-tit { font-weight: 600; color: #2a2f35; margin-bottom: 9px; }
+  .wf .sc-l { display: flex; align-items: center; height: 23px; }
+  .wf .sc-l .k { width: 132px; color: #4a5058; flex-shrink: 0; }
+  .wf .sc-l .src { color: #8a9099; margin-left: 10px; }
+  .wf .sc-res { text-align: center; padding: 6px 0 8px; }
+  .wf .sc-val { font-size: 34px; line-height: 1.1; font-weight: 600; }
+  .wf .sc-cls { display: inline-block; margin-top: 5px; padding: 2px 10px; border-radius: 2px; font-weight: 600; }
+  .wf .sc-cls.tres { color: #8f1d22; background: #fbe6e7; border: 1px solid #edbfc1; }
+  .wf .sc-cls.haut { color: #8a5a00; background: #fdf3d8; border: 1px solid #e8d49a; }
+  .wf .sc-cls.bas  { color: #245c2c; background: #e8f4ea; border: 1px solid #b9d9c0; }
+  .wf .sc-seuils { margin-top: 8px; border-top: 1px solid #e6e9ec; padding-top: 8px; color: #6b7075; }
+  .wf .sc-seuils b { color: #2a2f35; font-weight: 600; }
+  .wf .sc-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; }
+  .wf .sc-avert { margin-top: 12px; border-left: 3px solid #b08a1e; background: #fdfaf0; padding: 8px 12px; color: #5c5751; }
   .wf .histbar { display: flex; align-items: center; gap: 7px; height: 25px; padding: 0 8px; background: linear-gradient(#fbfbfc,#f2f4f6); border-top: 1px solid #dfe3e6; color: #4a5058; cursor: pointer; user-select: none; }
   .wf .histbar:hover { color: #1a5fb4; }
   .wf .histbar svg { transition: transform .12s; }
@@ -319,7 +336,7 @@
   <section id="module">
     <div class="sec-num">03</div>
     <h2>Le module Prévention</h2>
-    <p class="wide">Le module Vaccinations devient « Prévention », à trois onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
+    <p class="wide">Le module Vaccinations devient « Prévention », à quatre onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
 
     <div class="essayez">Manipulable</div>
     <p class="wide" style="margin-top:0;">Triez en cliquant les entêtes, sélectionnez une ligne, passez le détail en modification, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, ouvrez le document d'origine, dépliez l'historique, cliquez un point de la frise.</p>
@@ -329,6 +346,12 @@
     </figure>
 
     <p class="wide" style="margin-top:26px;">Un rappel marqué <strong>« Fait »</strong> sort de la liste active et rejoint l'historique — ce qui conserve la réponse à « c'est quand, votre dernière mammographie ? ». XMED propose alors de reposer le même rappel avec le même délai. Si l'on oublie de le marquer et qu'un nouveau compte rendu arrive, le nouveau rappel <strong>remplace</strong> l'ancien, qui reste dans l'historique au statut « remplacé ».</p>
+
+    <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet SCORE2</h3>
+    <p class="wide">SCORE2 estime le risque de survenue d'un accident cardiovasculaire dans les dix ans. Ce n'est pas un examen à programmer : c'est la mesure qui commande une bonne partie de ce qu'on programmera ensuite — le bilan lipidique, la consultation de cardiologie, l'aide au sevrage. Il a donc sa place dans le module qui porte la prévention, plutôt que dans un écran à part.</p>
+    <p class="wide"><strong>Ce que cet onglet démontre tient en une phrase : le calcul ne demande aucune saisie.</strong> L'âge et le sexe sont dans la fiche patient, le tabagisme dans les facteurs de risque, la pression dans les constantes, le bilan lipidique dans les résultats de biologie. XMED détient déjà les cinq variables et sait dater chacune d'elles. Le score peut donc être présenté d'emblée, avec la provenance de chaque valeur en regard — ce qui permet de voir d'un coup d'œil si le chiffre repose sur une biologie de l'an dernier ou du mois dernier. Les champs restent modifiables à l'écran pour simuler, sans rien écrire au dossier.</p>
+    <p class="wide">Deux usages en découlent. Le premier est le <strong>suivi dans le temps</strong> : un score isolé ne dit pas grand-chose, une trajectoire si — d'où les scores enregistrés, en bas du cadre. Le second est la <strong>simulation devant le patient</strong> : afficher ce que deviendrait le risque à l'arrêt du tabac transforme un conseil en argument chiffré, et c'est cette ligne-là qui sert en consultation.</p>
+    <p class="wide">Deux réserves, énoncées ici pour qu'elles ne se perdent pas. La maquette ne contient pas l'algorithme : le chiffre affiché réagit aux données pour montrer l'écran, rien de plus — les tables officielles, la région de risque applicable à la France et les seuils par tranche d'âge sont à vérifier et à intégrer. Et un score affiché à l'écran oriente une décision thérapeutique : il faudra déterminer avec Olaqin ce que cela implique quant au statut réglementaire de la fonction, et prévoir l'affichage de la source et de sa date de mise à jour.</p>
 
     <h3 style="font-size:22px; margin:34px 0 12px;">L'onglet Timeline</h3>
     <p class="wide">C'est la seule pièce entièrement nouvelle. Elle ne saisit rien : elle donne à voir. Chaque ligne de prévention devient une piste sur un axe du temps, les échéances répétées y sont projetées, les examens déjà faits figurent en clair à gauche, et un trait rouge marque aujourd'hui. Un coup d'œil suffit alors pour répondre à deux questions qu'un tableau ne montre jamais bien : <em>qu'est-ce qui a été négligé</em>, et <em>qu'est-ce qui arrive ensemble</em> — un patient dont trois échéances tombent dans le même trimestre gagne à ce qu'on les regroupe en une seule consultation.</p>
@@ -346,14 +369,15 @@
       <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
       <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
       <tr><td>Marquage</td><td>Case et note dans la fenêtre, <em>en plus</em> de la colonne « Marquer » actuelle, qui ne bouge pas.</td></tr>
-      <tr><td>Module</td><td>Un seul module « Prévention ». Trois onglets plutôt que deux, avec la Timeline.</td></tr>
+      <tr><td>Module</td><td>Un seul module « Prévention ». Quatre onglets plutôt que deux : SCORE2 et la Timeline s'ajoutent aux deux prévus.</td></tr>
       <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
       <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, cases ALD et AT/MP. Le rattachement est le cas le plus fréquent.</td></tr>
       <tr><td>Tâche secrétariat</td><td>Sortie de réserve, au stade bêta : une secrétaire, une tâche, depuis la même fenêtre. Reste à définir la grille de to-do list qui les reçoit.</td></tr>
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
-      <tr><td>Timeline</td><td>Ajout : troisième onglet, vue chronologique de toute la prévention, vaccins compris.</td></tr>
+      <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
+      <tr><td>Timeline</td><td>Ajout : vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
   </section>
 
@@ -455,6 +479,8 @@ var LISTES = {
   vaccin: ['BOOSTRIX TETRA', 'ENGERIX B 20', 'GARDASIL 9', 'INFLUVAC TETRA', 'PNEUMOVAX',
     'PREVENAR 13', 'REPEVAX SER 0,5ML', 'REVAXIS', 'SHINGRIX', 'VAXIGRIP TETRA'],
   acteur: ['Audrey - secrétaire', 'Maude - secrétaire'],
+  sexe: ['Féminin', 'Masculin'],
+  tabac: ['Fumeur', 'Non-fumeur', 'Ancien fumeur'],
   episode: function () {
     return Etat.episodes.slice()
       .sort(function (a, b) { return b.debut - a.debut; })
@@ -532,6 +558,14 @@ function initialiser() {
       { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX' }
     ],
     vaccinSel: 1,
+    score: {
+      age: '45', sexe: 'Féminin', tabac: 'Fumeur', pas: '138', ct: '2,35', hdl: '0,55',
+      sansTabac: false,
+      historique: [
+        { le: d(2024, 6, 15), val: 2.4 },
+        { le: d(2026, 7, 12), val: 3.2 }
+      ]
+    },
     episodes: [
       { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie', docs: 4 },
       { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, atmp: true, note: 'mollet droit — chute au travail', docs: 2 },
@@ -1034,6 +1068,90 @@ function paneVaccins() {
   return h;
 }
 
+/* SCORE2 - le chiffre affiche ici est ILLUSTRATIF : la maquette ne contient pas
+   l'algorithme officiel. Formule monotone servant a faire vivre l'ecran, a remplacer
+   par les tables ESC 2021 (region a risque faible pour la France). */
+function nombre(x) { return parseFloat(String(x).replace(',', '.')); }
+function virg(x) { return String(x).replace('.', ','); }
+
+function score2(sansTabac) {
+  var s = Etat.score;
+  var age = nombre(s.age), pas = nombre(s.pas), ct = nombre(s.ct), hdl = nombre(s.hdl);
+  if (!(age > 0) || !(pas > 0) || !(ct > 0) || !(hdl > 0) || hdl >= ct) { return null; }
+  var nonHdl = (ct - hdl) * 2.586;
+  var fume = !sansTabac && s.tabac === 'Fumeur';
+  var a = 0.09 * (age - 40) + (s.sexe === 'Féminin' ? -0.5 : 0) + (fume ? 0.6 : 0) +
+          0.018 * (pas - 120) + 0.35 * (nonHdl - 3) - 0.3;
+  return { pct: Math.round(Math.exp(a) * 10) / 10, nonHdl: Math.round(nonHdl * 100) / 100 };
+}
+
+function classeRisque(pct, age) {
+  var s = age < 50 ? [2.5, 7.5] : age < 70 ? [5, 10] : [7.5, 15];
+  var lib = age < 50 ? '40 à 49 ans' : age < 70 ? '50 à 69 ans' : '70 ans et plus';
+  if (pct >= s[1]) { return { cls: 'tres', lib: 'Risque très élevé', seuils: s, tranche: lib }; }
+  if (pct >= s[0]) { return { cls: 'haut', lib: 'Risque élevé', seuils: s, tranche: lib }; }
+  return { cls: 'bas', lib: 'Risque faible à modéré', seuils: s, tranche: lib };
+}
+
+function paneScore() {
+  var s = Etat.score, age = nombre(s.age);
+  var r = score2(false), sansT = score2(true);
+  var h = '<div class="pane" data-pane="score2"' + (Etat.onglet === 'score2' ? '' : ' hidden') + '>';
+  h += '<div class="grid"><div class="sc"><div class="sc-cols">';
+
+  h += '<div class="sc-bloc" style="width:474px; flex-shrink:0;">';
+  h += '<div class="sc-tit">Données reprises du dossier</div>';
+  h += '<div class="sc-l"><div class="k">Âge :</div>' + champ('score.age', 46) +
+       '<span class="src">ans — fiche patient</span></div>';
+  h += '<div class="sc-l"><div class="k">Sexe :</div>' + combo('score.sexe', 'sexe', 112) +
+       '<span class="src">fiche patient</span></div>';
+  h += '<div class="sc-l"><div class="k">Tabac :</div>' + combo('score.tabac', 'tabac', 112) +
+       '<span class="src">facteurs de risque</span></div>';
+  h += '<div class="sc-l"><div class="k">Pression systolique :</div>' + champ('score.pas', 46) +
+       '<span class="src">mmHg — constantes du 04/08/2026</span></div>';
+  h += '<div class="sc-l"><div class="k">Cholestérol total :</div>' + champ('score.ct', 46) +
+       '<span class="src">g/L — biologie du 12/07/2026</span></div>';
+  h += '<div class="sc-l"><div class="k">HDL :</div>' + champ('score.hdl', 46) +
+       '<span class="src">g/L — biologie du 12/07/2026</span></div>';
+  h += '<div class="sc-l"><div class="k">non-HDL :</div><div class="soft">' +
+       (r ? virg(Math.round((nombre(s.ct) - nombre(s.hdl)) * 100) / 100) + ' g/L' : '—') +
+       '</div><span class="src">' + (r ? 'soit ' + virg(r.nonHdl) + ' mmol/L — calculé' : 'calculé') + '</span></div>';
+  h += '<div class="grey" style="margin-top:10px;">Aucune de ces valeurs n’est à saisir : elles sont déjà au dossier. Elles restent modifiables ici pour simuler.</div>';
+  h += '</div>';
+
+  h += '<div class="sc-bloc" style="flex-grow:1;">';
+  h += '<div class="sc-tit">Risque cardiovasculaire à 10 ans</div>';
+  if (!r) {
+    h += '<div class="grey" style="padding:24px 0; text-align:center;">Données incomplètes ou incohérentes.</div>';
+  } else if (age < 40 || age > 89) {
+    h += '<div class="grey" style="padding:24px 0; text-align:center;">SCORE2 ne s’applique qu’à partir de 40 ans, SCORE2-OP jusqu’à 89 ans.</div>';
+  } else {
+    var c = classeRisque(r.pct, age);
+    h += '<div class="sc-res"><div class="sc-val"' +
+         (c.cls === 'tres' ? ' style="color:#c0272d;"' : c.cls === 'haut' ? ' style="color:#b06a06;"' : ' style="color:#245c2c;"') +
+         '>' + virg(r.pct) + ' %</div>' +
+         '<div class="sc-cls ' + c.cls + '">' + c.lib + '</div></div>';
+    h += '<div class="sc-seuils">Seuils pour la tranche <b>' + c.tranche + '</b> : faible à modéré sous ' +
+         virg(c.seuils[0]) + ' %, élevé de ' + virg(c.seuils[0]) + ' à ' + virg(c.seuils[1]) +
+         ' %, très élevé au-delà.<br><span class="grey">' +
+         (age >= 70 ? 'SCORE2-OP' : 'SCORE2') + ' — région à risque faible (France). Seuils ESC 2021, à vérifier.</span></div>';
+    if (s.tabac === 'Fumeur' && sansT) {
+      h += '<div class="sc-note">' + SVG.horloge + '<div>À l’arrêt du tabac, le risque estimé passerait à <b>' +
+           virg(sansT.pct) + ' %</b> — ' + classeRisque(sansT.pct, age).lib.toLowerCase() +
+           '. C’est le chiffre qu’on montre au patient.</div></div>';
+    }
+    h += '<div class="sc-note"><div style="width:15px;"></div><div><span style="color:#4a5058;">Scores enregistrés :</span> ' +
+         s.historique.slice().sort(function (a, b) { return a.le - b.le; }).map(function (x) {
+           return fmt(x.le) + ' — ' + virg(x.val) + ' %';
+         }).join('  ·  ') + '</div></div>';
+  }
+  h += '</div></div>';
+
+  h += '<div class="sc-avert"><b>Valeur illustrative.</b> Cette maquette ne contient pas l’algorithme SCORE2 : le chiffre réagit aux données pour faire vivre l’écran, il n’a aucune valeur clinique. Les tables officielles et les seuils affichés sont à vérifier et à intégrer par Olaqin.</div>';
+  h += '</div></div></div>';
+  return h;
+}
+
 function paneTimeline() {
   return '<div class="pane" data-pane="timeline"' + (Etat.onglet === 'timeline' ? '' : ' hidden') + '>' +
     '<div class="grid"><div class="tl">' +
@@ -1058,6 +1176,10 @@ var JEUX = {
   examens: [['Ajouter', 'ajoutRappel'], ['Modifier', 'modifier'], ['Supprimer', 'suppRappel'], ['sp'],
             ['Fait', 'fait'], ['Annuler le rappel', 'annulRappel'], ['sp'],
             ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
+  score2: [['Recalculer', ''], ['Enregistrer le score', ''], ['sp'],
+           ['Poser un rappel', 'versExamens'], ['sp'],
+           ['Imprimer', ''], ['sp'],
+           ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']],
   timeline: [['Imprimer la frise', 'imprimer'], ['Remettre au patient', 'imprimer'], ['sp'],
              ['Revenir à la liste', 'versExamens'], ['sp'],
              ['Ok', ''], ['Appliquer', 'off'], ['sp'], ['Aide', ''], ['Annuler', '']]
@@ -1068,6 +1190,12 @@ function rendreModule() {
     vaccins: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="#c0272d"/></svg>',
     examens: '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' +
       (Etat.rappels.some(function (r) { return r.due < AUJ; }) ? '#c0272d' : (Etat.rappels.some(function (r) { return r.due <= PROCHE; }) ? '#e08a1e' : '#c3c7cb')) + '"/></svg>',
+    score2: (function () {
+      var rr = score2(false), aa = nombre(Etat.score.age);
+      var cc = (rr && aa >= 40 && aa <= 89) ? classeRisque(rr.pct, aa).cls : null;
+      var col = cc === 'tres' ? '#c0272d' : cc === 'haut' ? '#e08a1e' : cc === 'bas' ? '#2a6b34' : '#c3c7cb';
+      return '<svg width="9" height="9" viewBox="0 0 9 9"><circle cx="4.5" cy="4.5" r="4" fill="' + col + '"/></svg>';
+    })(),
     timeline: '<svg width="11" height="9" viewBox="0 0 11 9"><path d="M0.5 7.5 H10.5" stroke="#5a6068" stroke-width="1"/><circle cx="3" cy="4" r="2" fill="#7a8087"/><circle cx="8" cy="4" r="2" fill="#7a8087"/></svg>'
   };
 
@@ -1076,9 +1204,10 @@ function rendreModule() {
   h += '<div class="tabs">' +
     '<div class="tab' + (Etat.onglet === 'vaccins' ? ' act' : '') + '" data-act="onglet" data-arg="vaccins">' + pastilleOng.vaccins + '<span>Vaccins</span></div>' +
     '<div class="tab' + (Etat.onglet === 'examens' ? ' act' : '') + '" data-act="onglet" data-arg="examens">' + pastilleOng.examens + '<span>Examens &amp; consultations</span></div>' +
+    '<div class="tab' + (Etat.onglet === 'score2' ? ' act' : '') + '" data-act="onglet" data-arg="score2">' + pastilleOng.score2 + '<span>SCORE2</span></div>' +
     '<div class="tab' + (Etat.onglet === 'timeline' ? ' act' : '') + '" data-act="onglet" data-arg="timeline">' + pastilleOng.timeline + '<span>Timeline</span></div>' +
     '</div>';
-  h += paneVaccins() + paneExamens() + paneTimeline();
+  h += paneVaccins() + paneExamens() + paneScore() + paneTimeline();
   h += '</div><div class="sidebtns">';
   JEUX[Etat.onglet].forEach(function (b) {
     if (b[0] === 'sp') { h += '<div class="spacer"></div>'; return; }
