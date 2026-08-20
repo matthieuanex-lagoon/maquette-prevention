@@ -246,7 +246,7 @@
 
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
-      <li><strong>Épisode de soins</strong> — deux gestes sous une même case, au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et la case <strong>ALD</strong> lorsqu'elle y ouvre droit. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
+      <li><strong>Épisode de soins</strong> — deux gestes sous une même case, au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et les cases <strong>ALD</strong> et <strong>AT/MP</strong> lorsque l'affection y ouvre droit — un épisode ouvert au titre d'un accident du travail ou d'une maladie professionnelle relève d'une prise en charge à part, et c'est au moment où on l'ouvre qu'on le sait. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
       <li><strong>Prévention</strong> — l'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
     </ul>
 
@@ -343,7 +343,7 @@
       <tr><td>Visibilité</td><td>Tous les praticiens du cabinet. Pas de filtre « mes rappels » : c'est la coordination qui est recherchée.</td></tr>
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
-      <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, case ALD. Le rattachement est le cas le plus fréquent.</td></tr>
+      <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, cases ALD et AT/MP. Le rattachement est le cas le plus fréquent.</td></tr>
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>Timeline</td><td>Ajout : troisième onglet, vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
@@ -477,7 +477,7 @@ function saisieInitiale() {
     marquer: { on: true, note: 'à rappeler — commenter le résultat' },
     prevention: { on: true, blocs: [blocInitial()] },
     episode: { on: true, mode: 'creer', lien: '', patho: 'Nodule thyroïdien',
-               debut: '19/08/2026', ald: false,
+               debut: '19/08/2026', ald: false, atmp: false,
                note: 'découvert sur écho. cervicale du 19/08/2026' }
   };
 }
@@ -519,7 +519,7 @@ function initialiser() {
     vaccinSel: 1,
     episodes: [
       { id: 1, nom: 'Dépression',           debut: d(2023, 9, 3),  ald: false, note: 'suivi psychothérapie', docs: 4 },
-      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, note: 'mollet droit', docs: 2 },
+      { id: 2, nom: 'Déchirure musculaire', debut: d(2024, 4, 12), ald: false, atmp: true, note: 'mollet droit — chute au travail', docs: 2 },
       { id: 3, nom: 'Gonarthrose',          debut: d(2025, 1, 21), ald: false, note: 'genou droit', docs: 6 }
     ]
   };
@@ -682,6 +682,8 @@ function rendreFenetre() {
       h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Début :</div>' +
            champ('saisie.episode.debut', 96, 'jj/mm/aaaa') +
            '<div style="margin-left:18px;">' + caseAC('saisie.episode.ald', 'ALD', '— affection de longue durée') + '</div></div>';
+      h += '<div class="row" style="margin-top:7px; padding-left:210px;">' +
+           caseAC('saisie.episode.atmp', 'AT/MP', '— accident du travail ou maladie professionnelle') + '</div>';
       h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
            champ('saisie.episode.note', 0, 'contexte…') + '</div>';
       var deja = null;
@@ -691,7 +693,8 @@ function rendreFenetre() {
               ? (deja ? '→ « ' + e(deja.nom) + ' » est déjà ouvert depuis le ' + fmt(deja.debut) +
                         ' — le rattachement est sans doute préférable'
                       : '→ nouvel épisode « ' + e(s.episode.patho) + ' » ouvert le ' +
-                        fmt(lit(s.episode.debut) || AUJ) + (s.episode.ald ? ', en ALD' : ''))
+                        fmt(lit(s.episode.debut) || AUJ) +
+                        (s.episode.ald ? ', en ALD' : '') + (s.episode.atmp ? ', en AT/MP' : ''))
               : '→ aucune pathologie choisie') + '</div>';
     }
     h += '</div>';
@@ -791,20 +794,22 @@ function resume() {
 function rendreEpisodes() {
   var h = '<div class="grid" style="margin-top:0;">' +
     '<div class="ghead"><div style="width:280px;">Épisode</div><div style="width:100px;">Début</div>' +
-    '<div style="width:70px;">ALD</div><div style="width:92px;">Documents</div>' +
-    '<div style="width:260px;">Note</div><div style="width:110px;">Auteur</div></div>';
+    '<div style="width:70px;">ALD</div><div style="width:70px;">AT/MP</div>' +
+    '<div style="width:92px;">Documents</div>' +
+    '<div style="width:230px;">Note</div><div style="width:110px;">Auteur</div></div>';
   Etat.episodes.slice().sort(function (a, b) { return b.debut - a.debut; }).forEach(function (ep) {
     h += '<div class="grow' + (Etat.nouveaux.indexOf('ep' + ep.id) !== -1 ? ' flash' : '') + '" data-act="rienEp">' +
       '<div style="width:280px;">' + e(ep.nom) + '</div>' +
       '<div style="width:100px;">' + fmt(ep.debut) + '</div>' +
       '<div style="width:70px;">' + (ep.ald ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
+      '<div style="width:70px;">' + (ep.atmp ? '<span style="color:#2a6b34; font-weight:600;">Oui</span>' : '<span class="grey">—</span>') + '</div>' +
       '<div style="width:92px;">' + (ep.docs ? e(String(ep.docs)) : '<span class="grey">—</span>') + '</div>' +
-      '<div style="width:260px;">' + e(ep.note) + '</div>' +
+      '<div style="width:230px;">' + e(ep.note) + '</div>' +
       '<div style="width:110px;">M. ANEX</div></div>';
   });
   h += '<div style="height:24px; background:#fff;"></div></div>';
   var hote = document.getElementById('episodesWF');
-  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 930, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
+  hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 970, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
   cabler(hote);
 }
 
@@ -1223,10 +1228,12 @@ function actions(nom, arg) {
     } else if (s.episode.on && s.episode.patho) {
       compteur += 1;
       var deb = lit(s.episode.debut) || AUJ;
-      Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald, note: s.episode.note, docs: 1 });
+      Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald,
+        atmp: !!s.episode.atmp, note: s.episode.note, docs: 1 });
       cles.push('ep' + compteur);
       bilan.push('Épisode de soins « ' + e(s.episode.patho) + ' » ouvert au ' + fmt(deb) +
-        (s.episode.ald ? ' <strong>en ALD</strong>' : '') + ', le document lui est rattaché.');
+        (s.episode.ald ? ' <strong>en ALD</strong>' : '') +
+        (s.episode.atmp ? ' <strong>en AT/MP</strong>' : '') + ', le document lui est rattaché.');
     }
     if (s.prevention.on) {
       var faits = 0;
