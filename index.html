@@ -105,7 +105,7 @@
   .wf .navy { color: #1f3a63; }
   .wf .grey { color: #6b7075; }
   .wf .check { display: flex; align-items: center; gap: 7px; }
-  .wf .check .ico { display: inline-flex; align-items: center; margin-right: -3px; flex-shrink: 0; }
+  .wf .check .ico { display: inline-flex; align-items: center; margin-left: auto; padding-left: 12px; flex-shrink: 0; }
   .wf .check.click { cursor: pointer; user-select: none; }
   .wf .check .tick { display: none; }
   .wf .check.on .box { border-color: #5a5a5a; }
@@ -551,9 +551,9 @@ function champ(chemin, largeur, vide, desactive) {
 function caseAC(chemin, libelle, suffixe, icone) {
   return '<div class="check click' + (get(chemin) ? ' on' : '') + '" data-check="' + chemin + '">' +
     '<span class="box">' + SVG.tick + '</span>' +
-    (icone ? '<span class="ico">' + icone + '</span>' : '') +
     '<span class="navy">' + e(libelle) + '</span>' +
-    (suffixe ? '<span class="grey">' + e(suffixe) + '</span>' : '') + '</div>';
+    (suffixe ? '<span class="grey">' + e(suffixe) + '</span>' : '') +
+    (icone ? '<span class="ico">' + icone + '</span>' : '') + '</div>';
 }
 function radio(chemin, valeur, libelle) {
   var on = get(chemin) === valeur;
