@@ -160,6 +160,32 @@
   .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
   .wf .vert { color: #2a6b34; font-weight: 600; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
+  .wf .pi-barre { display: flex; align-items: center; gap: 16px; padding: 7px 10px; background: #f4f5f6; border-bottom: 1px solid #d8dce0; }
+  .wf .pi-zone { border-bottom: 1px solid #e6e9ec; }
+  .wf .pi-zone:last-child { border-bottom: none; }
+  .wf .pi-tete { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; background: linear-gradient(#fbfbfc,#f2f4f6); cursor: pointer; user-select: none; }
+  .wf .pi-tete:hover { background: #eef3fa; }
+  .wf .pi-tete .t { font-weight: 600; color: #2a2f35; }
+  .wf .pi-tete .n { color: #6b7075; }
+  .wf .pi-tete .o { margin-left: auto; color: #9aa0a6; font-size: 11px; }
+  .wf .pi-tete svg.ch { transition: transform .12s; }
+  .wf .pi-tete.open svg.ch { transform: rotate(90deg); }
+  .wf .pi-corps { padding: 8px 10px 10px 28px; }
+  .wf .pi-item { display: flex; align-items: flex-start; gap: 8px; padding: 3px 0; }
+  .wf .pi-item .pt { padding-top: 3px; flex-shrink: 0; }
+  .wf .pi-item .tx { flex-grow: 1; }
+  .wf .pi-item .sous { color: #8a9099; }
+  .wf .pi-act { display: flex; gap: 6px; flex-shrink: 0; }
+  .wf .pi-mini { height: 19px; display: inline-flex; align-items: center; padding: 0 8px; border: 1px solid #b9c8d8; border-radius: 2px; background: #f2f7fc; cursor: pointer; color: #1a5fb4; }
+  .wf .pi-mini:hover { background: #e2edf9; }
+  .wf .pi-jaune { background: #fdfba8; border: 1px solid #e4dd7a; min-height: 62px; padding: 7px 9px; white-space: pre-wrap; outline: none; }
+  .wf .pi-jaune:focus { border-color: #b9c8d8; box-shadow: inset 0 0 0 1px #cfe0f2; }
+  .wf .pi-vide { color: #9aa0a6; padding: 2px 0 4px; }
+  .wf .pi-inter { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; margin-left: auto; }
+  .wf .pi-sw { width: 30px; height: 15px; border-radius: 8px; background: #c3c7cb; position: relative; transition: background .12s; }
+  .wf .pi-sw i { position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: #fff; transition: left .12s; }
+  .wf .pi-sw.on { background: #2a6b34; }
+  .wf .pi-sw.on i { left: 17px; }
   .wf .fmt-tete { display: flex; align-items: center; gap: 20px; padding: 10px 14px; background: #fbfcfd; border-bottom: 1px solid #dfe3e6; }
   .wf .fmt-kpi { display: flex; align-items: baseline; gap: 7px; }
   .wf .fmt-kpi .n { font-size: 22px; font-weight: 600; line-height: 1; }
@@ -252,6 +278,7 @@
       <a href="#principe">Le principe</a>
       <a href="#fenetre">La fenêtre</a>
       <a href="#module">Le module</a>
+      <a href="#postit">Le post-it</a>
       <a href="#arbitrages">Les arbitrages</a>
       <a href="#" class="reinit" id="reinit">Réinitialiser la démo</a>
     </nav>
@@ -267,7 +294,7 @@
 
     <div class="version">
       <span class="v-lab">Version de la démo</span>
-      <span class="v-num">v6</span>
+      <span class="v-num">v7</span>
       <span class="v-date">20 août 2026</span>
     </div>
 
@@ -391,8 +418,37 @@
     <p class="wide">C'est aussi le support naturel de la <strong>frise imprimable à remettre au patient</strong>, que l'ébauche du 19 août plaçait en réserve pour une version ultérieure. La vue existant de toute façon à l'écran, l'impression n'en est plus qu'un prolongement.</p>
   </section>
 
-  <section id="arbitrages">
+  <section id="postit">
     <div class="sec-num">04</div>
+    <h2>Le post-it</h2>
+    <p>Le troisième lieu du dispositif. On saisit dans H', on consulte dans le module — mais c'est ici qu'on est <em>rattrapé</em>, sans avoir rien demandé.</p>
+    <p class="wide">Le post-it d'aujourd'hui empile deux choses de nature différente : un plan de soins calculé, qui déroule le risque cardiovasculaire et les indicateurs ROSP en manque, et une zone jaune de notes libres. Le tout arrive d'un bloc, sans hiérarchie, et l'on prend vite l'habitude de fermer la fenêtre avant de l'avoir lue. C'est le sort ordinaire d'un rappel qui s'affiche toujours, y compris quand il n'a rien à dire.</p>
+    <p class="wide">La proposition le découpe en <strong>quatre zones</strong>, chacune avec une origine distincte, un titre, un compteur et une mention discrète de sa provenance. Chaque zone se replie ; celle qui est vide se réduit à sa ligne de titre et annonce « rien à signaler ». Le post-it d'un patient sans rien en cours tient alors en quatre lignes.</p>
+
+    <ul class="plain">
+      <li><strong>Marquage</strong> — ce qui vient d'être reçu et attend d'être repris : la note saisie à l'incorporation, avec sa date, son motif et le document qui l'a motivé. « Ouvrir » rouvre le compte rendu, « Traité » retire la ligne.</li>
+      <li><strong>Prévention</strong> — les échéances dépassées et proches, examens et vaccins mêlés, chacune avec la raison qui explique qu'elle traîne : refusée, proposée en attente. En pied de zone, une ligne de synthèse rappelle les indicateurs du forfait à faire et les examens manquants de l'ex-ROSP.</li>
+      <li><strong>Notes personnelles</strong> — la zone jaune d'aujourd'hui, gardée telle quelle, écrite à la volée. Elle change de rang mais pas de nature ni de couleur.</li>
+      <li><strong>Tâches secrétariat</strong> — ce qui a été confié depuis la fenêtre d'incorporation : à qui, quoi, depuis quand. Elle ne demande rien au médecin ; elle lui dit que c'est parti.</li>
+    </ul>
+
+    <p class="wide"><strong>L'ordre suit l'exigibilité, du plus impératif au plus informatif.</strong> Le marquage vient d'abord parce qu'il attend une action de moi, aujourd'hui. La prévention ensuite : elle attend une action, mais elle a le temps. Les notes personnelles sont du contexte, pas une demande. Les tâches du secrétariat viennent en dernier parce qu'elles ne me sont pas adressées — savoir qu'elles sont lancées suffit. Lire le post-it de haut en bas, c'est traiter dans l'ordre.</p>
+
+    <div class="essayez">Manipulable</div>
+    <p class="wide" style="margin-top:0;">Dépliez et repliez les zones, marquez un document « Traité », une tâche « Faite », écrivez dans la zone jaune. Et surtout : remontez à la fenêtre d'incorporation, cochez « Marquer le patient » et « Ajouter une tâche secrétaire », validez — les deux lignes apparaissent ici.</p>
+
+    <figure class="shot" style="margin-top:22px;">
+      <div class="wf" id="postitWF"></div>
+      <div class="hint">Redessiné d'après le post-it actuel. Les quatre cases d'impression remplacent les deux d'aujourd'hui, et l'interrupteur « Marquer ce patient » reste à sa place.</div>
+    </figure>
+
+    <p class="wide" style="margin-top:26px;">Deux propositions s'ajoutent, moins visibles mais qui décident de l'usage réel de cet écran.</p>
+    <p class="wide"><strong>N'ouvrir le post-it que lorsqu'il a quelque chose à dire.</strong> Une fenêtre qui s'ouvre à chaque dossier, même vide, s'apprend comme un obstacle : on la ferme d'un geste devenu réflexe, et le jour où elle porte l'information importante, on la ferme aussi. Un post-it qui ne s'ouvre qu'en présence d'un marquage, d'une échéance dépassée ou d'une note redevient un signal. Une icône dans la barre permettrait de l'ouvrir à la demande le reste du temps.</p>
+    <p class="wide"><strong>Le plan de soins calculé ne disparaît pas, il est rangé.</strong> Le risque cardiovasculaire et les indicateurs ROSP en manque ne sont pas supprimés : ils quittent le texte brut du haut pour rejoindre la zone Prévention sous forme de lignes, et leur détail vit désormais dans les onglets SCORE2 et ex ROSP du module. Le post-it dit qu'il y a quelque chose ; le module dit quoi.</p>
+  </section>
+
+  <section id="arbitrages">
+    <div class="sec-num">05</div>
     <h2>Les arbitrages</h2>
     <p>Réponses aux six points soumis dans l'ébauche du 19 août, plus la question de la périodicité.</p>
     <table class="decisions">
@@ -410,6 +466,7 @@
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
       <tr><td>Prévention MT (CPAM)</td><td>Ajout, au stade bêta : les quinze indicateurs du volet prévention du forfait médecin traitant, triés selon qu'ils concernent ou non le patient ouvert.</td></tr>
+      <tr><td>Post-it</td><td>Restructuré en quatre zones repliables — marquage, prévention, notes personnelles, tâches secrétariat — rangées par exigibilité. Proposition : ne l'ouvrir automatiquement que s'il a quelque chose à dire.</td></tr>
       <tr><td>Proposé / Refusé</td><td>Ajout : deux cases à cocher par ligne, dans Vaccins comme dans Examens &amp; consultations. Ce qui a été proposé au patient, ce qu'il a refusé — l'un des deux seuls motifs qui expliquent une échéance qui ne bouge pas.</td></tr>
       <tr><td>ex ROSP</td><td>Ajout : les anciens indicateurs ROSP non repris par le forfait, à commencer par le suivi rénal de l'hypertendu.</td></tr>
       <tr><td>Timeline</td><td>Ajout : vue chronologique de toute la prévention, vaccins compris.</td></tr>
@@ -417,7 +474,7 @@
   </section>
 
   <section id="perimetre">
-    <div class="sec-num">05</div>
+    <div class="sec-num">06</div>
     <h2>Hors périmètre</h2>
     <ul class="plain">
       <li><strong>L'incorporation rapide en masse n'est pas concernée.</strong> Elle intègre les documents sans qu'on les lise ; un rappel de prévention n'a de sens qu'après lecture.</li>
@@ -483,6 +540,7 @@ var SVG = {
   marque: '<svg width="11" height="13" viewBox="0 0 11 13"><path d="M1.2 1.2 H9.8 V11.8 L5.5 8.7 L1.2 11.8 Z" fill="none" stroke="#5a6068" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   dossier: '<svg width="14" height="13" viewBox="0 0 14 13"><path d="M1 2.8 H5.5 L6.8 4.5 H13 V11.4 H1 Z" fill="none" stroke="#5a6068" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   calendrier: '<svg width="13" height="13" viewBox="0 0 13 13"><rect x="1" y="2.6" width="11" height="9.4" fill="none" stroke="#5a6068" stroke-width="1.2"/><path d="M1 5.6 H12" stroke="#5a6068" stroke-width="1.2"/><path d="M3.8 1 V3.4 M9.2 1 V3.4" stroke="#5a6068" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="8.9" r="1.05" fill="#5a6068"/></svg>',
+  crayon: '<svg width="13" height="13" viewBox="0 0 13 13"><path d="M2 11 L2.6 8.6 L9 2.2 L10.8 4 L4.4 10.4 Z" fill="none" stroke="#5a6068" stroke-width="1.2" stroke-linejoin="round"/><path d="M8.2 3 L10 4.8" stroke="#5a6068" stroke-width="1.2"/></svg>',
   liste: '<svg width="12" height="13" viewBox="0 0 12 13"><rect x="1" y="2" width="10" height="10" fill="none" stroke="#5a6068" stroke-width="1.2"/><path d="M3.2 5.4 H8.8 M3.2 7.7 H8.8 M3.2 10 H6.6" stroke="#5a6068" stroke-width="1.1" stroke-linecap="round"/></svg>',
   doc: '<svg width="26" height="26" viewBox="0 0 26 26"><path d="M6 2 H16 L21 7 V24 H6 Z" fill="#fff" stroke="#7a8087" stroke-width="1.2"/><path d="M16 2 V7 H21" fill="none" stroke="#7a8087" stroke-width="1.2"/><path d="M9 12 H18 M9 15.5 H18 M9 19 H14" stroke="#9aa0a6" stroke-width="1.1"/></svg>'
 };
@@ -573,7 +631,6 @@ function initialiser() {
     tri: { col: 'due', sens: 1 },
     nouveaux: [],
     pisteSel: null,
-    marquage: null,
     saisie: saisieInitiale(),
     rappels: [
       { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023', propose: true, refuse: true },
@@ -595,6 +652,16 @@ function initialiser() {
     ],
     vaccinSel: 1,
     fmtBientot: false, fmtNon: false,
+    pi: { marq: true, prev: true, notes: true, tach: true },
+    piImpr: { marq: true, prev: true, notes: true, tach: false },
+    piMarquer: false,
+    notesPerso: 'Travaille en horaires décalés — éviter les rendez-vous avant 11 h.\nSœur suivie pour un cancer du sein, âge de découverte à préciser.',
+    marquages: [
+      { id: 91, le: d(2026, 8, 12), note: 'résultat à commenter, rappeler la patiente', src: 'Biologie — LABO BIOMEDILAM — 12/07/2026', qui: 'M. ANEX' }
+    ],
+    taches: [
+      { id: 95, le: d(2026, 8, 5), pour: 'Maude', quoi: 'reprendre le rendez-vous de contrôle, la patiente ne s’est pas présentée', etat: 'en attente' }
+    ],
     rosp: [
       { n: 'ROSP HTA sans (micro)albuminurie ou protéinurie depuis 1 an', le: null,          val: 'jamais dosée' },
       { n: 'ROSP HTA sans créatininémie depuis 1 an',                     le: d(2026, 7, 12), val: '8,4 mg/L' },
@@ -920,6 +987,114 @@ function rendreEpisodes() {
   h += '<div style="height:24px; background:#fff;"></div></div>';
   var hote = document.getElementById('episodesWF');
   hote.innerHTML = chrome('Épisodes de soins — MARTIN Claire (45 ans)', 970, '<div style="padding:8px;">' + h + '</div>', '#f0f0f0');
+  cabler(hote);
+}
+
+/* ============================ post-it ============================ */
+
+function piPrevention() {
+  var out = [];
+  Etat.rappels.forEach(function (r) {
+    var s = etat(r.due);
+    if (s.cle === 'avenir') { return; }
+    out.push({ cle: s.cle, quoi: r.nom,
+      quand: s.cle === 'depasse' ? 'échéance dépassée depuis le ' + fmt(r.due) : 'échéance proche, le ' + fmt(r.due),
+      motif: r.refuse ? 'refusé par la patiente' : (r.propose ? 'proposé, en attente' : ''),
+      tri: r.due });
+  });
+  Etat.vaccins.forEach(function (v) {
+    var s = etat(v.rappel);
+    if (s.cle === 'avenir') { return; }
+    out.push({ cle: s.cle, quoi: v.valence + ' (' + v.nom + ')',
+      quand: s.cle === 'depasse' ? 'rappel dépassé depuis le ' + fmt(v.rappel) : 'rappel proche, le ' + fmt(v.rappel),
+      motif: v.refuse ? 'refusé par la patiente' : (v.propose ? 'proposé, en attente' : ''),
+      tri: v.rappel });
+  });
+  return out.sort(function (a, b) { return a.tri - b.tri; });
+}
+
+function piZone(cle, icone, titre, compte, origine, corps) {
+  var ouvert = Etat.pi[cle];
+  var h = '<div class="pi-zone">';
+  h += '<div class="pi-tete' + (ouvert ? ' open' : '') + '" data-act="piZone" data-arg="' + cle + '">' +
+       '<svg class="ch" width="8" height="9" viewBox="0 0 8 9"><path d="M1 1 L6.5 4.5 L1 8 Z" fill="#5a6068"/></svg>' +
+       icone + '<span class="t">' + e(titre) + '</span>' +
+       (compte === null ? '' : compte ? '<span class="n">— ' + e(compte) + '</span>' : '<span class="n">— rien à signaler</span>') +
+       '<span class="o">' + e(origine) + '</span></div>';
+  if (ouvert) { h += '<div class="pi-corps">' + corps + '</div>'; }
+  h += '</div>';
+  return h;
+}
+
+function rendrePostit() {
+  var h = '';
+
+  /* barre d'outils */
+  h += '<div class="pi-barre">' +
+       '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="4" y="1.5" width="8" height="4" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="1.5" y="5.5" width="13" height="6" fill="none" stroke="#4a5058" stroke-width="1.1"/><rect x="4" y="10" width="8" height="4.5" fill="#fff" stroke="#4a5058" stroke-width="1.1"/></svg>' +
+       '<span class="grey">Imprimer :</span>' +
+       caseAC('piImpr.marq', 'Marquage') + caseAC('piImpr.prev', 'Prévention') +
+       caseAC('piImpr.notes', 'Notes') + caseAC('piImpr.tach', 'Tâches') +
+       '<span class="pi-inter" data-act="piMarquer"><span class="pi-sw' + (Etat.piMarquer ? ' on' : '') + '"><i></i></span>' +
+       '<span>Marquer ce patient</span></span>' +
+       '</div>';
+
+  /* 1 - marquage */
+  var m = Etat.marquages.map(function (x) {
+    return '<div class="pi-item"><div class="pt">' + SVG.marque + '</div>' +
+      '<div class="tx"><div>' + e(x.note || 'marqué, sans motif') + '</div>' +
+      '<div class="sous">' + fmt(x.le) + ' · ' + e(x.src) + ' · ' + e(x.qui) + '</div></div>' +
+      '<div class="pi-act"><span class="pi-mini" data-act="piVoirDoc">Ouvrir</span>' +
+      '<span class="pi-mini" data-act="piTraite" data-arg="' + x.id + '">Traité</span></div></div>';
+  }).join('');
+  h += piZone('marq', SVG.marque, 'Marquage', Etat.marquages.length ? Etat.marquages.length + (Etat.marquages.length > 1 ? ' documents à reprendre' : ' document à reprendre') : '',
+    'posé à l’incorporation', m || '<div class="pi-vide">Aucun document en attente de reprise.</div>');
+
+  /* 2 - prevention */
+  var pv = piPrevention();
+  var dep = pv.filter(function (x) { return x.cle === 'depasse'; }).length;
+  var pro = pv.length - dep;
+  var lignes = pv.map(function (x) {
+    return '<div class="pi-item"><div class="pt">' + pastille[x.cle] + '</div>' +
+      '<div class="tx"><span class="' + (x.cle === 'depasse' ? 'red' : 'orange') + '">' + e(x.quoi) + '</span> — ' + e(x.quand) +
+      (x.motif ? ' <span class="sous">· ' + e(x.motif) + '</span>' : '') + '</div>' +
+      '<div class="pi-act"><span class="pi-mini" data-act="piVersModule">Voir</span></div></div>';
+  }).join('');
+  var xf = fmtContexte(), nbf = 0;
+  FMT.forEach(function (i) { if (i.t(xf) === 'oui' && (FMT_ETAT[i.n] || {}).st !== 'valide') { nbf += 1; } });
+  var nbr = aHTA() ? Etat.rosp.filter(function (r) { return rospEtat(r).cle === 'alerte'; }).length : 0;
+  if (nbf || nbr) {
+    lignes += '<div class="pi-item" style="margin-top:5px; border-top:1px dashed #e0e3e6; padding-top:6px;">' +
+      '<div class="pt"></div><div class="tx sous">' +
+      (nbf ? 'Forfait médecin traitant : ' + nbf + ' indicateur' + (nbf > 1 ? 's' : '') + ' à faire.' : '') +
+      (nbf && nbr ? ' ' : '') +
+      (nbr ? 'Ex-ROSP : ' + nbr + ' examen' + (nbr > 1 ? 's manquants' : ' manquant') + ' chez cette hypertendue.' : '') +
+      '</div></div>';
+  }
+  h += piZone('prev', SVG.calendrier, 'Prévention',
+    pv.length ? (dep ? dep + (dep > 1 ? ' dépassées' : ' dépassée') : '') + (dep && pro ? ', ' : '') + (pro ? pro + ' proche' + (pro > 1 ? 's' : '') : '') : '',
+    'module Prévention',
+    lignes || '<div class="pi-vide">Rien de dépassé ni de proche.</div>');
+
+  /* 3 - notes personnelles */
+  h += piZone('notes', SVG.crayon, 'Notes personnelles',
+    String(Etat.notesPerso).trim() ? null : '', 'saisie libre',
+    '<div class="pi-jaune" contenteditable="true" data-edit="notesPerso">' + e(Etat.notesPerso) + '</div>');
+
+  /* 4 - taches secretariat */
+  var tc = Etat.taches.map(function (x) {
+    return '<div class="pi-item"><div class="pt">' + SVG.liste + '</div>' +
+      '<div class="tx"><div><b>' + e(x.pour) + '</b> · ' + e(x.quoi) + '</div>' +
+      '<div class="sous">posée le ' + fmt(x.le) + ' · ' + e(x.etat) + '</div></div>' +
+      '<div class="pi-act"><span class="pi-mini" data-act="piFaite" data-arg="' + x.id + '">Faite</span></div></div>';
+  }).join('');
+  h += piZone('tach', SVG.liste, 'Tâches secrétariat',
+    Etat.taches.length ? Etat.taches.length + ' en attente' : '', 'posées à l’incorporation',
+    tc || '<div class="pi-vide">Aucune tâche en cours.</div>');
+
+  var hote = document.getElementById('postitWF');
+  if (!hote) { return; }
+  hote.innerHTML = chrome('Post-It — MARTIN Claire (45 ans)', 720, h, '#fff');
   cabler(hote);
 }
 
@@ -1591,8 +1766,10 @@ function actions(nom, arg) {
   if (nom === 'valider') {
     var s = Etat.saisie, bilan = [], cles = [];
     if (s.marquer.on) {
-      Etat.marquage = { note: s.marquer.note };
-      bilan.push('Patient marqué' + (s.marquer.note ? ' — « ' + e(s.marquer.note) + ' »' : '') + '.');
+      compteur += 1;
+      Etat.marquages.push({ id: compteur, le: AUJ, note: s.marquer.note, src: s.intitule, qui: 'M. ANEX' });
+      bilan.push('Patient marqué' + (s.marquer.note ? ' — « ' + e(s.marquer.note) + ' »' : '') +
+        '. <span class="grey">(remonte au post-it)</span>');
     }
     if (s.episode.on && s.episode.mode === 'lier') {
       var epl = epLie();
@@ -1638,6 +1815,9 @@ function actions(nom, arg) {
       if (!faits && s.prevention.blocs.length) { bilan.push('<span class="grey">Aucun rappel : élément de suivi ou échéance manquant.</span>'); }
     }
     if (s.tache.on && s.tache.acteur) {
+      compteur += 1;
+      Etat.taches.push({ id: compteur, le: AUJ, pour: s.tache.acteur.split(' - ')[0],
+                         quoi: s.tache.note, etat: 'en attente' });
       bilan.push('Tâche transmise à ' + e(s.tache.acteur.split(' - ')[0]) +
         (s.tache.note ? ' — « ' + e(s.tache.note) + ' »' : '') +
         '. <span class="grey">(bêta : la grille de to-do list reste à définir)</span>');
@@ -1646,7 +1826,7 @@ function actions(nom, arg) {
     Etat.relance = null;
     rendreTout();
     flash(cles);
-    rendreEpisodes(); rendreModule();
+    rendreEpisodes(); rendreModule(); rendrePostit();
     modaleValidation(bilan);
     return;
   }
@@ -1677,6 +1857,12 @@ function actions(nom, arg) {
   if (nom === 'versExamens') { Etat.onglet = 'examens'; rendreModule(); return; }
   if (nom === 'hist')        { Etat.histOuvert = !Etat.histOuvert; rendreModule(); return; }
   if (nom === 'fmtBientot')  { Etat.fmtBientot = !Etat.fmtBientot; rendreModule(); return; }
+  if (nom === 'piZone')      { Etat.pi[arg] = !Etat.pi[arg]; rendrePostit(); return; }
+  if (nom === 'piMarquer')   { Etat.piMarquer = !Etat.piMarquer; rendrePostit(); return; }
+  if (nom === 'piTraite')    { Etat.marquages = Etat.marquages.filter(function (x) { return x.id !== +arg; }); rendrePostit(); return; }
+  if (nom === 'piFaite')     { Etat.taches = Etat.taches.filter(function (x) { return x.id !== +arg; }); rendrePostit(); return; }
+  if (nom === 'piVoirDoc')   { modaleInfo('Document source', 'Le compte rendu qui a motivé le marquage s’ouvrirait ici, sans avoir à le rechercher dans le dossier.'); return; }
+  if (nom === 'piVersModule'){ Etat.onglet = 'examens'; rendreModule(); modaleInfo('Module Prévention', 'La ligne cliquée ouvrirait le module sur l’onglet correspondant, rappel sélectionné.'); return; }
   if (nom === 'fmtNon')      { Etat.fmtNon = !Etat.fmtNon; rendreModule(); return; }
   if (nom === 'selRappel')   { Etat.selection = +arg; Etat.modification = false; rendreModule(); return; }
   if (nom === 'selVaccin')   { Etat.vaccinSel = +arg; rendreModule(); return; }
@@ -1784,7 +1970,7 @@ function actions(nom, arg) {
 
 /* ============================ rendu global ============================ */
 
-function rendreTout() { rendreFenetre(); rendreEpisodes(); rendreModule(); }
+function rendreTout() { rendreFenetre(); rendreEpisodes(); rendreModule(); rendrePostit(); }
 
 document.getElementById('reinit').addEventListener('click', function (ev) {
   ev.preventDefault();
