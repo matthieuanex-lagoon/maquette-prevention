@@ -106,6 +106,7 @@
   .wf .grey { color: #6b7075; }
   .wf .check { display: flex; align-items: center; gap: 7px; }
   .wf .check .ico { display: inline-flex; align-items: center; margin-left: -2px; flex-shrink: 0; }
+  .wf .beta { font-size: 10px; line-height: 14px; letter-spacing: .04em; text-transform: uppercase; color: #8a5a00; background: #fdf3d8; border: 1px solid #e8d49a; border-radius: 2px; padding: 0 4px; flex-shrink: 0; }
   .wf .check.click { cursor: pointer; user-select: none; }
   .wf .check .tick { display: none; }
   .wf .check.on .box { border-color: #5a5a5a; }
@@ -149,7 +150,10 @@
   .wf .grow.flash { animation: flash 2s ease-out; }
   @keyframes flash { 0% { background: #ffe9a8; } 55% { background: #fff4cf; } 100% { background: transparent; } }
   .wf .c1 { width: 40px; } .wf .c2 { width: 200px; } .wf .c3 { width: 88px; } .wf .c4 { width: 128px; }
-  .wf .c5 { width: 324px; } .wf .c6 { width: 88px; } .wf .c7 { width: 108px; }
+  .wf .c5 { width: 210px; } .wf .c6 { width: 88px; } .wf .c7 { width: 88px; }
+  .wf .c8 { width: 70px; } .wf .c9 { width: 64px; }
+  .wf .c8, .wf .c9 { display: flex; align-items: center; justify-content: center; }
+  .wf .grow .c8:hover .box, .wf .grow .c9:hover .box { border-color: #1a5fb4; }
   .wf .red { color: #c0272d; font-weight: 600; } .wf .orange { color: #b06a06; font-weight: 600; } .wf .soft { color: #4a5058; }
   .wf .histbar { display: flex; align-items: center; gap: 7px; height: 25px; padding: 0 8px; background: linear-gradient(#fbfbfc,#f2f4f6); border-top: 1px solid #dfe3e6; color: #4a5058; cursor: pointer; user-select: none; }
   .wf .histbar:hover { color: #1a5fb4; }
@@ -243,15 +247,16 @@
   <section id="fenetre">
     <div class="sec-num">02</div>
     <h2>La fenêtre d'incorporation</h2>
-    <p class="wide">La fenêtre garde ses options actuelles — intitulé du document, incorporation manuelle, ouvrir la fiche patient — et gagne trois sections repliables. Chacune est une case à cocher : décochée, elle n'occupe qu'une ligne ; cochée, elle déplie son mini-menu. Les trois décochées — c'est l'état dans lequel elle s'ouvre — on retrouve la fenêtre d'aujourd'hui, augmentée de ces trois lignes.</p>
+    <p class="wide">La fenêtre garde ses options actuelles — intitulé du document, incorporation manuelle, ouvrir la fiche patient — et gagne quatre sections repliables. Chacune est une case à cocher : décochée, elle n'occupe qu'une ligne ; cochée, elle déplie son mini-menu. Les quatre décochées — c'est l'état dans lequel elle s'ouvre — on retrouve la fenêtre d'aujourd'hui, augmentée de ces quatre lignes.</p>
 
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — avec un champ de note, pour le cas où il faut rappeler ou traiter plus tard. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
       <li><strong>Épisode de soins</strong> — deux gestes sous une même case, au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et les cases <strong>ALD</strong> et <strong>AT/MP</strong> lorsque l'affection y ouvre droit — un épisode ouvert au titre d'un accident du travail ou d'une maladie professionnelle relève d'une prise en charge à part, et c'est au moment où on l'ouvre qu'on le sait. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
       <li><strong>Prévention</strong> — l'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
+      <li><strong>Ajouter une tâche secrétaire</strong> <span class="beta">Bêta</span> — la secrétaire à qui l'on confie la suite, et ce qu'il y a à faire : rappeler la patiente, programmer le contrôle, réclamer un compte rendu qui manque. Le rappel dit <em>quand</em> ; la tâche dit <em>qui s'en occupe</em>. C'est la troisième idée qu'Olaqin plaçait en réserve, figurée ici pour en juger sur pièce — la grille de to-do list qui recevrait ces tâches reste à définir.</li>
     </ul>
 
-    <p class="wide"><strong>L'ordre de ces trois sections n'est pas indifférent : c'est celui du temps.</strong> On marque en premier, parce qu'un résultat anormal réclame quelque chose de moi tout de suite et que je veux le garder de côté avant toute autre chose. On rattache ensuite, parce que le document appartient à une histoire déjà ouverte, et que c'est ce geste-là qui tient le dossier en ordre. Le rappel de prévention vient en dernier, parce qu'il ne porte ni sur aujourd'hui ni sur le dossier tel qu'il est, mais sur une échéance à venir. Descendre la fenêtre, c'est parcourir le présent, puis le suivi en cours, puis l'avenir — dans l'ordre même où les questions se posent à la lecture du compte rendu.</p>
+    <p class="wide"><strong>L'ordre de ces sections n'est pas indifférent : les trois premières suivent celui du temps.</strong> On marque en premier, parce qu'un résultat anormal réclame quelque chose de moi tout de suite et que je veux le garder de côté avant toute autre chose. On rattache ensuite, parce que le document appartient à une histoire déjà ouverte, et que c'est ce geste-là qui tient le dossier en ordre. Le rappel de prévention vient après, parce qu'il ne porte ni sur aujourd'hui ni sur le dossier tel qu'il est, mais sur une échéance à venir. Descendre la fenêtre, c'est parcourir le présent, puis le suivi en cours, puis l'avenir — dans l'ordre même où les questions se posent à la lecture du compte rendu. La tâche secrétaire ferme la série pour une autre raison : elle ne répond pas à <em>quand</em>, mais à <em>qui s'en charge</em>, et elle ne se pose qu'une fois le reste décidé.</p>
 
     <div class="essayez">Tout répond — essayez</div>
     <p class="wide" style="margin-top:0;">Cochez une case pour la déplier — la saisie s'ouvre déjà remplie, sur l'exemple de l'échographie cervicale. Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
@@ -300,7 +305,7 @@
       <figure class="shot">
         <figcaption>Proposé</figcaption>
         <div class="wf" id="fenetreWF"></div>
-        <div class="hint">À l'ouverture, les trois cases sont décochées et n'occupent qu'une ligne chacune — la fenêtre de gauche, augmentée de trois lignes. Cochez-en une, elle déplie sa saisie ; décochez-la, elle se replie. Rien n'est imposé à qui incorpore un document sans suite à donner.</div>
+        <div class="hint">À l'ouverture, les quatre cases sont décochées et n'occupent qu'une ligne chacune — la fenêtre de gauche, augmentée de quatre lignes. Cochez-en une, elle déplie sa saisie ; décochez-la, elle se replie. Rien n'est imposé à qui incorpore un document sans suite à donner.</div>
       </figure>
     </div>
 
@@ -346,6 +351,7 @@
       <tr><td>Historique</td><td>Sans préférence. Figuré ici replié en bas de grille, la forme la moins encombrante.</td></tr>
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
       <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, cases ALD et AT/MP. Le rattachement est le cas le plus fréquent.</td></tr>
+      <tr><td>Tâche secrétariat</td><td>Sortie de réserve, au stade bêta : une secrétaire, une tâche, depuis la même fenêtre. Reste à définir la grille de to-do list qui les reçoit.</td></tr>
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>Timeline</td><td>Ajout : troisième onglet, vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
@@ -417,6 +423,7 @@ var SVG = {
   marque: '<svg width="11" height="13" viewBox="0 0 11 13"><path d="M1.2 1.2 H9.8 V11.8 L5.5 8.7 L1.2 11.8 Z" fill="none" stroke="#5a6068" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   dossier: '<svg width="14" height="13" viewBox="0 0 14 13"><path d="M1 2.8 H5.5 L6.8 4.5 H13 V11.4 H1 Z" fill="none" stroke="#5a6068" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   calendrier: '<svg width="13" height="13" viewBox="0 0 13 13"><rect x="1" y="2.6" width="11" height="9.4" fill="none" stroke="#5a6068" stroke-width="1.2"/><path d="M1 5.6 H12" stroke="#5a6068" stroke-width="1.2"/><path d="M3.8 1 V3.4 M9.2 1 V3.4" stroke="#5a6068" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="8.9" r="1.05" fill="#5a6068"/></svg>',
+  liste: '<svg width="12" height="13" viewBox="0 0 12 13"><rect x="1" y="2" width="10" height="10" fill="none" stroke="#5a6068" stroke-width="1.2"/><path d="M3.2 5.4 H8.8 M3.2 7.7 H8.8 M3.2 10 H6.6" stroke="#5a6068" stroke-width="1.1" stroke-linecap="round"/></svg>',
   doc: '<svg width="26" height="26" viewBox="0 0 26 26"><path d="M6 2 H16 L21 7 V24 H6 Z" fill="#fff" stroke="#7a8087" stroke-width="1.2"/><path d="M16 2 V7 H21" fill="none" stroke="#7a8087" stroke-width="1.2"/><path d="M9 12 H18 M9 15.5 H18 M9 19 H14" stroke="#9aa0a6" stroke-width="1.1"/></svg>'
 };
 
@@ -447,6 +454,7 @@ var LISTES = {
     'Polyarthrite rhumatoïde', 'Sclérose en plaques', 'Syndrome anxieux', 'Tabagisme'],
   vaccin: ['BOOSTRIX TETRA', 'ENGERIX B 20', 'GARDASIL 9', 'INFLUVAC TETRA', 'PNEUMOVAX',
     'PREVENAR 13', 'REPEVAX SER 0,5ML', 'REVAXIS', 'SHINGRIX', 'VAXIGRIP TETRA'],
+  acteur: ['Audrey - secrétaire', 'Maude - secrétaire'],
   episode: function () {
     return Etat.episodes.slice()
       .sort(function (a, b) { return b.debut - a.debut; })
@@ -483,7 +491,9 @@ function saisieInitiale() {
     prevention: { on: false, blocs: [blocInitial()] },
     episode: { on: false, mode: 'creer', lien: '', patho: 'Nodule thyroïdien',
                debut: '19/08/2026', ald: false, atmp: false,
-               note: 'découvert sur écho. cervicale du 19/08/2026' }
+               note: 'découvert sur écho. cervicale du 19/08/2026' },
+    tache: { on: false, acteur: 'Maude - secrétaire',
+             note: 'programmer l’écho de contrôle dans un an' }
   };
 }
 
@@ -504,8 +514,8 @@ function initialiser() {
     marquage: null,
     saisie: saisieInitiale(),
     rappels: [
-      { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023' },
-      { id: 2, nom: 'Mammographie',           due: d(2026, 10, 4), rep: { n: 2, u: 'an(s)' }, note: 'dépistage organisé', auteur: 'M. ANEX', src: 'Mammographie — IRIMED — 04/10/2024' },
+      { id: 1, nom: 'Frottis cervico-utérin', due: d(2026, 3, 12), rep: { n: 3, u: 'an(s)' }, note: 'dernier frottis normal', auteur: 'M. ANEX', src: 'Frottis — LABO BIOMEDILAM — 12/03/2023', propose: true, refuse: true },
+      { id: 2, nom: 'Mammographie',           due: d(2026, 10, 4), rep: { n: 2, u: 'an(s)' }, note: 'dépistage organisé', auteur: 'M. ANEX', src: 'Mammographie — IRIMED — 04/10/2024', propose: true, refuse: false },
       { id: 3, nom: 'Échographie cervicale',  due: d(2027, 8, 19), rep: { n: 1, u: 'an(s)', pendant: 5 }, note: 'nodule thyroïdien droit 14mm EU-TIRADS 3', auteur: 'M. ANEX', src: 'Écho. cervicale — IRIMED — 19/08/2026' },
       { id: 4, nom: 'Coloscopie',             due: d(2031, 8, 15), rep: null, note: 'polype — contrôle à 5 ans', auteur: 'M. ANEX', src: 'CR coloscopie — CH Saint-Nazaire — 15/08/2026' }
     ],
@@ -755,6 +765,23 @@ function rendreFenetre() {
     h += '</div>';
   }
 
+  h += '<div class="sep"></div>';
+  h += '<div class="check click' + (s.tache.on ? ' on' : '') + '" data-check="saisie.tache.on">' +
+       '<span class="box">' + SVG.tick + '</span>' +
+       '<span class="navy">Ajouter une tâche secrétaire</span>' +
+       '<span class="ico">' + SVG.liste + '</span>' +
+       '<span class="beta">Bêta</span></div>';
+  if (s.tache.on) {
+    h += '<div class="panel">';
+    h += '<div class="row"><div class="lbl" style="width:96px;">Pour :</div>' +
+         combo('saisie.tache.acteur', 'acteur', 240) + '</div>';
+    h += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Tâche :</div>' +
+         champ('saisie.tache.note', 0, 'ce qu’il y a à faire…') + '</div>';
+    h += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
+         '→ <span class="beta">Bêta</span> ajouterait une tâche dans une grille de to-do list</div>';
+    h += '</div>';
+  }
+
   h += '<div style="display:flex; gap:20px; margin-top:20px; align-items:center;">' +
        '<div class="grey" style="flex-grow:1;">' + resume() + '</div>' +
        '<div class="btn def" data-act="valider">Valider</div>' +
@@ -792,6 +819,7 @@ function resume() {
   }
   var n = s.prevention.on ? s.prevention.blocs.filter(function (b) { return b.suivi && echeance(b); }).length : 0;
   if (n) { bouts.push(n + (n > 1 ? ' rappels' : ' rappel')); }
+  if (s.tache.on && s.tache.acteur) { bouts.push('1 tâche'); }
   return bouts.length ? 'À la validation : document classé, ' + bouts.join(', ') + '.' : 'À la validation : document classé.';
 }
 
@@ -849,6 +877,10 @@ function occurrences(r) {
   }
   return out;
 }
+function coche(v) {
+  return '<span class="box">' + (v ? SVG.tick.replace('class="tick"', 'style="display:block"') : '') + '</span>';
+}
+
 var pastille = {
   depasse: '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#c0272d"/></svg>',
   proche:  '<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#e08a1e"/></svg>',
@@ -881,7 +913,8 @@ function paneExamens() {
        '<div class="c3 tri" data-act="trier" data-arg="due">Échéance ' + fleche('due') + '</div>' +
        '<div class="c4">Répétition</div>' +
        '<div class="c5 tri" data-act="trier" data-arg="note">Note ' + fleche('note') + '</div>' +
-       '<div class="c6">Statut</div><div class="c7">Créé par</div></div>';
+       '<div class="c6">Statut</div><div class="c8">Proposé</div><div class="c9">Refusé</div>' +
+       '<div class="c7">Créé par</div></div>';
 
   triees().forEach(function (r) {
     var s = etat(r.due);
@@ -892,6 +925,8 @@ function paneExamens() {
       '<div class="c4">' + e(repTexte(r)) + '</div>' +
       '<div class="c5">' + e(r.note) + '</div>' +
       '<div class="c6 ' + s.cls + '">' + s.lib + '</div>' +
+      '<div class="c8" data-act="proposer" data-arg="' + r.id + '" title="proposé au patient">' + coche(r.propose) + '</div>' +
+      '<div class="c9" data-act="refuser" data-arg="' + r.id + '" title="refusé par le patient">' + coche(r.refuse) + '</div>' +
       '<div class="c7">' + e(r.auteur) + '</div></div>';
   });
   h += '<div style="height:' + Math.max(0, 7 - Etat.rappels.length) * 24 + 'px; background:#fff;"></div>';
@@ -902,7 +937,8 @@ function paneExamens() {
       h += '<div class="grow hist"><div class="c1"></div><div class="c2">' + e(x.nom) + '</div>' +
         '<div class="c3">' + fmt(x.due) + '</div><div class="c4">—</div>' +
         '<div class="c5">' + (x.statut === 'fait' ? 'réalisé le ' + fmt(x.le) : x.statut + ' le ' + fmt(x.le)) + '</div>' +
-        '<div class="c6">' + x.statut.charAt(0).toUpperCase() + x.statut.slice(1) + '</div><div class="c7">M. ANEX</div></div>';
+        '<div class="c6">' + x.statut.charAt(0).toUpperCase() + x.statut.slice(1) + '</div>' +
+        '<div class="c8"></div><div class="c9"></div><div class="c7">M. ANEX</div></div>';
     });
   }
   h += '</div>';
@@ -1263,6 +1299,11 @@ function actions(nom, arg) {
       });
       if (!faits && s.prevention.blocs.length) { bilan.push('<span class="grey">Aucun rappel : élément de suivi ou échéance manquant.</span>'); }
     }
+    if (s.tache.on && s.tache.acteur) {
+      bilan.push('Tâche transmise à ' + e(s.tache.acteur.split(' - ')[0]) +
+        (s.tache.note ? ' — « ' + e(s.tache.note) + ' »' : '') +
+        '. <span class="grey">(bêta : la grille de to-do list reste à définir)</span>');
+    }
     Etat.saisie = saisieInitiale();
     Etat.relance = null;
     rendreTout();
@@ -1299,6 +1340,11 @@ function actions(nom, arg) {
   if (nom === 'hist')        { Etat.histOuvert = !Etat.histOuvert; rendreModule(); return; }
   if (nom === 'selRappel')   { Etat.selection = +arg; Etat.modification = false; rendreModule(); return; }
   if (nom === 'selVaccin')   { Etat.vaccinSel = +arg; rendreModule(); return; }
+  if (nom === 'proposer' || nom === 'refuser') {
+    var cle = nom === 'proposer' ? 'propose' : 'refuse';
+    Etat.rappels.forEach(function (x) { if (x.id === +arg) { x[cle] = !x[cle]; } });
+    rendreModule(); return;
+  }
   if (nom === 'trier') {
     if (Etat.tri.col === arg) { Etat.tri.sens = -Etat.tri.sens; } else { Etat.tri = { col: arg, sens: 1 }; }
     rendreModule(); return;
