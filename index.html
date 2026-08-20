@@ -267,7 +267,7 @@
 
     <div class="version">
       <span class="v-lab">Version de la démo</span>
-      <span class="v-num">v5</span>
+      <span class="v-num">v6</span>
       <span class="v-date">20 août 2026</span>
     </div>
 
@@ -357,7 +357,7 @@
   <section id="module">
     <div class="sec-num">03</div>
     <h2>Le module Prévention</h2>
-    <p class="wide">Le module Vaccinations devient « Prévention », à six onglets. <strong>Vaccins</strong> reste strictement identique à aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Prévention MT (CPAM)</strong> montre où en est ce patient au regard du volet prévention du forfait médecin traitant. <strong>ex ROSP</strong> conserve les anciens indicateurs que le forfait n'a pas repris. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
+    <p class="wide">Le module Vaccinations devient « Prévention », à six onglets. <strong>Vaccins</strong> reste l'écran d'aujourd'hui — mêmes saisies, mêmes rappels, mêmes échanges avec le DMP — aux deux colonnes <em>Proposé</em> et <em>Refusé</em> près, qu'il partage désormais avec l'onglet suivant. <strong>Examens &amp; consultations</strong> porte les rappels, avec le code couleur déjà en usage : rouge lorsque l'échéance est dépassée, orange lorsqu'elle est proche, neutre lorsqu'elle est simplement à venir. <strong>SCORE2</strong> estime le risque cardiovasculaire à dix ans. <strong>Prévention MT (CPAM)</strong> montre où en est ce patient au regard du volet prévention du forfait médecin traitant. <strong>ex ROSP</strong> conserve les anciens indicateurs que le forfait n'a pas repris. <strong>Timeline</strong> déroule le tout sur un axe du temps.</p>
 
     <div class="essayez">Manipulable</div>
     <p class="wide" style="margin-top:0;">Triez en cliquant les entêtes, sélectionnez une ligne, passez le détail en modification, marquez un rappel <strong>« Fait »</strong> et acceptez de le reposer, ouvrez le document d'origine, dépliez l'historique, cliquez un point de la frise.</p>
@@ -410,6 +410,7 @@
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
       <tr><td>Prévention MT (CPAM)</td><td>Ajout, au stade bêta : les quinze indicateurs du volet prévention du forfait médecin traitant, triés selon qu'ils concernent ou non le patient ouvert.</td></tr>
+      <tr><td>Proposé / Refusé</td><td>Ajout : deux cases à cocher par ligne, dans Vaccins comme dans Examens &amp; consultations. Ce qui a été proposé au patient, ce qu'il a refusé — l'un des deux seuls motifs qui expliquent une échéance qui ne bouge pas.</td></tr>
       <tr><td>ex ROSP</td><td>Ajout : les anciens indicateurs ROSP non repris par le forfait, à commencer par le suivi rénal de l'hypertendu.</td></tr>
       <tr><td>Timeline</td><td>Ajout : vue chronologique de toute la prévention, vaccins compris.</td></tr>
     </table>
@@ -589,8 +590,8 @@ function initialiser() {
       { nom: 'Frottis cervico-utérin', due: d(2020, 3, 12), statut: 'remplacé', le: d(2023, 3, 14) }
     ],
     vaccins: [
-      { id: 1, nom: 'REPEVAX SER 0,5ML', valence: 'DTCP', date: d(2010, 9, 15), rappel: d(2020, 9, 15), dmp: true, acteur: 'Matthieu ANEX' },
-      { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX' }
+      { id: 1, nom: 'REPEVAX SER 0,5ML', valence: 'DTCP', date: d(2010, 9, 15), rappel: d(2020, 9, 15), dmp: true, acteur: 'Matthieu ANEX', propose: true, refuse: true },
+      { id: 2, nom: 'VAXIGRIP TETRA',    valence: 'Grippe', date: d(2025, 10, 12), rappel: d(2026, 10, 12), dmp: true, acteur: 'Matthieu ANEX', propose: true, refuse: false }
     ],
     vaccinSel: 1,
     fmtBientot: false, fmtNon: false,
@@ -1075,7 +1076,9 @@ function paneVaccins() {
        '<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#5a6068" stroke-width="1.3"/><path d="M9.3 9.3 L13 13" stroke="#5a6068" stroke-width="1.5" stroke-linecap="round"/></svg></div>';
   h += '<div class="ghead"><div class="c1">!</div><div style="width:90px;">Date</div><div style="width:48px;">DMP</div>' +
        '<div style="width:250px;">Nom commercial</div><div style="width:90px;">Valence</div>' +
-       '<div style="width:96px;">Rappel</div><div style="width:80px;">Statut</div><div style="width:122px;">Acteur</div></div>';
+       '<div style="width:96px;">Rappel</div><div style="width:80px;">Statut</div>' +
+       '<div class="c8">Proposé</div><div class="c9">Refusé</div>' +
+       '<div style="width:122px;">Acteur</div></div>';
   Etat.vaccins.forEach(function (v) {
     var s = etat(v.rappel);
     h += '<div class="grow' + (v.id === Etat.vaccinSel ? ' sel' : '') + (Etat.nouveaux.indexOf('v' + v.id) !== -1 ? ' flash' : '') + '" data-act="selVaccin" data-arg="' + v.id + '">' +
@@ -1085,6 +1088,8 @@ function paneVaccins() {
       '<div style="width:250px;">' + e(v.nom) + '</div><div style="width:90px;">' + e(v.valence) + '</div>' +
       '<div style="width:96px;" class="' + s.cls + '">' + fmt(v.rappel) + '</div>' +
       '<div style="width:80px;" class="' + s.cls + '">' + s.lib + '</div>' +
+      '<div class="c8" data-act="proposerV" data-arg="' + v.id + '" title="proposé au patient">' + coche(v.propose) + '</div>' +
+      '<div class="c9" data-act="refuserV" data-arg="' + v.id + '" title="refusé par le patient">' + coche(v.refuse) + '</div>' +
       '<div style="width:122px;">' + e(v.acteur) + '</div></div>';
   });
   h += '<div style="height:' + Math.max(0, 6 - Etat.vaccins.length) * 24 + 'px; background:#fff;"></div></div>';
@@ -1102,7 +1107,7 @@ function paneVaccins() {
       '<div class="txt dim" style="width:120px; color:#24211e;">' + fmt(v.rappel) + '</div>' +
       '<div class="' + s2.cls + '" style="margin-left:10px;">' + s2.lib + '</div></div>' +
       '</div><div style="width:300px; flex-shrink:0; color:#6b7075; border-left:1px solid #e6e9ec; padding-left:16px;">' +
-      'Cet onglet est l’écran Vaccinations d’aujourd’hui, sans modification : mêmes colonnes, mêmes champs, mêmes échanges avec le DMP. Il est reproduit ici en abrégé.' +
+      'Cet onglet est l’écran Vaccinations d’aujourd’hui : mêmes champs, mêmes saisies, mêmes échanges avec le DMP. Il est reproduit ici en abrégé. Seul ajout : les deux colonnes <b>Proposé</b> et <b>Refusé</b>, communes à l’onglet Examens — le refus vaccinal est trop fréquent pour rester hors du dossier.' +
       '</div></div>';
   }
   h += '</div></div>';
@@ -1678,6 +1683,11 @@ function actions(nom, arg) {
   if (nom === 'proposer' || nom === 'refuser') {
     var cle = nom === 'proposer' ? 'propose' : 'refuse';
     Etat.rappels.forEach(function (x) { if (x.id === +arg) { x[cle] = !x[cle]; } });
+    rendreModule(); return;
+  }
+  if (nom === 'proposerV' || nom === 'refuserV') {
+    var cv = nom === 'proposerV' ? 'propose' : 'refuse';
+    Etat.vaccins.forEach(function (x) { if (x.id === +arg) { x[cv] = !x[cv]; } });
     rendreModule(); return;
   }
   if (nom === 'trier') {
