@@ -104,10 +104,26 @@
   .wf .btn:hover { background: linear-gradient(#ffffff,#dcdcdc); }
   .wf .btn.def { border-color: #3c7fb1; box-shadow: inset 0 0 0 1px #ffffff; }
   .wf .btn.sq { min-width: 0; width: 23px; padding: 0; }
+  .wf .lst { border: 1px solid #a8b0b8; background: #fff; height: 108px; overflow-y: auto; }
+  .wf .lst-i { display: flex; align-items: center; gap: 7px; height: 21px; padding: 0 6px; cursor: pointer; }
+  .wf .lst-i:hover { background: #eef3fa; }
+  .wf .lst-i.on { background: #e8eef6; }
+  .wf .lst-i .d { color: #6b7075; }
+  .wf .gr { border: 1px solid #a8b0b8; background: #fff; margin-top: 9px; }
+  .wf .gr .gh { display: flex; height: 22px; align-items: center; background: linear-gradient(#fdfdfd,#eceef0); border-bottom: 1px solid #c3c7cb; color: #2a2f35; }
+  .wf .gr .gh > div { padding: 0 6px; border-right: 1px solid #dfe3e6; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
+  .wf .gr .gl { display: flex; height: 21px; align-items: center; cursor: pointer; border-bottom: 1px solid #f0f2f4; }
+  .wf .gr .gl:hover { background: #f2f7fd; }
+  .wf .gr .gl.on { background: #d6e4f5; }
+  .wf .gr .gl > div { padding: 0 6px; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
+  .wf .gr .vide { padding: 6px 8px; color: #9aa0a6; }
   .wf .bnd { display: flex; align-items: center; gap: 8px; height: 27px; margin-top: 10px; padding: 0 9px; background: linear-gradient(#f7f9fb,#e9eef3); border: 1px solid #d3dae1; cursor: pointer; user-select: none; }
   .wf .bnd:hover { background: linear-gradient(#f7fbff,#e2ecf7); border-color: #b9c8d8; }
   .wf .bnd.open { background: linear-gradient(#eef3f8,#e2e9f0); border-bottom-color: #c3ccd5; }
   .wf .bnd .t { color: #1f3a63; font-weight: 600; }
+  .wf .bnd-marq { display: flex; align-items: center; gap: 8px; height: 27px; margin-top: 10px; padding: 0 9px; background: #dce7f3; border: 1px solid #c2d2e4; }
+  .wf .bnd-marq .check { gap: 8px; }
+  .wf .bnd-marq .navy { font-weight: 600; }
   .wf .bnd .r { color: #4a5058; }
   .wf .bnd .r.vide { color: #9aa0a6; font-style: italic; }
   .wf .bnd svg.ch { transition: transform .12s; flex-shrink: 0; }
@@ -328,7 +344,7 @@
 
     <div class="version">
       <span class="v-lab">Version de la démo</span>
-      <span class="v-num">v13</span>
+      <span class="v-num">v14</span>
       <span class="v-date">20 août 2026</span>
     </div>
 
@@ -350,19 +366,19 @@
 
     <ul class="plain">
       <li><strong>Marquer le patient</strong> — <em>une case à cocher</em>. Cocher <em>est</em> l'action ; la note qui apparaît en dessous ne fait que préciser le motif. Cette case s'ajoute à la colonne « Marquer » de la liste H', qui reste inchangée.</li>
-      <li><strong>Rattacher à un épisode de soins</strong> — <em>un bandeau dépliant</em>. Deux gestes au choix. <strong>Rattacher</strong> le document à un épisode déjà ouvert : c'est le cas courant, le compte rendu de cardiologie qui rejoint l'insuffisance cardiaque suivie depuis deux ans, la biologie qui rejoint le diabète. Ou <strong>créer</strong> un nouvel épisode quand c'est ce document-là qui révèle l'affection — la pathologie choisie dans le glossaire, sa date de début, et les cases <strong>ALD</strong> et <strong>AT/MP</strong> lorsque l'affection y ouvre droit — un épisode ouvert au titre d'un accident du travail ou d'une maladie professionnelle relève d'une prise en charge à part, et c'est au moment où on l'ouvre qu'on le sait. Si la pathologie que l'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
-      <li><strong>Prévoir un rappel</strong> — <em>un bandeau dépliant</em>. L'élément de suivi à prévoir, l'échéance en délai ou en date, la répétition éventuelle, une note. Les <strong>favoris</strong> proposent en un clic les éléments les plus utilisés, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
+      <li><strong>Rattacher à un épisode de soins</strong> — <em>un bandeau dépliant</em>. La liste des épisodes ouverts, avec leur date de début, et une case devant chacun : <strong>un même document peut en rejoindre plusieurs</strong>, ce qui arrive plus souvent qu'on ne croit — une biologie qui documente à la fois le diabète et l'insuffisance rénale. C'est le cas courant. Le bouton <strong>« Créer un épisode… »</strong> ouvre l'autre chemin, celui du document qui révèle l'affection : la pathologie choisie dans le glossaire, sa date de début, et les cases <strong>ALD</strong> et <strong>AT/MP</strong> lorsqu'elle y ouvre droit — un épisode ouvert au titre d'un accident du travail ou d'une maladie professionnelle relève d'une prise en charge à part, et c'est au moment où on l'ouvre qu'on le sait. Si la pathologie qu'on s'apprête à créer correspond à un épisode déjà ouvert, la fenêtre le signale.</li>
+      <li><strong>Prévoir un rappel d'examen</strong> — <em>un bandeau dépliant</em>. Un formulaire unique — l'examen, l'échéance en délai ou en date, la répétition éventuelle, une note — et un bouton <strong>« Ajouter ce rappel »</strong> qui le dépose dans la liste en dessous avant de se vider pour le suivant. Deux, trois rappels s'empilent ainsi sans que le formulaire s'allonge, et l'on voit d'un coup ce qu'on a déjà posé ; « Retirer le rappel sélectionné » défait une ligne. Les <strong>favoris</strong> remplissent l'examen en un clic, et ils s'apprennent : choisissez plusieurs fois le même, il remonte dans la rangée.</li>
       <li><strong>Ajouter une tâche secrétaire</strong> <span class="beta">Plus tard</span> — <em>un bandeau dépliant</em>. La secrétaire à qui l'on confie la suite, et ce qu'il y a à faire : rappeler la patiente, programmer le contrôle, réclamer un compte rendu qui manque. Le rappel dit <em>quand</em> ; la tâche dit <em>qui s'en occupe</em>. C'est la troisième idée qu'Olaqin plaçait en réserve, figurée ici pour en juger sur pièce. Elle ne fait pas partie du premier lot : la destination des tâches demande d'être décidée d'abord. Au cabinet, les secrétaires suivent aujourd'hui ce qu'on leur confie dans une messagerie interne hébergée sur le serveur, avec ses signets — chaque cabinet ayant sa méthode. XMED porte déjà une liste de tâches, et la fonction est au fond très proche du marquage : c'est ce rapprochement-là qu'il faudra instruire avant de dessiner l'écran.</li>
     </ul>
 
     <p class="wide"><strong>Une case à cocher pour l'une, un bandeau dépliant pour les trois autres : la différence n'est pas cosmétique.</strong> Une case à cocher fait deux métiers à la fois — elle déclare l'intention et elle déplie le contenu. Pour « Marquer le patient », les deux coïncident : cocher <em>est</em> l'action, et la case est exactement le bon contrôle. Pour les trois autres, l'intention est déjà portée par ce qu'on a saisi — un épisode choisi, des rappels ajoutés, une secrétaire désignée. La case y devient redondante, et pire : elle autorise deux états contradictoires, cochée sans rien dedans, ou décochée alors qu'on a rempli quelque chose qui sera silencieusement jeté à la validation.</p>
     <p class="wide">Le bandeau supprime l'ambiguïté et apporte deux choses de plus. Il a sa propre hauteur et son propre fond, ce qui sépare les sections mieux que trois lignes de texte accolées. Et surtout, <strong>il porte son résumé quand il est replié</strong> : « Rattacher à un épisode de soins — <em>Gonarthrose</em> », « Prévoir un rappel — <em>2 rappels</em> ». On peut alors valider sans rien déplier tout en voyant ce qu'on s'apprête à faire — c'est ce qui change le plus l'usage quotidien.</p>
-    <p class="wide"><em>Cette distinction est due à l'équipe de développement, qui a mis le doigt sur ce que la version précédente de la maquette faisait porter à une case à cocher qu'elle ne pouvait pas tenir.</em></p>
+    <p class="wide"><em>Cette distinction est due à l'équipe de développement, qui a mis le doigt sur ce que la version précédente de la maquette faisait porter à une case à cocher qu'elle ne pouvait pas tenir. Les deux écrans ci-dessous reprennent leur proposition : la liste d'épisodes à cocher, le formulaire de rappel suivi de sa grille. Deux choix qui valent mieux que les miens et qui sont adoptés tels quels. S'y ajoute le résumé porté par le bandeau replié, qui manquait à leur version.</em></p>
 
     <p class="wide"><strong>L'ordre de ces sections n'est pas indifférent : les trois premières suivent celui du temps.</strong> On marque en premier, parce qu'un résultat anormal réclame quelque chose de moi tout de suite et que je veux le garder de côté avant toute autre chose. On rattache ensuite, parce que le document appartient à une histoire déjà ouverte, et que c'est ce geste-là qui tient le dossier en ordre. Le rappel de prévention vient après, parce qu'il ne porte ni sur aujourd'hui ni sur le dossier tel qu'il est, mais sur une échéance à venir. Descendre la fenêtre, c'est parcourir le présent, puis le suivi en cours, puis l'avenir — dans l'ordre même où les questions se posent à la lecture du compte rendu. La tâche secrétaire ferme la série pour une autre raison : elle ne répond pas à <em>quand</em>, mais à <em>qui s'en charge</em>, et elle ne se pose qu'une fois le reste décidé.</p>
 
     <div class="essayez">Tout répond — essayez</div>
-    <p class="wide" style="margin-top:0;">Ouvrez un bandeau, choisissez un favori d'un clic — le rappel se remplit tout seul. Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
+    <p class="wide" style="margin-top:0;">Ouvrez « Prévoir un rappel d'examen », cliquez un favori, puis « Ajouter ce rappel » : la ligne descend dans la grille et le formulaire se vide pour le suivant. Les listes se déroulent et se filtrent à la frappe, les champs de texte s'écrivent, « Ajouter un rappel » empile les lignes, et <strong>« Valider » dépose vraiment le résultat dans le dossier</strong> : le rappel rejoint le module plus bas, l'épisode rejoint le cadre juste en dessous.</p>
 
     <div class="shots">
       <figure class="shot is-now">
@@ -500,7 +516,7 @@
       <tr><td>Un seul rappel actif par examen</td><td>Confirmé, à condition que le remplacement <strong>conserve le rythme de répétition</strong> — « tous les X pendant Y » ne doit pas se perdre en route.</td></tr>
       <tr><td>SCORE2 et l'ampoule</td><td>Un risque élevé n'allume pas l'ampoule : elle dit « quelque chose est en retard », pas « ce patient est à risque ».</td></tr>
       <tr><td>Liste des examens</td><td>Le listing existant du cadre « Éléments de suivi » — pas de seconde liste à maintenir.</td></tr>
-      <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent.</td></tr>
+      <tr><td>Rappels multiples</td><td>Besoin réel : deux ou trois par document suffisent. Saisis un par un, puis empilés dans une grille — le formulaire ne s'allonge pas.</td></tr>
       <tr><td>Forme de saisie</td><td>Option B élargie — tout dans la fenêtre d'incorporation, rien dans la liste H'.</td></tr>
       <tr><td>Marquage</td><td>Case et note dans la fenêtre, <em>en plus</em> de la colonne « Marquer » actuelle, qui ne bouge pas.</td></tr>
       <tr><td>Module</td><td>Un seul module « Prévention ». Six onglets plutôt que deux : SCORE2, Prévention MT, ex ROSP et la Timeline s'ajoutent aux deux prévus.</td></tr>
@@ -509,6 +525,7 @@
       <tr><td>Répéter l'examen</td><td>Oui, dès la première version, à côté de la reconduction proposée au moment du « Fait ».</td></tr>
       <tr><td>Épisode de soins</td><td>Ajout : rattacher le document à un épisode déjà ouvert, ou en créer un — pathologie, date de début, cases ALD et AT/MP. Le rattachement est le cas le plus fréquent.</td></tr>
       <tr><td>Tâche secrétariat</td><td>Sortie de réserve, au stade bêta : une secrétaire, une tâche, depuis la même fenêtre. Reste à définir la grille de to-do list qui les reçoit.</td></tr>
+      <tr><td>Rattachement multiple</td><td>Un document peut rejoindre plusieurs épisodes : la liste est à cases à cocher, pas à choix unique.</td></tr>
       <tr><td>Case ou bandeau</td><td>Case à cocher pour le marquage, où cocher <em>est</em> l'action. Bandeau dépliant pour les trois autres, dont l'intention est portée par le contenu — et qui affichent leur résumé une fois repliés.</td></tr>
       <tr><td>Ordre des sections</td><td>Marquer, puis rattacher, puis prévoir — l'ordre du temps : ce qui est à traiter tout de suite, ce qui range le dossier, ce qui n'arrive que plus tard.</td></tr>
       <tr><td>SCORE2</td><td>Ajout : risque cardiovasculaire à dix ans, calculé sans saisie à partir des données déjà au dossier. Algorithme et seuils à intégrer par Olaqin.</td></tr>
@@ -631,12 +648,6 @@ var LISTES = {
 
 function libEpisode(ep) { return ep.nom + ' — depuis le ' + fmt(ep.debut); }
 
-function epLie() {
-  var l = Etat.saisie.episode.lien, out = null;
-  Etat.episodes.forEach(function (ep) { if (libEpisode(ep) === l) { out = ep; } });
-  return out;
-}
-
 /* ============================ état ============================ */
 
 var Etat, favoris, compteur;
@@ -655,9 +666,9 @@ function saisieInitiale() {
     manuel: false, fiche: false,
     intitule: 'Écho. cervicale - nodule thyroïdien droit 14mm EU-TIRADS 3 — Prévoir',
     marquer: { on: false, note: 'à rappeler — commenter le résultat' },
-    episode: { ouvert: false, mode: 'lier', lien: '', patho: '',
+    episode: { ouvert: false, liens: [], creation: false, patho: '',
                debut: '19/08/2026', ald: false, atmp: false, note: '' },
-    prevention: { ouvert: false, blocs: [blocVide()] },
+    prevention: { ouvert: false, saisie: blocVide(), liste: [], sel: null },
     tache: { ouvert: false, acteur: '', note: '' }
   };
 }
@@ -844,22 +855,27 @@ function bandeau(chemin, titre, resume, badge, corps) {
   return h;
 }
 
+function episodesLies() {
+  var ids = Etat.saisie.episode.liens;
+  return Etat.episodes.filter(function (ep) { return ids.indexOf(ep.id) !== -1; });
+}
+
 function resumeEpisode() {
-  var s = Etat.saisie.episode;
-  if (s.mode === 'lier') {
-    var ep = epLie();
-    return ep ? '<em>' + e(ep.nom) + '</em>' : '';
+  var s = Etat.saisie.episode, bouts = [];
+  var lies = episodesLies();
+  if (lies.length) { bouts.push('<em>' + lies.map(function (ep) { return e(ep.nom); }).join(', ') + '</em>'); }
+  if (s.patho) {
+    bouts.push('nouvel épisode <em>' + e(s.patho) + '</em>' +
+      (s.ald ? ', ALD' : '') + (s.atmp ? ', AT/MP' : ''));
   }
-  if (!s.patho) { return ''; }
-  return 'nouvel épisode <em>' + e(s.patho) + '</em>' +
-    (s.ald ? ', ALD' : '') + (s.atmp ? ', AT/MP' : '');
+  return bouts.join(' · ');
 }
 
 function resumePrevention() {
-  var b = Etat.saisie.prevention.blocs.filter(function (x) { return x.suivi && echeance(x); });
-  if (!b.length) { return ''; }
-  if (b.length === 1) { return '<em>' + e(b[0].suivi) + '</em> le ' + fmt(echeance(b[0])); }
-  return '<em>' + b.length + ' rappels</em> — ' + b.map(function (x) { return e(x.suivi); }).join(', ');
+  var l = Etat.saisie.prevention.liste;
+  if (!l.length) { return ''; }
+  if (l.length === 1) { return '<em>' + e(l[0].suivi) + '</em> le ' + fmt(l[0].due); }
+  return '<em>' + l.length + ' rappels</em> — ' + l.map(function (x) { return e(x.suivi); }).join(', ');
 }
 
 function resumeTache() {
@@ -888,32 +904,15 @@ function rendreFenetre() {
   h += '<div class="sep"></div>';
 
   /* 1 — un acte booleen : cocher EST l'action, la note est facultative */
-  h += caseAC('saisie.marquer.on', 'Marquer le patient', '', SVG.marque);
+  h += '<div class="bnd-marq">' + caseAC('saisie.marquer.on', 'Marquer le patient', '', SVG.marque) + '</div>';
   if (s.marquer.on) {
-    h += '<div class="panel"><div class="row"><div class="lbl" style="width:96px;">Note :</div>' +
+    h += '<div class="bnd-c"><div class="row"><div class="lbl" style="width:96px;">Note :</div>' +
          champ('saisie.marquer.note', 0, 'motif du marquage…') + '</div></div>';
   }
 
-  /* 2 — rattacher a un episode : l'intention est portee par le contenu */
+  /* 2 — rattacher : une liste a cocher, plusieurs episodes possibles */
   var ce = '';
-  ce += '<div class="row" style="margin-bottom:10px;">' +
-        '<div style="display:flex; align-items:center; gap:6px;">' +
-        radio('saisie.episode.mode', 'lier', 'Un épisode déjà ouvert') + '</div>' +
-        '<div style="display:flex; align-items:center; gap:6px; margin-left:24px;">' +
-        radio('saisie.episode.mode', 'creer', 'Ouvrir un nouvel épisode') + '</div></div>';
-  if (s.episode.mode === 'lier') {
-    ce += '<div class="row"><div class="lbl" style="width:96px;">Épisode :</div>' +
-          '<div class="combo" data-combo="episode" data-path="saisie.episode.lien" style="flex-grow:1;">' +
-          '<div class="v"' + (s.episode.lien ? '' : ' style="color:#8a9099;"') + '>' +
-          e(s.episode.lien || '— choisir un épisode ouvert —') + '</div>' + SVG.arr + '</div>' +
-          '<div class="btn sq" data-act="ouvrirEpisode" title="rechercher">' + SVG.loupe + '</div></div>';
-    ce += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
-          champ('saisie.episode.note', 0, 'précision sur le rattachement…') + '</div>';
-    var epc = epLie();
-    ce += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
-          (epc ? '→ le document rejoint « ' + e(epc.nom) + ' », ouvert le ' + fmt(epc.debut)
-               : '→ aucun épisode choisi, rien ne sera rattaché') + '</div>';
-  } else {
+  if (s.episode.creation) {
     ce += '<div class="row"><div class="lbl" style="width:96px;">Pathologie :</div>' +
           '<div class="combo" data-combo="patho" data-path="saisie.episode.patho" style="flex-grow:1;">' +
           '<div class="v"' + (s.episode.patho ? '' : ' style="color:#8a9099;"') + '>' +
@@ -927,64 +926,80 @@ function rendreFenetre() {
           champ('saisie.episode.note', 0, 'contexte…') + '</div>';
     var deja = null;
     Etat.episodes.forEach(function (ep) { if (ep.nom === s.episode.patho) { deja = ep; } });
-    ce += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
-          (s.episode.patho
-             ? (deja ? '→ « ' + e(deja.nom) + ' » est déjà ouvert depuis le ' + fmt(deja.debut) +
-                       ' — le rattachement est sans doute préférable'
-                     : '→ nouvel épisode « ' + e(s.episode.patho) + ' » ouvert le ' +
-                       fmt(lit(s.episode.debut) || AUJ) +
-                       (s.episode.ald ? ', en ALD' : '') + (s.episode.atmp ? ', en AT/MP' : ''))
-             : '→ aucune pathologie choisie, aucun épisode ne sera ouvert') + '</div>';
+    if (deja) {
+      ce += '<div class="grey" style="margin-top:7px; padding-left:106px;">→ « ' + e(deja.nom) +
+            ' » est déjà ouvert depuis le ' + fmt(deja.debut) + ' — le rattachement est sans doute préférable</div>';
+    }
+    ce += '<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:11px;">' +
+          '<div class="btn" data-act="annulerCreation">Revenir à la liste</div></div>';
+  } else {
+    ce += '<div style="display:flex; gap:10px; align-items:flex-start;">';
+    ce += '<div class="lst" style="flex-grow:1;">';
+    var ouverts = Etat.episodes.slice().sort(function (a, b) { return b.debut - a.debut; });
+    if (ouverts.length) {
+      ouverts.forEach(function (ep) {
+        var on = s.episode.liens.indexOf(ep.id) !== -1;
+        ce += '<div class="lst-i' + (on ? ' on' : '') + '" data-act="lierEp" data-arg="' + ep.id + '">' +
+              '<span class="box">' + (on ? SVG.tick.replace('class="tick"', 'style="display:block"') : '') + '</span>' +
+              '<span>' + e(ep.nom) + '</span><span class="d">(depuis le ' + fmt(ep.debut) + ')</span></div>';
+      });
+    } else { ce += '<div class="grey" style="padding:6px 8px;">Aucun épisode ouvert.</div>'; }
+    ce += '</div>';
+    ce += '<div class="btn" style="flex-shrink:0;" data-act="creerEpisode">Créer un épisode…</div>';
+    ce += '</div>';
+    var lies = episodesLies();
+    ce += '<div class="grey" style="margin-top:8px;">' +
+          (lies.length ? '→ le document rejoindra ' + (lies.length > 1 ? 'ces ' + lies.length + ' épisodes' : '« ' + e(lies[0].nom) + ' »')
+                       : '→ aucun épisode coché, rien ne sera rattaché') + '</div>';
   }
   h += bandeau('saisie.episode.ouvert', 'Rattacher à un épisode de soins', resumeEpisode(), '', ce);
 
-  /* 3 — prevoir : idem, ce sont les rappels ajoutes qui font foi */
-  var cp = '';
-  var tops = Object.keys(favoris).sort(function (a, b) { return favoris[b] - favoris[a] || a.localeCompare(b); }).slice(0, 6);
-  s.prevention.blocs.forEach(function (b, i) {
-    var chem = 'saisie.prevention.blocs.' + i;
-    cp += '<div class="bloc">';
-    if (s.prevention.blocs.length > 1) {
-      cp += '<div style="display:flex; align-items:center; margin-bottom:6px;">' +
-            '<div class="grey" style="flex-grow:1;">Rappel ' + (i + 1) + '</div>' +
-            '<span class="x" data-act="retirerBloc" data-arg="' + i + '" title="retirer ce rappel">✕</span></div>';
-    }
-    cp += '<div class="row" style="align-items:flex-start;"><div class="lbl" style="width:96px; padding-top:3px;">Favoris :</div>' +
-          '<div class="chips" style="flex-grow:1;">';
-    tops.forEach(function (f) {
-      cp += '<span class="chip' + (f === b.suivi ? ' on' : '') + '" data-act="favori" data-arg="' + i + '|' + e(f) + '">' + e(f) + '</span>';
-    });
-    cp += '</div></div>';
-    cp += '<div class="row" style="margin-top:8px;"><div class="lbl" style="width:96px;">Élément de suivi :</div>' +
-          '<div class="combo" data-combo="suivi" data-path="' + chem + '.suivi" style="flex-grow:1;">' +
-          '<div class="v"' + (b.suivi ? '' : ' style="color:#8a9099;"') + '>' +
-          e(b.suivi || '— choisir un élément de suivi —') + '</div>' + SVG.arr + '</div>' +
-          '<div class="btn sq" data-act="ouvrirSuivi" data-arg="' + i + '" title="rechercher">' + SVG.loupe + '</div></div>';
-    cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Échéance :</div>' +
-          '<div style="display:flex; align-items:center; gap:6px;">' + radio(chem + '.mode', 'delai', 'dans') +
-          combo(chem + '.delai', 'delai', 96, b.mode !== 'delai') + '</div>' +
-          '<div style="display:flex; align-items:center; gap:6px; margin-left:14px;">' + radio(chem + '.mode', 'date', 'le') +
-          champ(chem + '.date', 96, 'jj/mm/aaaa', b.mode !== 'date') + '</div></div>';
-    cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Répéter :</div>' +
-          '<div style="display:flex; align-items:center; gap:6px;">' +
-          '<span class="check click' + (b.repeter ? ' on' : '') + '" data-check="' + chem + '.repeter" style="display:inline-flex;"><span class="box">' + SVG.tick + '</span></span>' +
-          '<span' + (b.repeter ? '' : ' class="grey"') + '>tous les</span>' +
-          champ(chem + '.repN', 38, '', !b.repeter) +
-          combo(chem + '.repU', 'unite', 88, !b.repeter) +
-          '<span' + (b.repeter ? '' : ' class="grey"') + '>pendant</span>' +
-          champ(chem + '.repPendant', 38, '', !b.repeter) +
-          '<span' + (b.repeter ? '' : ' class="grey"') + '>ans</span></div></div>';
-    cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
-          champ(chem + '.note', 0, 'motif du rappel…') + '</div>';
-    var apercu = echeance(b);
-    cp += '<div class="grey" style="margin-top:7px; padding-left:106px;">' +
-          (b.suivi ? (apercu ? '→ ' + e(b.suivi) + ' le ' + fmt(apercu) + (b.repeter ? ', puis ' + repTexte({ rep: repDe(b) }).toLowerCase() : '') : '→ date incomplète') : '→ aucun élément de suivi choisi') +
-          '</div>';
-    cp += '</div>';
+  /* 3 — prevoir : un formulaire, puis la liste de ce qu'on a ajoute */
+  var b = s.prevention.saisie, cp = '';
+  var tops = Object.keys(favoris).sort(function (a, b2) { return favoris[b2] - favoris[a] || a.localeCompare(b2); }).slice(0, 6);
+  cp += '<div class="chips" style="margin-bottom:10px;">';
+  tops.forEach(function (f) {
+    cp += '<span class="chip' + (f === b.suivi ? ' on' : '') + '" data-act="favori" data-arg="' + e(f) + '">' + e(f) + '</span>';
   });
-  cp += '<div style="display:flex; justify-content:flex-end; margin-top:11px;">' +
-        '<div class="btn" style="height:22px;" data-act="ajouterBloc">' + SVG.plus + '<span>Ajouter un rappel</span></div></div>';
-  h += bandeau('saisie.prevention.ouvert', 'Prévoir un rappel', resumePrevention(), '', cp);
+  cp += '</div>';
+  cp += '<div class="row"><div class="lbl" style="width:96px;">Examen :</div>' +
+        '<div class="combo" data-combo="suivi" data-path="saisie.prevention.saisie.suivi" style="flex-grow:1;">' +
+        '<div class="v"' + (b.suivi ? '' : ' style="color:#8a9099;"') + '>' +
+        e(b.suivi || '— choisir un élément de suivi —') + '</div>' + SVG.arr + '</div>' +
+        '<div class="btn sq" data-act="ouvrirSuivi" title="rechercher">' + SVG.loupe + '</div></div>';
+  cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Échéance :</div>' +
+        '<div style="display:flex; align-items:center; gap:6px;">' + radio('saisie.prevention.saisie.mode', 'delai', 'dans') +
+        combo('saisie.prevention.saisie.delai', 'delai', 96, b.mode !== 'delai') + '</div>' +
+        '<div style="display:flex; align-items:center; gap:6px; margin-left:14px;">' + radio('saisie.prevention.saisie.mode', 'date', 'le') +
+        champ('saisie.prevention.saisie.date', 96, 'jj/mm/aaaa', b.mode !== 'date') + '</div></div>';
+  cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Répéter :</div>' +
+        '<div style="display:flex; align-items:center; gap:6px;">' +
+        '<span class="check click' + (b.repeter ? ' on' : '') + '" data-check="saisie.prevention.saisie.repeter" style="display:inline-flex;"><span class="box">' + SVG.tick + '</span></span>' +
+        '<span' + (b.repeter ? '' : ' class="grey"') + '>tous les</span>' +
+        champ('saisie.prevention.saisie.repN', 38, '', !b.repeter) +
+        combo('saisie.prevention.saisie.repU', 'unite', 88, !b.repeter) +
+        '<span' + (b.repeter ? '' : ' class="grey"') + '>pendant</span>' +
+        champ('saisie.prevention.saisie.repPendant', 38, '', !b.repeter) +
+        '<span' + (b.repeter ? '' : ' class="grey"') + '>ans</span></div></div>';
+  cp += '<div class="row" style="margin-top:9px;"><div class="lbl" style="width:96px;">Note :</div>' +
+        champ('saisie.prevention.saisie.note', 0, 'motif du rappel…') + '</div>';
+  var pret = b.suivi && echeance(b);
+  cp += '<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:11px;">' +
+        '<div class="btn' + (pret ? ' def' : ' off') + '"' + (pret ? ' data-act="ajouterRappel"' : '') + '>' + SVG.plus + '<span>Ajouter ce rappel</span></div>' +
+        '<div class="btn' + (s.prevention.sel === null ? ' off' : '') + '"' + (s.prevention.sel === null ? '' : ' data-act="retirerRappel"') + '><span>Retirer le rappel sélectionné</span></div></div>';
+  cp += '<div class="gr"><div class="gh"><div style="width:204px;">Examen</div><div style="width:92px;">Échéance</div>' +
+        '<div style="width:156px;">Répétition</div><div style="width:148px;">Note</div></div>';
+  if (s.prevention.liste.length) {
+    s.prevention.liste.forEach(function (x, i) {
+      cp += '<div class="gl' + (s.prevention.sel === i ? ' on' : '') + '" data-act="selRappelSaisi" data-arg="' + i + '">' +
+            '<div style="width:204px;">' + e(x.suivi) + '</div>' +
+            '<div style="width:92px;">' + fmt(x.due) + '</div>' +
+            '<div style="width:156px;">' + e(repTexte(x)) + '</div>' +
+            '<div style="width:148px;">' + e(x.note) + '</div></div>';
+    });
+  } else { cp += '<div class="vide">Aucun rappel ajouté pour l’instant.</div>'; }
+  cp += '</div>';
+  h += bandeau('saisie.prevention.ouvert', 'Prévoir un rappel d’examen', resumePrevention(), '', cp);
 
   /* 4 — la tache secretaire, hors du premier lot */
   var ct = '';
@@ -1030,9 +1045,10 @@ function echeance(b) {
 function resume() {
   var s = Etat.saisie, bouts = [];
   if (s.marquer.on) { bouts.push('marquage'); }
-  if (s.episode.mode === 'lier') { if (epLie()) { bouts.push('1 rattachement'); } }
-  else if (s.episode.patho) { bouts.push('1 épisode'); }
-  var n = s.prevention.blocs.filter(function (b) { return b.suivi && echeance(b); }).length;
+  var nl = s.episode.liens.length;
+  if (nl) { bouts.push(nl + (nl > 1 ? ' rattachements' : ' rattachement')); }
+  if (s.episode.patho) { bouts.push('1 épisode ouvert'); }
+  var n = s.prevention.liste.length;
   if (n) { bouts.push(n + (n > 1 ? ' rappels' : ' rappel')); }
   if (s.tache.acteur) { bouts.push('1 tâche'); }
   return bouts.length ? 'À la validation : document classé, ' + bouts.join(', ') + '.' : 'À la validation : document classé.';
@@ -1903,14 +1919,11 @@ function actions(nom, arg) {
       bilan.push('Patient marqué' + (s.marquer.note ? ' — « ' + e(s.marquer.note) + ' »' : '') +
         '. <span class="grey">(remonte au post-it)</span>');
     }
-    if (s.episode.mode === 'lier') {
-      var epl = epLie();
-      if (epl) {
-        cles.push('ep' + epl.id);
-        bilan.push('Document rattaché à l’épisode « ' + e(epl.nom) + ' », ouvert le ' + fmt(epl.debut) + '.' +
-          (s.episode.note ? ' <span class="grey">« ' + e(s.episode.note) + ' »</span>' : ''));
-      }
-    } else if (s.episode.patho) {
+    episodesLies().forEach(function (epl) {
+      cles.push('ep' + epl.id);
+      bilan.push('Document rattaché à l’épisode « ' + e(epl.nom) + ' », ouvert le ' + fmt(epl.debut) + '.');
+    });
+    if (s.episode.patho) {
       compteur += 1;
       var deb = lit(s.episode.debut) || AUJ;
       Etat.episodes.push({ id: compteur, nom: s.episode.patho, debut: deb, ald: !!s.episode.ald,
@@ -1922,11 +1935,10 @@ function actions(nom, arg) {
     }
     {
       var faits = 0;
-      s.prevention.blocs.forEach(function (b) {
-        var due = echeance(b);
-        if (!b.suivi || !due) { return; }
+      s.prevention.liste.forEach(function (b) {
+        var due = b.due;
         compteur += 1;
-        var nr = { id: compteur, nom: b.suivi, due: due, rep: repDe(b), note: b.note, auteur: 'M. ANEX', src: s.intitule };
+        var nr = { id: compteur, nom: b.suivi, due: due, rep: b.rep, note: b.note, auteur: 'M. ANEX', src: s.intitule };
         var anciens = Etat.rappels.filter(function (x) { return x.nom === nr.nom; });
         anciens.forEach(function (x) {
           Etat.historique.push({ nom: x.nom, due: x.due, statut: 'remplacé', le: AUJ });
@@ -1940,8 +1952,8 @@ function actions(nom, arg) {
           (nr.rep ? ', ' + repTexte(nr).toLowerCase() : '') + '.' +
           (anciens.length ? ' <span class="grey">(l’ancien rappel du même examen passe en « remplacé »)</span>' : ''));
       });
-      if (!faits && s.prevention.blocs.some(function (b) { return b.suivi || b.date; })) {
-        bilan.push('<span class="grey">Aucun rappel posé : élément de suivi ou échéance manquant.</span>');
+      if (!faits && (s.prevention.saisie.suivi || s.prevention.saisie.date)) {
+        bilan.push('<span class="grey">Un rappel était en cours de saisie mais n’a pas été ajouté à la liste.</span>');
       }
     }
     if (s.tache.acteur) {
@@ -1963,25 +1975,43 @@ function actions(nom, arg) {
 
   if (nom === 'bandeau') { set(arg, !get(arg)); rendreFenetre(); return; }
   if (nom === 'annulerSaisie') { Etat.saisie = saisieInitiale(); rendreTout(); return; }
-  if (nom === 'ajouterBloc')   { Etat.saisie.prevention.blocs.push(blocVide()); rendreFenetre(); return; }
-  if (nom === 'retirerBloc')   { Etat.saisie.prevention.blocs.splice(+arg, 1); if (!Etat.saisie.prevention.blocs.length) { Etat.saisie.prevention.blocs.push(blocVide()); } rendreFenetre(); return; }
+  if (nom === 'lierEp') {
+    var L = Etat.saisie.episode.liens, id = +arg, k = L.indexOf(id);
+    if (k === -1) { L.push(id); } else { L.splice(k, 1); }
+    rendreFenetre(); return;
+  }
+  if (nom === 'creerEpisode')    { Etat.saisie.episode.creation = true; rendreFenetre(); return; }
+  if (nom === 'annulerCreation') { Etat.saisie.episode.creation = false; rendreFenetre(); return; }
+  if (nom === 'ajouterRappel') {
+    var b = Etat.saisie.prevention.saisie, due = echeance(b);
+    if (!b.suivi || !due) { return; }
+    Etat.saisie.prevention.liste.push({ suivi: b.suivi, due: due, rep: repDe(b), note: b.note });
+    Etat.saisie.prevention.saisie = blocVide();
+    Etat.saisie.prevention.sel = null;
+    rendreFenetre(); return;
+  }
+  if (nom === 'retirerRappel') {
+    if (Etat.saisie.prevention.sel === null) { return; }
+    Etat.saisie.prevention.liste.splice(Etat.saisie.prevention.sel, 1);
+    Etat.saisie.prevention.sel = null;
+    rendreFenetre(); return;
+  }
+  if (nom === 'selRappelSaisi') {
+    Etat.saisie.prevention.sel = (Etat.saisie.prevention.sel === +arg) ? null : +arg;
+    rendreFenetre(); return;
+  }
   if (nom === 'favori') {
-    var p = arg.split('|');
-    Etat.saisie.prevention.blocs[+p[0]].suivi = p[1];
-    favoris[p[1]] = (favoris[p[1]] || 0) + 1;
+    Etat.saisie.prevention.saisie.suivi = arg;
+    favoris[arg] = (favoris[arg] || 0) + 1;
     rendreFenetre(); return;
   }
   if (nom === 'ouvrirSuivi') {
-    var c = document.querySelector('[data-path="saisie.prevention.blocs.' + arg + '.suivi"]');
+    var c = document.querySelector('[data-path="saisie.prevention.saisie.suivi"]');
     if (c) { ouvrirDD(c); } return;
   }
   if (nom === 'ouvrirPatho') {
     var cp = document.querySelector('[data-path="saisie.episode.patho"]');
     if (cp) { ouvrirDD(cp); } return;
-  }
-  if (nom === 'ouvrirEpisode') {
-    var ce = document.querySelector('[data-path="saisie.episode.lien"]');
-    if (ce) { ouvrirDD(ce); } return;
   }
 
   if (nom === 'onglet')      { Etat.onglet = arg; Etat.modification = false; rendreModule(); return; }
