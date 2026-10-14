@@ -47,12 +47,14 @@
 .xw-res .big{font-size:34px;font-weight:600;color:#888}
 .xw-scale{display:flex;height:14px;margin:10px 0 2px;border-radius:3px;overflow:hidden}
 .xw-scale i{flex:1}
-.xw-dock{width:340px;border:1px solid #8a94c4;background:#fff;font:12.5px "Segoe UI",sans-serif}
+.xw-dock{width:100%;max-width:680px;border:1px solid #8a94c4;background:#fff;font:12.5px "Segoe UI",sans-serif}
 .xw-dock .hd{background:#5a6aa8;color:#fff;padding:5px 8px;font-weight:600;display:flex;justify-content:space-between}
 .xw-seg{display:flex;margin:6px;border:1px solid #5a6aa8;border-radius:12px;overflow:hidden}
 .xw-seg button{flex:1;border:0;background:#fff;padding:3px;font:inherit;cursor:pointer}
 .xw-seg button.act{background:#5a6aa8;color:#fff}
-.xw-dock .bd{padding:6px 10px 10px;min-height:150px}
+.xw-dock .bd{padding:6px 10px 10px;min-height:150px;max-height:480px;overflow:auto}
+.xw-dock .xw-grid{width:100%}
+.xw-dock .xw-grid td,.xw-dock .xw-grid th{white-space:nowrap}
 .legendbox{border:1px solid #ccc;background:#fff;padding:6px 10px;font-size:12px;position:absolute;right:12px;top:52px}
 
 /* voyants (LED), ampoules, statut refusé, impression */
@@ -77,3 +79,7 @@
   #xwPrintDoc table{width:100%;border-collapse:collapse}#xwPrintDoc th,#xwPrintDoc td{border:1px solid #888;padding:4px 6px;text-align:left}
   #xwPrintDoc .foot{font-size:11px;color:#444;margin-top:14px}
 }
+
+.xw-form input[type=text],.xw-form input[type=number],.xw-form input[type=date],.xw-form select{border:1px solid #bbb;padding:2px 6px;font:inherit;background:#fff}
+.xw-btn:not(.dis){cursor:pointer}
+.xw-btn:not(.dis):hover{background:#eef6fa}

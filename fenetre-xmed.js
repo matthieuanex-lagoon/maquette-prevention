@@ -87,6 +87,8 @@ const PROFILES = {
     exams:[ X('Consultation gériatrique','2027-01-18','3 mois'), X('Ostéodensitométrie','2026-12-14','2 mois'), X('Bilan ophtalmologique','2026-11-25','1 mois'), X('Audiométrie','2027-04-08','6 mois') ],
     ev:{vpc:['2025-02-12'], flu:['2025-10-20'], covid:['2026-10-08']}, s2:{tabac:false, pas:148, chol:5.6, hdl:1.6, statine:false, date:'2026-06-30'}}
 };
+const TABAC_TXT = {E:'Non fumeur', C:'Fumeur actif — 25 paquets-années', L:'Fumeuse active — 15 paquets-années', M:'Fumeur actif — 30 paquets-années', K:'Ex-fumeuse (sevrée en 1998)', D:'Non fumeuse', B:'Ex-fumeuse (sevrée en 2015)', J:'Ex-fumeur (sevré en 2018)'};
+Object.entries(TABAC_TXT).forEach(([k, t]) => { if(PROFILES[k]) PROFILES[k].s2.tabacTxt = t; });
 Object.values(PROFILES).forEach(p => { p.ald = p.aldCim ? [...new Set(p.aldCim.flatMap(c => window.aldFromCim10(c)))] : (p.ald || []); p.dobD = D(p._dob); p.ageM = monthsBetween(p.dobD, REF); p.age = Math.floor(p.ageM/12); });
 
 /* ---- Règles : population → exclusion → réalisation ---- */
@@ -173,6 +175,7 @@ const RULES = {
 const ORDER_XW = ['MRC','DIA','DOC','DOU','DOS','HBA','GRI','COV','PNE','HPV','M9','M24','DENT','ROR','MEN'];
 
 /* ---- État de la démonstration ---- */
+let horsOpen = false;
 let cur = 'E', tab = 'vacc', selId = null, dock = 'grille', unit = 'mmol', hunit = 'mmol', s2sim = {}, mt = {}, vsel = 0;
 const mtOf = () => (mt[cur] = mt[cur] || {});
 function evalAll(){
@@ -221,22 +224,103 @@ function paneVacc(){
    '</table></div>' + sideButtons() + '</div>';
 }
 
-/* ---- Examens et consultations ---- */
+/* ---- Examens et consultations (fonctionnel : saisie, Appliquer, Fait, Annuler le rappel, historique) ---- */
 const examStatut = x => x.refus ? 'Refusé' : (D(x.ech) < REF ? 'En retard' : x.statut);
-let esel = 0;
-function paneExam(){
+let esel = 0, edraft = null, edirty = false, showHist = false;
+const EXAM_NAMES = ['Echographie thyroïdienne','Consultation de cardiologie','Bilan lipidique','Coloscopie de contrôle','Mammographie','Ostéodensitométrie','Fond d’œil','Electrocardiogramme','Epreuve d’effort','Echocardiographie','HbA1c','Albuminurie et créatininurie','Consultation de tabacologie','Consultation gériatrique','Audiométrie','Test immunologique colorectal','Consultation gynécologique','Scanner thoracique low-dose'];
+function exInit(){
+  Object.values(PROFILES).forEach(p => {
+    p.exHist = p.exHist || [];
+    p.exams.forEach((x, i) => {
+      if(x.dansN === undefined){
+        const m = String(x.dans || '').match(/^(\d+)\s*(mois|ans?|semaines?)/);
+        x.dansN = m ? +m[1] : ''; x.dansU = m && /^an/.test(m[2]) ? 'ans' : 'mois';
+        if(m && /^semaine/.test(m[2])) x.dansN = Math.max(1, Math.round(+m[1] / 4.3));
+      }
+      x.id = x.id || ('x' + i + Math.random().toString(36).slice(2, 6));
+    });
+  });
+}
+exInit();
+function exSel(){
   const p = PROFILES[cur];
   if(esel >= p.exams.length) esel = 0;
-  const e = p.exams[esel];
+  const x = p.exams[esel];
+  if(!x){ edraft = null; return null; }
+  if(!edraft || edraft._id !== x.id){ edraft = Object.assign({}, x, {_id:x.id}); edirty = false; }
+  return edraft;
+}
+const exMonths = x => (x.dansN === '' || x.dansN == null) ? null : (+x.dansN) * (x.dansU === 'ans' ? 12 : 1);
+function paneExam(){
+  const p = PROFILES[cur], e = exSel();
   const rep = x => x.repN ? 'Tous les ' + x.repN + ' an(s) pendant ' + x.repY + ' an(s)' : '';
-  const grid = '<table class="xw-grid"><tr><th>Examen</th><th>Répétition</th><th>Note</th><th>Statut</th><th>Créé par</th><th>Proposé</th><th>Refusé</th><th>Échéance</th></tr>' +
-    p.exams.slice().sort((x,y)=>x.ech<y.ech?-1:1).map(x => { const i = p.exams.indexOf(x), s = examStatut(x);
-      return '<tr class="click' + (i === esel ? ' sel' : '') + '" data-e="' + i + '"><td>' + x.nom + '</td><td>' + rep(x) + '</td><td>' + x.note + '</td><td' + (s === 'En retard' ? ' style="color:#b3261e;font-weight:600"' : '') + '>' + s + '</td><td>' + x.par + '</td><td>' + (x.prop ? '☑' : '☐') + '</td><td>' + (x.refus ? '☑' : '☐') + '</td><td>' + fmt(D(x.ech)) + '</td></tr>'; }).join('') + '</table>';
-  const form = e ? '<div class="xw-form" style="grid-template-columns:90px 1fr"><div></div><div class="mut">Posé le ' + e.pose + ' par ' + e.par + '</div><div>Examen :</div><div><span class="fld" style="display:block">' + e.nom + '</span></div>' +
-    '<div>dans</div><div>' + (e.dans ? '<span class="fld">' + e.dans.split(' ')[0] + '</span> ' + e.dans.split(' ').slice(1).join(' ') : '<span class="fld" style="min-width:40px;display:inline-block"></span>') + ' ou le <span class="fld" style="min-width:90px;display:inline-block">' + (e.dans ? '' : fmt(D(e.ech))) + '</span></div>' +
-    '<div></div><div>' + (e.repN ? '☑' : '☐') + ' Répéter tous les <span class="fld">' + (e.repN || 1) + '</span> an(s) pendant <span class="fld">' + (e.repY || 10) + '</span> an(s)</div>' +
-    '<div>Note :</div><div><span class="fld" style="display:block;min-height:22px">' + e.note + '</span></div><div></div><div style="color:#2f6f9f">→ ' + e.nom + ' le ' + fmt(D(e.ech)) + '</div></div>' : '<div class="xw-pad mut">Aucun examen programmé pour ce patient.</div>';
-  return '<div class="xw-body"><div class="xw-main">' + grid + form + '</div>' + sideButtons() + '</div>';
+  const hist = showHist ? p.exHist : [];
+  const act = p.exams.slice().sort((x,y)=>x.ech<y.ech?-1:1).map(x => { const i = p.exams.indexOf(x), s = examStatut(x);
+      return '<tr class="click' + (i === esel ? ' sel' : '') + '" data-e="' + i + '"><td>' + x.nom + '</td><td>' + rep(x) + '</td><td>' + x.note + '</td><td' + (s === 'En retard' ? ' style="color:#b3261e;font-weight:600"' : '') + '>' + s + '</td><td>' + x.par + '</td>' +
+        '<td><input type="checkbox" data-exflag="prop" data-i="' + i + '"' + (x.prop ? ' checked' : '') + '></td><td><input type="checkbox" data-exflag="refus" data-i="' + i + '"' + (x.refus ? ' checked' : '') + '></td><td>' + fmt(D(x.ech)) + '</td></tr>'; }).join('');
+  const old = hist.map(x => '<tr style="color:#777;background:#f6f6f6"><td>' + x.nom + '</td><td>' + rep(x) + '</td><td>' + x.note + '</td><td>' + x.statut + (x.fait ? ' le ' + fmt(D(x.fait)) : '') + '</td><td>' + x.par + '</td><td></td><td></td><td>' + fmt(D(x.ech)) + '</td></tr>').join('');
+  const grid = '<table class="xw-grid"><tr><th>Examen</th><th>Répétition</th><th>Note</th><th>Statut</th><th>Créé par</th><th>Proposé</th><th>Refusé</th><th>Échéance</th></tr>' + act + old + '</table>' +
+    (!p.exams.length ? '<div class="xw-pad mut">Aucun examen programmé. Utilisez « Ajouter ».</div>' : '');
+  const num = (k, v, w) => '<input type="number" min="0" data-ef="' + k + '" value="' + (v === '' || v == null ? '' : v) + '" style="width:' + (w || 60) + 'px">';
+  const form = e ? '<div class="xw-form" id="xwEForm" style="grid-template-columns:90px 1fr"><div></div><div class="mut">Posé le ' + e.pose + ' par ' + e.par + '</div>' +
+    '<div>Examen :</div><div><input type="text" list="xwExList" data-ef="nom" value="' + e.nom.replace(/"/g, '&quot;') + '" style="width:100%"><datalist id="xwExList">' + EXAM_NAMES.map(n => '<option value="' + n + '">').join('') + '</datalist></div>' +
+    '<div>dans</div><div>' + num('dansN', e.dansN) + ' <select data-ef="dansU"><option value="mois"' + (e.dansU !== 'ans' ? ' selected' : '') + '>mois</option><option value="ans"' + (e.dansU === 'ans' ? ' selected' : '') + '>ans</option></select> ou le <input type="date" data-ef="ech" value="' + e.ech + '"></div>' +
+    '<div></div><div><label><input type="checkbox" data-ef="rep"' + (e.repN ? ' checked' : '') + '> Répéter tous les</label> ' + num('repN', e.repN || 1, 50).replace('<input', '<input' + (e.repN ? '' : ' disabled')) + ' an(s) pendant ' + num('repY', e.repY || 10, 50).replace('<input', '<input' + (e.repN ? '' : ' disabled')) + ' an(s)</div>' +
+    '<div>Note :</div><div><input type="text" data-ef="note" value="' + e.note.replace(/"/g, '&quot;') + '" style="width:100%"></div>' +
+    '<div></div><div><a href="#" id="xwELink" style="color:#2f6f9f">→ ' + e.nom + ' le ' + fmt(D(e.ech)) + '</a></div></div>' : '';
+  const b = (t, dis) => '<div class="xw-btn' + (dis ? ' dis' : '') + '" data-act="' + t + '">' + t + '</div>';
+  const none = !e;
+  const side = '<div class="xw-side">' + b('Ajouter') + b('Appliquer', !edirty) + b('Annuler la saisie', !edirty) + b('Fait', none) + '<div style="height:8px"></div>' + b('Annuler le rappel', none) + b('Ouvrir le document', none) +
+    b('Imprimer') + b('Impression PDF') + '<label style="font-size:12px;margin:4px 0"><input type="checkbox" id="xwHist"' + (showHist ? ' checked' : '') + '> Voir l’historique</label><div style="flex:1"></div>' + b('Fermer') + '</div>';
+  return '<div class="xw-body"><div class="xw-main">' + grid + form + '</div>' + side + '</div>';
+}
+/* boîte de dialogue simple (réutilise la fenêtre modale) */
+let dlgCb = {};
+function dlg(html, btns){
+  dlgCb = {}; btns.forEach((x, i) => { dlgCb['b' + i] = x[1]; });
+  document.getElementById('modalBody').innerHTML = html + '<div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">' + btns.map((x, i) => '<button data-dlg="b' + i + '" class="xw-btn" style="width:auto;padding:6px 18px;cursor:pointer">' + x[0] + '</button>').join('') + '</div>';
+  document.getElementById('modalBg').classList.add('on');
+}
+document.getElementById('modalBg').addEventListener('click', e => {
+  const x = e.target.closest('[data-dlg]');
+  if(x && dlgCb[x.dataset.dlg]){ const fn = dlgCb[x.dataset.dlg]; document.getElementById('modalBg').classList.remove('on'); fn(); }
+});
+function exAct(act){
+  const p = PROFILES[cur], x = p.exams[esel];
+  if(act === 'Ajouter'){
+    p.exams.push({id:'n' + Date.now(), nom:'Nouvel examen', ech:iso(addM(REF, 6)), statut:'Actif', par:'ANEX Matthieu', pose:fmt(REF), dansN:6, dansU:'mois', dans:'6 mois', note:'', repN:0, repY:0, prop:false, refus:false, neu:true});
+    esel = p.exams.length - 1; edraft = null; exSel(); edirty = true; render(); return;
+  }
+  if(!x) return;
+  if(act === 'Appliquer'){
+    if(!edraft) return;
+    const d = edraft; Object.assign(x, {nom:d.nom, ech:d.ech, dansN:d.dansN, dansU:d.dansU, note:d.note, repN:d.repN, repY:d.repY}); delete x.neu; edirty = false; edraft = null; render(); return;
+  }
+  if(act === 'Annuler la saisie'){
+    if(x.neu){ p.exams.splice(esel, 1); esel = 0; }
+    edraft = null; edirty = false; render(); return;
+  }
+  if(act === 'Fait'){
+    dlg('<h2>Fait</h2><p>Marquer « <strong>' + x.nom + '</strong> » comme réalisé le ' + fmt(REF) + ' ? Il sortira de la liste active et rejoindra l’historique.</p>', [['Annuler', () => {}], ['Valider', () => {
+      p.exams.splice(esel, 1); esel = 0; edraft = null; p.exHist.unshift(Object.assign({}, x, {statut:'Fait', fait:iso(REF)}));
+      const m = exMonths(x) || (x.repN ? x.repN * 12 : null);
+      if(m){
+        dlg('<h2>Reposer le rappel ?</h2><p>Reposer « <strong>' + x.nom + '</strong> » avec le même délai (' + (x.dansN !== '' ? x.dansN + ' ' + x.dansU : m + ' mois') + ') ?</p>', [['Non', render], ['Oui, reposer', () => {
+          p.exams.push(Object.assign({}, x, {id:'r' + Date.now(), ech:iso(addM(REF, m)), pose:fmt(REF), statut:'Actif', prop:false, refus:false, neu:false}));
+          esel = p.exams.length - 1; edraft = null; render();
+        }]]);
+      } else render();
+    }]]); return;
+  }
+  if(act === 'Annuler le rappel'){
+    dlg('<h2>Annuler le rappel</h2><p>Annuler le rappel « <strong>' + x.nom + '</strong> » ? Il rejoindra l’historique au statut « Annulé ».</p>', [['Non', () => {}], ['Annuler le rappel', () => {
+      p.exams.splice(esel, 1); esel = 0; edraft = null; p.exHist.unshift(Object.assign({}, x, {statut:'Annulé'})); render();
+    }]]); return;
+  }
+  if(act === 'Ouvrir le document') openDoc(x);
+}
+function openDoc(x){
+  dlg('<h2>Document d’origine</h2><p><strong>' + x.nom + '</strong></p><p class="mut">Compte rendu incorporé le ' + x.pose + ' par ' + x.par + '. Rappel posé pour le ' + fmt(D(x.ech)) + (x.note ? ' — « ' + x.note + ' »' : '') + '.</p><p class="mut" style="font-size:12px">(Maquette : dans XMed, ce lien ouvre le document incorporé.)</p>', [['Fermer', () => {}]]);
 }
 
 /* ---- Chronologie (SVG générée depuis les vaccins et examens) ---- */
@@ -249,7 +333,7 @@ function chronoSVG(compact){
   const years = [];
   rows.forEach(r => r.items.forEach(i => { years.push(D(i.d || i.ech).getFullYear()); if(i.rappel) years.push(D(i.rappel).getFullYear()); }));
   const y0 = Math.min(...years, REF.getFullYear()) - 1, y1 = Math.max(...years, REF.getFullYear()) + 1;
-  const W = compact ? 330 : 940, L = compact ? 118 : 230, R = 16, T = 10, B = 30, rh = compact ? 30 : 64;
+  const W = compact ? 620 : 940, L = compact ? 210 : 230, R = 16, T = 10, B = 30, rh = compact ? 28 : 64;
   const H = T + rh*rows.length + B;
   const X = d => L + (d - new Date(y0,0,1)) / (new Date(y1,0,1) - new Date(y0,0,1)) * (W - L - R);
   let s = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Chronologie">';
@@ -259,7 +343,7 @@ function chronoSVG(compact){
   for(let y=y0; y<=y1; y+=step){ const x = X(new Date(y,0,1)); s += '<line x1="'+x+'" x2="'+x+'" y1="'+T+'" y2="'+(H-B)+'" stroke="#d6dde2"/><text x="'+x+'" y="'+(H-B+14)+'" font-size="'+(compact?8:10)+'" text-anchor="middle" fill="#444">01/01/'+(compact?String(y).slice(2):y)+'</text>'; }
   rows.forEach((r,i) => {
     const y = T + rh*(i+.5);
-    s += '<text x="'+(L-8)+'" y="'+(y+4)+'" font-size="'+(compact?9:11)+'" text-anchor="end" fill="#222">'+(compact ? r.lab.slice(0,18) : r.lab)+'</text>';
+    s += '<text x="'+(L-8)+'" y="'+(y+4)+'" font-size="'+(compact?9:11)+'" text-anchor="end" fill="#222">'+r.lab+'</text>';
     const real = r.items.filter(x => !x.refus && r.type==='v').map(x => D(x.d)).sort((a,b)=>a-b);
     const rap = r.items.map(x => x.rappel).filter(Boolean).map(D).filter(d => d > REF).sort((a,b)=>b-a)[0];
     const ends = real.slice(); if(rap) ends.push(rap);
@@ -322,7 +406,7 @@ function paneS2(){
   return '<div class="xw-top"><div style="display:flex;gap:6px"><div class="xw-btn" data-act="Imprimer">Imprimer</div><div class="xw-btn" data-act="Impression PDF">Impression PDF</div></div><div class="xw-btn">Fermer</div></div><div class="xw-main" style="margin:0 6px 6px"><div class="xw-s2"><div>' +
    '<h4>Variables lues au dossier (modifiables pour simuler)</h4><table class="xw-grid"><tr><th>Variable</th><th>Valeur</th><th>Date</th><th>Origine</th></tr>' +
    row('Sexe', p.sexe === 'F' ? 'Femme' : 'Homme', '', 'Fiche patient') + row('Âge', String(p.age), 'ans', 'Date de naissance') +
-   row('Tabagisme', '<label><input type="checkbox" data-sim="smoker"' + (inp.smoker ? ' checked' : '') + '> Fumeur</label>', '', 'Facteurs de risque') +
+   row('Tabagisme', '<strong>' + (s.tabacTxt || (s.tabac ? 'Fumeur actif' : 'Non fumeur')) + '</strong> <span class="mut">— pris en compte automatiquement (fumeur actif : ' + (inp.smoker ? 'oui' : 'non') + ')</span><br><label class="mut" style="font-size:12px"><input type="checkbox" data-sim="smoker"' + (inp.smoker ? ' checked' : '') + '> Simuler : fumeur actif</label>', '', 'Facteurs de risque du dossier') +
    row('PAS', num('sbp', inp.sbp), 'mmHg', 'Constantes') + row('Cholestérol total', num('chol', conv(inp.tchol), stp), u, 'Biologie') + row('Cholestérol HDL', num('hdl', conv(inp.hdl), stp), u, 'Biologie') + dmRows + '</table>' +
    '<p style="font-size:12.5px">Unité des lipides : <label><input type="radio" name="xwUnit" value="mmol"' + (unit === 'mmol' ? ' checked' : '') + '> mmol/L</label> <label><input type="radio" name="xwUnit" value="g"' + (unit === 'g' ? ' checked' : '') + '> g/L</label> <span class="mut">(1 g/L = 2,586 mmol/L ; calcul toujours en mmol/L)</span>' +
    (dm ? '<br>Unité de l’HbA1c : <label><input type="radio" name="xwHUnit" value="mmol"' + (hunit === 'mmol' ? ' checked' : '') + '> mmol/mol</label> <label><input type="radio" name="xwHUnit" value="pct"' + (hunit === 'pct' ? ' checked' : '') + '> %</label> <span class="mut">(calcul en mmol/mol IFCC)</span>' : '') + '</p>' +
@@ -348,7 +432,7 @@ function paneMT(){
   const head = '<tr><th></th><th>Indicateur</th><th>Statut</th><th>Réalisé le</th><th>Échéance</th><th>Proposé</th><th>Refusé</th><th>Exclu</th><th>Précision</th><th>Fiche</th></tr>';
   return '<div class="xw-body"><div class="xw-main"><div class="xw-pad" style="padding-bottom:0"><strong>' + conc.length + ' indicateur(s) concernent ce patient</strong> — ' + nTodo + ' à faire avant le ' + fmt(YEAR_END) + '. <span class="mut">Double-clic sur une ligne : fiche technique.</span></div>' +
    '<table class="xw-grid" style="margin-top:8px">' + head + '<tr class="grp"><td colspan="10">Concerne ce patient</td></tr>' + (conc.length ? conc.map(row).join('') : '<tr><td colspan="10">Aucun indicateur.</td></tr>') +
-   '<tr class="grp"><td colspan="10">Ne concerne pas ce patient (' + hors.length + ') — avec la raison</td></tr>' + hors.map(row).join('') + '</table>' +
+   '<tr class="grp click" data-grp="hors"><td colspan="10">' + (horsOpen ? '▾' : '▸') + ' Ne concerne pas ce patient (' + hors.length + ') — avec la raison <span class="mut" style="font-weight:400">· cliquer pour ' + (horsOpen ? 'replier' : 'déplier') + '</span></td></tr>' + (horsOpen ? hors.map(row).join('') : '') + '</table>' +
    '<p class="mut xw-pad" style="font-size:12px">« Fait » est posé automatiquement quand la donnée est trouvée au dossier ; sinon il peut être forcé à la main. Statut calculé d’après le dossier XMed, à titre indicatif : le décompte officiel est établi par l’Assurance Maladie à partir des remboursements et peut différer. Règles simplifiées pour la démonstration.</p></div>' +
    sideButtons(true) + '</div>';
 }
@@ -372,8 +456,8 @@ function renderDock(){
     const groups = {}; p.vacc.filter(v => !v.refus).forEach(v => (groups[v.val] = groups[v.val] || []).push(v));
     const rows = [];
     Object.keys(groups).forEach(k => { const g = groups[k].sort((a,c)=>a.d<c.d?-1:1), l = g[g.length-1], rap = g.map(x=>x.rappel).filter(Boolean).sort().pop();
-      if(rap || monthsBetween(D(l.d), REF) < 60) rows.push(['Vaccin', k.slice(0,16), rap ? fmt(D(rap)) : '', rap ? 'Rappel atte…' : 'Fait', fmt(D(l.d))]); });
-    p.exams.forEach(e => rows.push(['Examen', e.nom.slice(0,16), fmt(D(e.ech)), examStatut(e) === 'Actif' ? 'A faire' : examStatut(e), '']));
+      if(rap || monthsBetween(D(l.d), REF) < 60) rows.push(['Vaccin', k, rap ? fmt(D(rap)) : '', rap ? 'Rappel atte…' : 'Fait', fmt(D(l.d))]); });
+    p.exams.forEach(e => rows.push(['Examen', e.nom, fmt(D(e.ech)), examStatut(e) === 'Actif' ? 'A faire' : examStatut(e), '']));
     b.innerHTML = '<table class="xw-grid"><tr><th>Type</th><th>Examen / …</th><th>Échéance</th><th>Statut</th><th>Réalisé le</th></tr>' + rows.map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + r[4] + '</td></tr>').join('') + '</table>';
   } else if(dock === 'mt'){
     const r = evalAll().filter(x => x.statut === 'todo');
@@ -409,7 +493,6 @@ root.addEventListener('click', e => {
     }
     return;
   }
-  const ex_ = e.target.closest('tr[data-e]'); if(ex_){ esel = +ex_.dataset.e; render(); return; }
   const v = e.target.closest('tr[data-v]'); if(v){ vsel = +v.dataset.v; root.querySelectorAll('tr[data-v]').forEach(x => x.classList.remove('sel')); v.classList.add('sel'); return; }
   const r = e.target.closest('tr[data-id]');
   if(r && !e.target.closest('input')){ selId = r.dataset.id; root.querySelectorAll('tr[data-id]').forEach(x => x.classList.toggle('sel', x === r)); return; }
@@ -441,6 +524,46 @@ root.addEventListener('input', e => {
   const res = document.getElementById('xwS2Res'); if(res) res.innerHTML = s2result();
   renderDock();
 });
-sel.addEventListener('change', () => { cur = sel.value; selId = null; vsel = 0; esel = 0; render(); });
+sel.addEventListener('change', () => { cur = sel.value; selId = null; vsel = 0; esel = 0; edraft = null; edirty = false; render(); });
+
+/* ---- interactions : Examens et consultations / repli « Ne concerne pas » ---- */
+root.addEventListener('click', e => {
+  const g = e.target.closest('tr[data-grp]'); if(g){ horsOpen = !horsOpen; render(); return; }
+  if(tab !== 'exam') return;
+  const link = e.target.closest('#xwELink'); if(link){ e.preventDefault(); const x = PROFILES[cur].exams[esel]; if(x) openDoc(x); return; }
+  const a = e.target.closest('[data-act]');
+  if(a){ if(a.classList.contains('dis')) return; const act = a.dataset.act; if(['Ajouter','Appliquer','Annuler la saisie','Fait','Annuler le rappel','Ouvrir le document'].includes(act)) exAct(act); return; }
+  const r = e.target.closest('tr[data-e]');
+  if(r && !e.target.closest('input')){ esel = +r.dataset.e; edraft = null; edirty = false; render(); }
+});
+root.addEventListener('change', e => {
+  if(tab !== 'exam') return;
+  if(e.target.id === 'xwHist'){ showHist = e.target.checked; render(); return; }
+  const fl = e.target.dataset && e.target.dataset.exflag;
+  if(fl){ const x = PROFILES[cur].exams[+e.target.dataset.i]; if(x){ x[fl] = e.target.checked; render(); } }
+});
+function exFormUpdate(e){
+  const k = e.target.dataset && e.target.dataset.ef; if(!k || !edraft) return;
+  const d = edraft, form = document.getElementById('xwEForm');
+  if(k === 'nom') d.nom = e.target.value;
+  if(k === 'note') d.note = e.target.value;
+  if(k === 'dansN' || k === 'dansU'){
+    d.dansN = form.querySelector('[data-ef=dansN]').value === '' ? '' : +form.querySelector('[data-ef=dansN]').value; d.dansU = form.querySelector('[data-ef=dansU]').value;
+    const m = exMonths(d); if(m != null){ d.ech = iso(addM(REF, m)); form.querySelector('[data-ef=ech]').value = d.ech; }
+  }
+  if(k === 'ech'){ d.ech = e.target.value || d.ech; d.dansN = ''; form.querySelector('[data-ef=dansN]').value = ''; }
+  if(k === 'rep'){
+    const on = e.target.checked; d.repN = on ? (d.repN || 1) : 0; d.repY = on ? (d.repY || 10) : 0;
+    form.querySelector('[data-ef=repN]').disabled = !on; form.querySelector('[data-ef=repY]').disabled = !on;
+    form.querySelector('[data-ef=repN]').value = d.repN || 1; form.querySelector('[data-ef=repY]').value = d.repY || 10;
+  }
+  if(k === 'repN') d.repN = Math.max(1, +e.target.value || 1);
+  if(k === 'repY') d.repY = Math.max(1, +e.target.value || 1);
+  edirty = true;
+  document.querySelectorAll('#xwPanes [data-act="Appliquer"], #xwPanes [data-act="Annuler la saisie"]').forEach(b => b.classList.remove('dis'));
+  const l = document.getElementById('xwELink'); if(l) l.textContent = '→ ' + d.nom + ' le ' + fmt(D(d.ech));
+}
+root.addEventListener('input', exFormUpdate);
+root.addEventListener('change', exFormUpdate);
 render();
 })();
