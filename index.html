@@ -10,7 +10,7 @@
 body{margin:0;font:15px/1.5 "Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
 header.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 24px}
 header.top h1{margin:0;font-size:18px}
-header.top p{margin:2px 0 0;color:var(--mut);font-size:13px}
+header.top p{margin:4px 0 0;color:var(--ink);font-size:14px;max-width:900px}
 .main-tabs{display:flex;gap:4px;padding:0 24px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .main-tabs button{border:0;background:none;padding:12px 16px;font:inherit;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent}
 .main-tabs button.act{color:var(--teal);border-bottom-color:var(--teal)}
@@ -64,7 +64,10 @@ ul{margin:4px 0 8px;padding-left:20px}
 <body>
 <header class="top">
   <h1>XMED — Module Prévention · étape 2</h1>
-  <p>Périmètre : icône <strong>CPAM</strong> (Prévention MT) et icône <strong>Score 2</strong>. Spécifications construites à partir des fiches techniques de l'Assurance Maladie (DDGOS + DSES, 24/03/2026 et 14/09/2026). L'étape 1 est conservée dans l'onglet « Archive étape 1 ».</p>
+  <p class="intro">Deux chantiers sont traités ici, à partir des documents officiels :
+  <strong>1. Prévention MT (CPAM)</strong> — repérer dans le dossier du patient les 15 indicateurs de prévention de l’Assurance Maladie et dire où il en est ;
+  <strong>2. Score 2</strong> — calculer son risque cardiovasculaire à 10 ans sans ressaisie.
+  L’étape 1 est conservée dans l’onglet « Archive étape 1 ».</p>
 </header>
 <nav class="main-tabs" id="mainTabs">
   <button data-p="prev" class="act">Prévention étape 2</button>
@@ -292,6 +295,16 @@ ORDER.forEach(id=>{
 
 s += '<h2 style="margin:22px 0 10px">4. Score 2</h2><div class="card" id="score2Spec"></div>';
 
+s += '<div class="card"><h2>Correspondance ALD ↔ CIM10</h2>'+
+ '<p>Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». XMed ne connaît pas le numéro : il faut donc retrouver le numéro d’ALD à partir du code CIM10 de l’épisode de soins, comme le fait le SNDS.</p>'+
+ '<table><tr><th>Élément</th><th>Ce qu’on sait (SNDS / Health Data Hub)</th></tr>'+
+ '<tr><td>Table de correspondance</td><td><code>IR_CIM_V</code> : <code>CIM_COD</code> (code CIM10) → <code>ALD_030_COD</code> (numéro d’ALD 1 à 30)</td></tr>'+
+ '<tr><td>Précision du code</td><td>Les codes CIM10 de la table s’étendent sur <strong>3 caractères</strong> ; la jointure se fait sur les 3–4 premiers caractères du code de l’épisode</td></tr>'+
+ '<tr><td>ALD 31 et 32</td><td>Hors liste et polypathologie : <strong>aucun code CIM10</strong> ne permet de les attribuer</td></tr>'+
+ '<tr><td>Exemple vérifié (ALD 1, AVC invalidant)</td><td>G08, G81, I60, I61, I62, I63, I64, I69</td></tr>'+
+ '<tr><td>Source officielle de la table complète</td><td>Assurance Maladie, « Alignement ALD/CIM10 » (fichier ZIP, page logiciel d’aide à la prescription) — <strong>pas encore intégrée</strong> : en attente d’autorisation de téléchargement</td></tr></table>'+
+ '<p class="mut">Point à vérifier : l’ALD 12 (HTA sévère) est sortie de la liste en 2011 d’après la documentation du SNDS, alors que les fiches CPAM de 2026 la citent encore (dépistage du diabète, MRC, grippe…). Sa correspondance CIM10 est à confirmer avec la table officielle.</p>'+
+ '<p><strong>Règle retenue pour la maquette :</strong> ALD active + code CIM10 → numéro d’ALD par la table ; à défaut de code, statut ALD global du dossier (alors insuffisant pour distinguer les ALD). Le diabète de type 1 / type 2 est distingué par le code CIM10 (E10 / E11).</p></div>';
 s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents manquants, questions restantes</h2>'+
  '<h3 class="s">Décidé</h3><ul>'+
  '<li><strong>Médecin traitant</strong> : XMed dispose d’un indicateur « médecin traitant » spécifique ; il limite les indicateurs à la patientèle du praticien.</li>'+
@@ -307,9 +320,9 @@ s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents man
  '</ul>'+
  '<h3 class="s">Documents ou informations qui manquent</h3>'+
  '<div class="q"><b>1 — Cinq fiches techniques.</b> Consultations M9 et M24-25, bucco-dentaire, ROR, méningocoque ACWY : codes d’actes et de produits, exclusions, profondeur d’historique.</div>'+
- '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». Le numéro étant inconnu dans XMed, il faut la table officielle de correspondance ALD / codes CIM10.</div>'+
+ '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Table officielle identifiée (Assurance Maladie, « Alignement ALD/CIM10 », fichier ZIP) mais <strong>non téléchargée</strong> : en attente de votre accord. Seul l’exemple de l’ALD 1 est vérifié à ce jour.</div>'+
  '<div class="q"><b>3 — Coefficients exacts SCORE2-Diabetes.</b> L’article fourni donne des rapports de risque arrondis à deux décimales (estimation avec un écart de −0,2 à −0,5 point). Les coefficients exacts sont dans le supplément en ligne (annexes 1 et 2) : à récupérer pour supprimer le « ≈ ».</div>'+
- '<div class="q"><b>4 — Supplément SCORE2-OP.</b> Pour le calcul continu des 70–89 ans (aujourd’hui : tableau par tranches).</div>'+
+ '<div class="q"><b>4 — Supplément SCORE2-OP.</b> Le fichier « score 2 op.pdf » reçu est identique à l’article déjà intégré (texte strictement identique) : il ne contient pas le supplément. Le calcul des 70–89 ans reste par tranches du tableau officiel.</div>'+
  '<div class="q"><b>5 — Champs XMed.</b> Noms exacts des champs : médecin traitant, statut ALD global, CIM10 de l’épisode, prescriptions (ATC), résultats incorporés (codes), vaccins (code CIP présent dans le module). À obtenir auprès d’Olaqin.</div>'+
  '</div>';
 
@@ -362,7 +375,7 @@ document.getElementById('score2Spec').innerHTML = SCORE2 +
  '<div class="q"><b>Décidé.</b> Seuils des articles (par âge) ; lipides en mmol/L ou g/L au choix (1 g/L = 2,586 mmol/L), HbA1c en mmol/mol ou % ; calcul proposé dès 40 ans, à revalider ; SCORE2-Diabetes intégré.</div>'+
  '<div class="q"><b>S1.</b> SCORE2-OP (70–89 ans) : valeur lue dans le <strong>tableau officiel</strong> (Figure 3), par tranches, arrondie à l’entier. La formule continue exige le supplément en ligne de l’article.</div>'+
  '<div class="q"><b>S2.</b> SCORE2-Diabetes : estimation à partir du Tableau 2 de l’article (rapports de risque arrondis). Elle sous-estime de 0,2 à 0,5 point les quatre exemples publiés ; le résultat est donc affiché « ≈ » avec cet avertissement. Les coefficients exacts du supplément le rendront exact. Aucune couleur : l’article ne définit pas de seuils d’action.</div>'+
- '<div class="q"><b>S3.</b> Diabète de type 2 uniquement : XMed distingue-t-il le type 1 du type 2 (code CIM10 E10 / E11) ? Sans cela, le type 2 est supposé.</div>'+
+ '<div class="q"><b>S3.</b> Diabète de type 2 uniquement : XMed distingue le type 1 du type 2 par le code CIM10 (E10 / E11) — pris en compte ; un diabète sans code est traité comme type 2, avec un avertissement.</div>'+
  '<div class="q"><b>S4.</b> Statut réglementaire : un score affiché oriente une décision thérapeutique (point déjà noté à l’étape 1 avec Olaqin).</div>';
 
 /* Navigation */

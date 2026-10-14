@@ -72,14 +72,16 @@ const fr = (v, d) => v.toFixed(d).replace('.', ',');
 
 /* ---- Point d'entrée : applicabilité + calcul ---- */
 function compute(p){
-  // p : {sex:'M'|'F', age, smoker, sbp, tchol, hdl, diabetes, type1, cvd, statin, severeHTA, ageDx, hba1c (mmol/mol), egfr}
+  // p : {sex:'M'|'F', age, smoker, sbp, tchol, hdl, diabetes, dmCode (CIM10 du diabète : E10 = type 1, E11 = type 2), cvd, statin, severeHTA, ageDx, hba1c (mmol/mol), egfr}
   const miss = [];
   if(p.sbp==null) miss.push('PAS'); if(p.tchol==null) miss.push('cholestérol total'); if(p.hdl==null) miss.push('HDL');
 
   if(p.diabetes){
     const why = [];
     if(p.cvd) why.push("Maladie cardiovasculaire établie : le score ne s'applique pas (prévention secondaire).");
-    if(p.type1) why.push("Diabète de type 1 : hors du modèle SCORE2-Diabetes (type 2 uniquement).");
+    const code = String(p.dmCode || '').toUpperCase();
+    if(p.type1 || code.indexOf('E10') === 0) why.push("Diabète de type 1 (CIM10 E10) : hors du modèle SCORE2-Diabetes (type 2 uniquement).");
+    else if(code && code.indexOf('E11') !== 0) why.push("Diabète de code CIM10 " + code + " : hors du modèle SCORE2-Diabetes (type 2, E11, uniquement).");
     if(p.age < 40 || p.age > 79) why.push("Âge hors de la plage 40–79 ans du modèle SCORE2-Diabetes.");
     if(why.length) return {ok:false, why, diabetes:true};
     if(p.ageDx==null) miss.push('âge au diagnostic du diabète'); if(p.hba1c==null) miss.push('HbA1c'); if(p.egfr==null) miss.push('DFG estimé');
@@ -87,6 +89,7 @@ function compute(p){
     const v = scoreDiabetes(p.sex, p.age, p.smoker, p.sbp, p.tchol, p.hdl, p.ageDx, p.hba1c, p.egfr);
     return {ok:true, model:'SCORE2-Diabetes', value:v, shown:'≈ ' + fr(v, 1), cls:null, thresholds:null, exact:false, approx:true,
             flags:["Estimation : rapports de risque arrondis du Tableau 2 de l’article. Écart observé de −0,2 à −0,5 point sur les exemples publiés ; coefficients exacts à intégrer (supplément).",
+                   ...(code ? [] : ["Code CIM10 du diabète non renseigné : type 2 supposé."]),
                    ...(p.statin ? ["Traitement hypolipémiant en cours : valeurs sous traitement, interprétation à valider."] : [])]};
   }
 

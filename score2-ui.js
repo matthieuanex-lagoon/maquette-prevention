@@ -20,7 +20,7 @@ function calcHTML(){
    '<label><input data-f="diabetes" type="checkbox"> Diabète</label></div>'+
    '<div class="dmbox" style="display:none;margin-top:10px;padding:10px;border:1px dashed #00769e;border-radius:8px">'+
    '<strong>SCORE2-Diabetes</strong> — variables du diabète<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end;margin-top:6px">'+
-   '<label><input data-f="type1" type="checkbox"> Diabète de type 1</label>'+
+   '<label>Code CIM10 du diabète<br><select data-f="dmCode"><option value="E11">E11 — type 2</option><option value="E10">E10 — type 1</option><option value="E13">E13 — autre diabète</option><option value="">non renseigné</option></select></label>'+
    '<label>Âge au diagnostic (ans)<br><input data-f="ageDx" type="number" min="10" max="90" value="55" style="width:90px"></label>'+
    '<label>HbA1c<br><input data-f="hba1c" type="number" step="0.1" value="58" style="width:80px"> <select data-f="hunit"><option value="mmol">mmol/mol</option><option value="pct">%</option></select></label>'+
    '<label>DFG estimé (mL/min/1,73 m²)<br><input data-f="egfr" type="number" min="5" max="150" value="80" style="width:90px"></label></div></div>'+
@@ -35,7 +35,7 @@ function mount(el){
   function read(){
     const hb = n('hba1c');
     return {sex:g('sex').value, age:n('age'), smoker:g('smoker').checked, sbp:n('sbp'), tchol:n('tchol'), hdl:n('hdl'),
-            diabetes:g('diabetes').checked, type1:g('type1').checked, cvd:g('cvd').checked, statin:g('statin').checked, severeHTA:g('severeHTA').checked,
+            diabetes:g('diabetes').checked, dmCode:g('dmCode').value, cvd:g('cvd').checked, statin:g('statin').checked, severeHTA:g('severeHTA').checked,
             ageDx:n('ageDx'), egfr:n('egfr'), hba1c: hb == null ? null : (g('hunit').value === 'pct' ? A.hba1cPctToMmol(hb) : hb)};
   }
   function run(){

@@ -57,13 +57,13 @@ const PROFILES = {
     vacc:[ V('2023-10-18','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
     exams:[ X('Consultation de tabacologie','2026-11-05','3 semaines',{note:'Aide au sevrage'}), X('Bilan lipidique','2027-03-03','5 mois',{repN:1,repY:5}), X('Mammographie (dès 50 ans)','2031-09-02','',{note:'Dépistage organisé'}) ],
     ev:{hpvhr:['2022-03-15']}, s2:{tabac:true, pas:128, chol:6.4, hdl:1.2, statine:false, date:'2026-04-18'}},
- B:{label:"Femme de 58 ans — diabète de type 2", sexe:'F', _dob:'1968-05-20', ald:[8], meds:{A10:true}, ante:[], refus:{},
+ B:{label:"Femme de 58 ans — diabète de type 2", sexe:'F', _dob:'1968-05-20', ald:[8], meds:{A10:true}, cim10:['E11.9'], ante:[], refus:{},
     vacc:[ V('2024-11-05','FLUARIXTETRA SER 0,5ML','Grippe saisonnière') ],
     exams:[ X('Fond d’œil','2026-12-01','6 mois',{repN:1,repY:10}), X('Albuminurie et créatininurie','2026-11-18','1 mois',{repN:1,repY:10}), X('Consultation de podologie','2027-01-14','3 mois'),
             X('Electrocardiogramme','2026-08-20','',{note:'En retard'}) ],
     ev:{creat:['2026-02-10'], hba1c:['2026-06-10'], dcc:['2025-02-14'], hpvhr:['2023-09-05'], mammo:['2024-05-20'], flu:['2024-11-05']},
     s2:{tabac:false, pas:138, chol:5.4, hdl:1.4, statine:false, date:'2026-04-18', dx:52, hba1c:54, egfr:78}},
- M:{label:"Homme de 63 ans — diabète de type 2 depuis 8 ans, fumeur", sexe:'M', _dob:'1963-07-09', ald:[8], meds:{A10:true}, ante:[], refus:{},
+ M:{label:"Homme de 63 ans — diabète de type 2 depuis 8 ans, fumeur", sexe:'M', _dob:'1963-07-09', ald:[8], meds:{A10:true}, cim10:['E11.7'], ante:[], refus:{},
     vacc:[ V('2025-11-04','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
     exams:[ X('Fond d’œil','2026-11-30','1 mois',{repN:1,repY:10}), X('Consultation de diabétologie','2027-01-21','3 mois'), X('Electrocardiogramme de repos','2026-12-18','2 mois'), X('Bilan rénal complet','2026-11-10','') ],
     ev:{hba1c:['2026-08-20'], creat:['2026-08-20'], alb:['2026-08-20'], creatU:['2026-08-20'], flu:['2025-11-04'], dcc:['2024-09-12']},
@@ -286,7 +286,7 @@ function paneChrono(){
 function s2input(p){
   const s = p.s2, o = s2sim[cur] || {}, pick = (k, v) => (o[k] !== undefined ? o[k] : v);
   return {sex:p.sexe, age:p.age, smoker:pick('smoker', s.tabac), sbp:pick('sbp', s.pas), tchol:pick('chol', s.chol), hdl:pick('hdl', s.hdl),
-          diabetes:p.ald.includes(8) || !!p.meds.A10, type1:false, cvd:hasAny(p,[1,3,13]), statin:pick('statine', s.statine), severeHTA:p.ald.includes(12),
+          diabetes:p.ald.includes(8) || !!p.meds.A10, dmCode:((p.cim10 || []).find(c => /^E1[0-4]/.test(c)) || ''), cvd:hasAny(p,[1,3,13]), statin:pick('statine', s.statine), severeHTA:p.ald.includes(12),
           ageDx:pick('dx', s.dx == null ? null : s.dx), hba1c:pick('hba1c', s.hba1c == null ? null : s.hba1c), egfr:pick('egfr', s.egfr == null ? null : s.egfr)};
 }
 function s2result(){
@@ -309,7 +309,7 @@ function paneS2(){
   const dm = inp.diabetes;
   const ante = [[!inp.cvd, 'Pas de maladie cardiovasculaire établie', inp.cvd ? 'ALD cardiovasculaire' : 'aucune']];
   if(dm){
-    ante.push([!inp.type1, 'Diabète de type 2 (SCORE2-Diabetes)', 'à confirmer au dossier']);
+    ante.push([!inp.dmCode || inp.dmCode.indexOf('E11') === 0, 'Diabète de type 2 (CIM10 E11)', inp.dmCode ? 'code ' + inp.dmCode : 'code non renseigné']);
   } else {
     ante.push([!inp.severeHTA, 'Pas d’HTA sévère', inp.severeHTA ? 'au dossier' : 'aucune']);
     ante.push([!inp.statin, 'Pas de traitement hypolipémiant', inp.statin ? 'en cours' : 'aucun']);
