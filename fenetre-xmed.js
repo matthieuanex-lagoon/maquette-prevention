@@ -57,18 +57,18 @@ const PROFILES = {
     vacc:[ V('2023-10-18','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
     exams:[ X('Consultation de tabacologie','2026-11-05','3 semaines',{note:'Aide au sevrage'}), X('Bilan lipidique','2027-03-03','5 mois',{repN:1,repY:5}), X('Mammographie (dès 50 ans)','2031-09-02','',{note:'Dépistage organisé'}) ],
     ev:{hpvhr:['2022-03-15']}, s2:{tabac:true, pas:128, chol:6.4, hdl:1.2, statine:false, date:'2026-04-18'}},
- B:{label:"Femme de 58 ans — diabète de type 2", sexe:'F', _dob:'1968-05-20', ald:[8], meds:{A10:true}, cim10:['E11.9'], ante:[], refus:{},
+ B:{label:"Femme de 58 ans — diabète de type 2", sexe:'F', _dob:'1968-05-20', aldCim:['E11.9'], meds:{A10:true}, cim10:['E11.9'], ante:[], refus:{},
     vacc:[ V('2024-11-05','FLUARIXTETRA SER 0,5ML','Grippe saisonnière') ],
     exams:[ X('Fond d’œil','2026-12-01','6 mois',{repN:1,repY:10}), X('Albuminurie et créatininurie','2026-11-18','1 mois',{repN:1,repY:10}), X('Consultation de podologie','2027-01-14','3 mois'),
             X('Electrocardiogramme','2026-08-20','',{note:'En retard'}) ],
     ev:{creat:['2026-02-10'], hba1c:['2026-06-10'], dcc:['2025-02-14'], hpvhr:['2023-09-05'], mammo:['2024-05-20'], flu:['2024-11-05']},
     s2:{tabac:false, pas:138, chol:5.4, hdl:1.4, statine:false, date:'2026-04-18', dx:52, hba1c:54, egfr:78}},
- M:{label:"Homme de 63 ans — diabète de type 2 depuis 8 ans, fumeur", sexe:'M', _dob:'1963-07-09', ald:[8], meds:{A10:true}, cim10:['E11.7'], ante:[], refus:{},
+ M:{label:"Homme de 63 ans — diabète de type 2 depuis 8 ans, fumeur", sexe:'M', _dob:'1963-07-09', aldCim:['E11.7'], meds:{A10:true}, cim10:['E11.7'], ante:[], refus:{},
     vacc:[ V('2025-11-04','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
     exams:[ X('Fond d’œil','2026-11-30','1 mois',{repN:1,repY:10}), X('Consultation de diabétologie','2027-01-21','3 mois'), X('Electrocardiogramme de repos','2026-12-18','2 mois'), X('Bilan rénal complet','2026-11-10','') ],
     ev:{hba1c:['2026-08-20'], creat:['2026-08-20'], alb:['2026-08-20'], creatU:['2026-08-20'], flu:['2025-11-04'], dcc:['2024-09-12']},
     s2:{tabac:true, pas:146, chol:4.9, hdl:1.0, statine:true, date:'2026-08-20', dx:55, hba1c:62, egfr:68}},
- J:{label:"Homme de 55 ans — maladie coronaire (ALD)", sexe:'M', _dob:'1971-01-15', ald:[13], meds:{}, ante:[], refus:{},
+ J:{label:"Homme de 55 ans — maladie coronaire (ALD)", sexe:'M', _dob:'1971-01-15', aldCim:['I25.1'], meds:{}, ante:[], refus:{},
     vacc:[ V('2022-06-14','REPEVAX SER+1AIG 0,5ML 1','DTCP',{rappel:'2032-06-14'}), V('2025-11-10','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
     exams:[ X('Consultation de cardiologie','2026-12-01','1 mois',{repN:1,repY:10}), X('Epreuve d’effort','2027-03-15','5 mois',{repN:1,repY:5}), X('Echocardiographie','2027-06-01','8 mois'),
             X('Bilan lipidique','2026-10-05','',{note:'En retard'}), X('Test immunologique colorectal','2026-11-25','') ],
@@ -87,7 +87,7 @@ const PROFILES = {
     exams:[ X('Consultation gériatrique','2027-01-18','3 mois'), X('Ostéodensitométrie','2026-12-14','2 mois'), X('Bilan ophtalmologique','2026-11-25','1 mois'), X('Audiométrie','2027-04-08','6 mois') ],
     ev:{vpc:['2025-02-12'], flu:['2025-10-20'], covid:['2026-10-08']}, s2:{tabac:false, pas:148, chol:5.6, hdl:1.6, statine:false, date:'2026-06-30'}}
 };
-Object.values(PROFILES).forEach(p => { p.dobD = D(p._dob); p.ageM = monthsBetween(p.dobD, REF); p.age = Math.floor(p.ageM/12); });
+Object.values(PROFILES).forEach(p => { p.ald = p.aldCim ? [...new Set(p.aldCim.flatMap(c => window.aldFromCim10(c)))] : (p.ald || []); p.dobD = D(p._dob); p.ageM = monthsBetween(p.dobD, REF); p.age = Math.floor(p.ageM/12); });
 
 /* ---- Règles : population → exclusion → réalisation ---- */
 const hasAny = (p, list) => list.some(x => p.ald.includes(x));
@@ -359,7 +359,7 @@ function render(){
   document.getElementById('xwTabs').innerHTML = TABS.map(t => '<button data-t="' + t[0] + '" class="' + (t[3] ? 'new ' : '') + (t[0] === tab ? 'act' : '') + '">' + t[2]() + t[1] + '</button>').join('');
   document.getElementById('xwPanes').innerHTML = panes[tab]();
   const p = PROFILES[cur];
-  document.getElementById('xwPatInfo').textContent = (p.sexe === 'F' ? 'Femme' : 'Homme') + ', ' + p.age + ' ans (né' + (p.sexe === 'F' ? 'e' : '') + ' le ' + fmt(p.dobD) + ') · date de référence ' + fmt(REF);
+  document.getElementById('xwPatInfo').textContent = (p.sexe === 'F' ? 'Femme' : 'Homme') + ', ' + p.age + ' ans (né' + (p.sexe === 'F' ? 'e' : '') + ' le ' + fmt(p.dobD) + ') · date de référence ' + fmt(REF) + (p.aldCim ? ' · ALD déduite(s) du CIM10 ' + p.aldCim.join(', ') + ' : ALD ' + p.ald.join(', ') : '');
   renderDock();
 }
 function renderDock(){

@@ -60,6 +60,7 @@ ul{margin:4px 0 8px;padding-left:20px}
 @media print{.main-tabs,.sub-tabs{display:none}.pane{display:block!important}}
 </style>
 <link rel="stylesheet" href="fenetre-xmed.css">
+<script src="ald-cim10.js"></script>
 </head>
 <body>
 <header class="top">
@@ -295,16 +296,32 @@ ORDER.forEach(id=>{
 
 s += '<h2 style="margin:22px 0 10px">4. Score 2</h2><div class="card" id="score2Spec"></div>';
 
-s += '<div class="card"><h2>Correspondance ALD ↔ CIM10</h2>'+
- '<p>Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». XMed ne connaît pas le numéro : il faut donc retrouver le numéro d’ALD à partir du code CIM10 de l’épisode de soins, comme le fait le SNDS.</p>'+
- '<table><tr><th>Élément</th><th>Ce qu’on sait (SNDS / Health Data Hub)</th></tr>'+
- '<tr><td>Table de correspondance</td><td><code>IR_CIM_V</code> : <code>CIM_COD</code> (code CIM10) → <code>ALD_030_COD</code> (numéro d’ALD 1 à 30)</td></tr>'+
- '<tr><td>Précision du code</td><td>Les codes CIM10 de la table s’étendent sur <strong>3 caractères</strong> ; la jointure se fait sur les 3–4 premiers caractères du code de l’épisode</td></tr>'+
- '<tr><td>ALD 31 et 32</td><td>Hors liste et polypathologie : <strong>aucun code CIM10</strong> ne permet de les attribuer</td></tr>'+
- '<tr><td>Exemple vérifié (ALD 1, AVC invalidant)</td><td>G08, G81, I60, I61, I62, I63, I64, I69</td></tr>'+
- '<tr><td>Source officielle de la table complète</td><td>Assurance Maladie, « Alignement ALD/CIM10 » (fichier ZIP, page logiciel d’aide à la prescription) — <strong>pas encore intégrée</strong> : en attente d’autorisation de téléchargement</td></tr></table>'+
- '<p class="mut">Point à vérifier : l’ALD 12 (HTA sévère) est sortie de la liste en 2011 d’après la documentation du SNDS, alors que les fiches CPAM de 2026 la citent encore (dépistage du diabète, MRC, grippe…). Sa correspondance CIM10 est à confirmer avec la table officielle.</p>'+
- '<p><strong>Règle retenue pour la maquette :</strong> ALD active + code CIM10 → numéro d’ALD par la table ; à défaut de code, statut ALD global du dossier (alors insuffisant pour distinguer les ALD). Le diabète de type 1 / type 2 est distingué par le code CIM10 (E10 / E11).</p></div>';
+s += (function(){
+  const T = window.ALD_CIM10 || {}, used = ['01','02','03','05','06','07','08','09','10','12','13','14','15','16','18','19','20','21','22','23','24','25','27','28','30'];
+  const base = [...new Set(Object.keys(T).map(k => k.split('.')[0]))];
+  const lab = k => T[k].label.charAt(0) + T[k].label.slice(1).toLowerCase();
+  const rows = base.map(n => {
+    const ks = Object.keys(T).filter(k => k.split('.')[0] === n);
+    const codes = [...new Set(ks.flatMap(k => T[k].codes.map(c => c[0])))];
+    const labels = ks.map(k => (ks.length > 1 ? '<span class="mut">' + k + '</span> ' : '') + lab(k)).join('<br>');
+    return '<tr><td>ALD ' + parseInt(n, 10) + '</td><td>' + labels + '</td><td>' + codes.join(', ') + '</td><td>' + (used.includes(n) ? '<span class="badge b-fiche">fiches CPAM</span>' : '<span class="mut">—</span>') + '</td></tr>';
+  }).join('');
+  const absent = used.filter(n => !base.includes(n));
+  return '<div class="card"><h2>Correspondance ALD ↔ CIM10</h2>' +
+   '<p>Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». XMed ne connaît pas le numéro : il le retrouve à partir du code CIM10 de l’épisode de soins, avec la table officielle de l’Assurance Maladie (fichier « Alignement ALD/CIM10 », <code>sources-cpam/ALD_CIM10.csv</code>, ' + Object.keys(T).length + ' sous-ALD, ' + Object.values(T).reduce((a, v) => a + v.codes.length, 0) + ' lignes), intégrée à la maquette.</p>' +
+   '<p><strong>Règle :</strong> le code de la table (3 caractères ou plus) doit être le début du code CIM10 de l’épisode — par exemple E11.9 → ALD 8, I25.1 → ALD 13. Un même code peut ouvrir plusieurs ALD ; les ALD 31 (hors liste) et 32 (polypathologie) n’ont pas de code CIM10.</p>' +
+   '<details><summary>Table complète (' + base.length + ' ALD) — ALD utilisées par les fiches repérées</summary><div class="body"><table><tr><th>ALD</th><th>Libellé</th><th>Codes CIM10</th><th>Utilisée</th></tr>' + rows + '</table></div></details>' +
+   '<h3 class="s">Points d’attention</h3><ul>' +
+   '<li><strong>Date du fichier : 2018.</strong> La documentation SNDS précise que sa propre table (<code>IR_CIM_V</code>) suit la réglementation la plus récente : à comparer avant usage clinique.</li>' +
+   '<li><strong>ALD 12 (HTA sévère)</strong> : présente dans ce fichier (I10, I15), alors que la documentation SNDS la dit sortie de la liste en 2011 ; les fiches CPAM 2026 la citent encore. Elle est donc conservée.</li>' +
+   '<li><strong>ALD 14</strong> : le fichier la scinde en 14.01 (asthme, J45) et 14.02 (insuffisance respiratoire chronique grave). Les fiches citent « insuffisance respiratoire chronique grave » : à confirmer que l’asthme (J45) doit bien compter.</li>' +
+   '<li><strong>ALD 7</strong> : le fichier ne contient que les codes du VIH (B20–B24, Z20.6, Z21), pas ceux du déficit immunitaire primitif cité par les fiches.</li>' +
+   '<li><strong>ALD 9</strong> : seulement l’épilepsie grave (G40, G41) ; les fiches parlent aussi des « formes graves d’affections neurologiques et musculaires ».</li>' +
+   '<li><strong>ALD 22</strong> et <strong>ALD 27</strong> : codes M05, M06, M08 et M07, M08.1, M45, M46 ; la gravité / l’évolutivité exigées par la fiche ne se déduisent pas du code.</li>' +
+   (absent.length ? '<li>ALD citées par les fiches mais absentes du fichier : ' + absent.map(n => 'ALD ' + parseInt(n, 10)).join(', ') + '.</li>' : '') +
+   '<li><strong>Diabète</strong> : ALD 8 = E10 (type 1) et E11 (type 2) seulement ; E12 à E14 n’ouvrent pas l’ALD 8. Le type 1 / type 2 est distingué par ce code (E10 / E11).</li></ul>' +
+   '<p><strong>Dans la maquette :</strong> les patients de démonstration portent un code CIM10 d’épisode ; leurs ALD sont déduites par cette table (le patient diabétique, le coronarien). Sans code, on retombe sur le statut ALD global du dossier, insuffisant pour distinguer les ALD.</p></div>';
+})();
 s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents manquants, questions restantes</h2>'+
  '<h3 class="s">Décidé</h3><ul>'+
  '<li><strong>Médecin traitant</strong> : XMed dispose d’un indicateur « médecin traitant » spécifique ; il limite les indicateurs à la patientèle du praticien.</li>'+
@@ -320,7 +337,7 @@ s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents man
  '</ul>'+
  '<h3 class="s">Documents ou informations qui manquent</h3>'+
  '<div class="q"><b>1 — Cinq fiches techniques.</b> Consultations M9 et M24-25, bucco-dentaire, ROR, méningocoque ACWY : codes d’actes et de produits, exclusions, profondeur d’historique.</div>'+
- '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Table officielle identifiée (Assurance Maladie, « Alignement ALD/CIM10 », fichier ZIP) mais <strong>non téléchargée</strong> : en attente de votre accord. Seul l’exemple de l’ALD 1 est vérifié à ce jour.</div>'+
+ '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Intégrée (fichier Assurance Maladie, 2018) : voir le paragraphe dédié. Reste à la comparer avec la réglementation en vigueur et à trancher les points d’attention (ALD 7, 9, 14).</div>'+
  '<div class="q"><b>3 — Coefficients exacts SCORE2-Diabetes.</b> L’article fourni donne des rapports de risque arrondis à deux décimales (estimation avec un écart de −0,2 à −0,5 point). Les coefficients exacts sont dans le supplément en ligne (annexes 1 et 2) : à récupérer pour supprimer le « ≈ ».</div>'+
  '<div class="q"><b>4 — Supplément SCORE2-OP.</b> Le fichier « score 2 op.pdf » reçu est identique à l’article déjà intégré (texte strictement identique) : il ne contient pas le supplément. Le calcul des 70–89 ans reste par tranches du tableau officiel.</div>'+
  '<div class="q"><b>5 — Champs XMed.</b> Noms exacts des champs : médecin traitant, statut ALD global, CIM10 de l’épisode, prescriptions (ATC), résultats incorporés (codes), vaccins (code CIP présent dans le module). À obtenir auprès d’Olaqin.</div>'+
