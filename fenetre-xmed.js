@@ -135,20 +135,20 @@ function evalAll(){
     let r = Object.assign({id}, RULES[id](p));
     const s = st[id] || {};
     if(r.statut !== 'nc'){
-      if(s.excl) r = Object.assign({id}, ex("Exclusion saisie par le praticien"));
-      else if(s.done) r = Object.assign({id}, ok(D(s.done), '—', "Saisi à la main"));
+      if(s.excl && (!s.until || D(s.until) > REF)) r = Object.assign({id}, ex("Exclusion saisie par le praticien" + (s.until ? " — jusqu’au " + fmt(D(s.until)) : "")));
+      else if(s.done) r = Object.assign({id}, ok(D(s.done), '—', "Forçage manuel du " + fmt(D(s.done))));
       else if(s.refus && r.statut === 'todo') r = Object.assign({id}, r, {statut:'refus', precision:"Refus du " + fmt(D(s.refus)) + " — " + r.precision});
     }
-    return Object.assign(r, {prop:!!s.prop, refusBox:!!s.refus, exclBox:!!s.excl});
+    return Object.assign(r, {prop:!!s.prop, refusBox:!!s.refus, exclBox:!!s.excl, until:s.until || ''});
   });
 }
 const led = c => '<span class="led led-' + c + '"></span>';
 const mtLed = () => evalAll().some(r => r.statut === 'todo') ? 'o' : 'g';
-function s2LedColor(){ const r = SCORE2ALGO.compute(s2input(PROFILES[cur])); return r.ok ? 'g' : 'x'; }
+function s2LedColor(){ return 'x'; }   // voyant Score 2 : neutre pour l'instant
 
 /* ---- Gabarit ---- */
 const root = document.getElementById('xwRoot');
-const TABS = [['vacc','Vaccins',()=>led('g'),0],['exam','Examens et consultations',()=>led('g'),0],['s2','Score 2',()=>led(s2LedColor()),1],['mt','Prévention MT (CPAM)',()=>led(mtLed()),1],['chrono','Chronologie',()=>'',0]];
+const TABS = [['vacc','Vaccins',()=>led('g'),0],['exam','Examens et consultations',()=>led('g'),0],['mt','Prévention MT (CPAM)',()=>led(mtLed()),1],['chrono','Chronologie',()=>'',0],['s2','Score 2',()=>led('x'),1]];
 root.innerHTML =
  '<p class="xw-note">Reproduction de la fenêtre « Prévention » de XMed d’après vos captures. Trois onglets existants sont conservés ; <strong style="color:#00769e">Score 2</strong> et <strong style="color:#00769e">Prévention MT (CPAM)</strong> sont les onglets proposés (liseré bleu). Les voyants colorés des onglets sont une proposition (règle à définir). Données fictives.</p>'+
  '<div class="xw-bar"><label>Patient de démonstration : <select id="xwPat"></select></label><span class="mut" id="xwPatInfo"></span></div>'+
@@ -162,8 +162,8 @@ Object.keys(PROFILES).forEach(k => sel.insertAdjacentHTML('beforeend','<option v
 
 /* ---- Boutons latéraux (comme l'écran actuel) ---- */
 function sideButtons(enableCancel){
-  const b = (t, dis) => '<div class="xw-btn' + (dis ? ' dis' : '') + '" data-act="' + t + '">' + t + '</div>';
-  return '<div class="xw-side">' + b('Ajouter') + b('Appliquer', 1) + b('Annuler la saisie', !enableCancel) + b('Fait') + '<div style="height:8px"></div>' + b('Annuler le rappel') + b('Ouvrir le document', 1) +
+  const b = (t, dis) => '<div class="xw-btn' + (dis ? ' dis' : '') + '" data-act="' + t + '">' + (enableCancel && t === 'Fait' ? 'Forcer « Fait »' : t) + '</div>';
+  return '<div class="xw-side">' + b('Ajouter') + b('Appliquer', 1) + b('Annuler la saisie', !enableCancel) + b('Fait') + '<div style="height:8px"></div>' + b(enableCancel ? 'Annuler le forçage' : 'Annuler le rappel', enableCancel ? 1 : 0) + b('Ouvrir le document', 1) +
    b('Imprimer') + b('Impression PDF') + '<label style="font-size:12px;margin:4px 0"><input type="checkbox"> Voir l’historique</label><div style="flex:1"></div>' + b('Fermer') + '</div>';
 }
 
@@ -280,12 +280,12 @@ function paneMT(){
     const cb = (k, v) => act ? '<input type="checkbox" data-mt="' + k + '" data-id="' + r.id + '"' + (v ? ' checked' : '') + '>' : '';
     return '<tr class="click' + (r.id === selId ? ' sel' : '') + '" data-id="' + r.id + '"><td>' + (r.statut === 'todo' ? led('o') : (r.statut === 'ok' ? led('g') : (r.statut === 'refus' ? led('r') : ''))) + '</td><td>' + i.titre + (i.source === 'ameli' ? ' <span class="st st-nc" title="Fiche technique non reçue">provisoire</span>' : '') + '</td>' +
       '<td><span class="st ' + st[0] + '">' + st[1] + '</span></td><td>' + (r.last ? fmt(r.last) : '') + '</td><td>' + echeance + '</td>' +
-      '<td>' + cb('prop', r.prop) + '</td><td>' + cb('refus', r.refusBox) + '</td><td>' + cb('excl', r.exclBox) + '</td><td style="white-space:normal;min-width:240px">' + (r.precision || '') + '</td><td>' + (i.source === 'fiche' ? 'v' + i.ver : 'liste') + '</td></tr>'; };
+      '<td>' + cb('prop', r.prop) + '</td><td>' + cb('refus', r.refusBox) + '</td><td>' + cb('excl', r.exclBox) + (act && r.exclBox ? '<br><span class="mut" style="font-size:11px">jusqu’au</span> <input type="date" data-mt="until" data-id="' + r.id + '" value="' + r.until + '">' : '') + '</td><td style="white-space:normal;min-width:240px">' + (r.precision || '') + '</td><td>' + (i.source === 'fiche' ? 'v' + i.ver : 'liste') + '</td></tr>'; };
   const head = '<tr><th></th><th>Indicateur</th><th>Statut</th><th>Réalisé le</th><th>Échéance</th><th>Proposé</th><th>Refusé</th><th>Exclu</th><th>Précision</th><th>Fiche</th></tr>';
   return '<div class="xw-body"><div class="xw-main"><div class="xw-pad" style="padding-bottom:0"><strong>' + conc.length + ' indicateur(s) concernent ce patient</strong> — ' + nTodo + ' à faire avant le ' + fmt(YEAR_END) + '. <span class="mut">Double-clic sur une ligne : fiche technique.</span></div>' +
    '<table class="xw-grid" style="margin-top:8px">' + head + '<tr class="grp"><td colspan="10">Concerne ce patient</td></tr>' + (conc.length ? conc.map(row).join('') : '<tr><td colspan="10">Aucun indicateur.</td></tr>') +
    '<tr class="grp"><td colspan="10">Ne concerne pas ce patient (' + hors.length + ') — avec la raison</td></tr>' + hors.map(row).join('') + '</table>' +
-   '<p class="mut xw-pad" style="font-size:12px">Statut calculé d’après le dossier XMed, à titre indicatif : le décompte officiel est établi par l’Assurance Maladie à partir des remboursements et peut différer. Règles simplifiées pour la démonstration.</p></div>' +
+   '<p class="mut xw-pad" style="font-size:12px">« Fait » est posé automatiquement quand la donnée est trouvée au dossier ; sinon il peut être forcé à la main. Statut calculé d’après le dossier XMed, à titre indicatif : le décompte officiel est établi par l’Assurance Maladie à partir des remboursements et peut différer. Règles simplifiées pour la démonstration.</p></div>' +
    sideButtons(true) + '</div>';
 }
 
@@ -302,7 +302,7 @@ function renderDock(){
   const b = document.getElementById('xwDockBody'); if(!b) return;
   const p = PROFILES[cur];
   [...document.querySelectorAll('#xwSeg button')].forEach(x => x.classList.toggle('act', x.dataset.d === dock));
-  document.getElementById('xwDockLeds').innerHTML = led(mtLed()) + ' ' + led(s2LedColor());
+  document.getElementById('xwDockLeds').innerHTML = led(mtLed()) + ' ' + led('x');
   if(dock === 'chrono') b.innerHTML = chronoSVG(true);
   else if(dock === 'grille'){
     const groups = {}; p.vacc.filter(v => !v.refus).forEach(v => (groups[v.val] = groups[v.val] || []).push(v));
@@ -316,6 +316,19 @@ function renderDock(){
     b.innerHTML = r.length ? '<strong>À faire avant le ' + fmt(YEAR_END) + ' (' + r.length + ')</strong><ul style="margin:6px 0;padding-left:18px">' + r.map(x => '<li>' + byId[x.id].titre + '</li>').join('') + '</ul>' : 'Rien à faire selon le dossier.';
   } else { const r = SCORE2ALGO.compute(s2input(p)); b.innerHTML = r.ok ? '<strong style="font-size:22px">' + r.shown + ' %</strong> <span class="mut">à 10 ans — ' + r.model + '</span>' : '<span class="mut">Score 2 non calculé : ' + r.why[0] + '</span>'; }
 }
+function printMT(){
+  const p = PROFILES[cur], res = evalAll();
+  const done = res.filter(r => r.statut === 'ok'), todo = res.filter(r => r.statut === 'todo' || r.statut === 'refus'), excl = res.filter(r => r.statut === 'ex');
+  const tbl = (rows, cols) => rows.length ? '<table><tr>' + cols.map(c => '<th>' + c[0] + '</th>').join('') + '</tr>' + rows.map(r => '<tr>' + cols.map(c => '<td>' + c[1](r) + '</td>').join('') + '</tr>').join('') + '</table>' : '<p><em>Aucun.</em></p>';
+  const name = r => byId[r.id].titre;
+  const doc = document.getElementById('xwPrintDoc') || document.body.appendChild(Object.assign(document.createElement('div'), {id:'xwPrintDoc'}));
+  doc.innerHTML = '<h1>Prévention — médecin traitant (CPAM)</h1><p>' + (p.sexe === 'F' ? 'Femme' : 'Homme') + ', ' + p.age + ' ans · édité le ' + fmt(REF) + '</p>' +
+    '<h2>Fait</h2>' + tbl(done, [['Indicateur', name], ['Réalisé le', r => r.last ? fmt(r.last) : '—'], ['Origine', r => r.precision && r.precision.indexOf('Forçage') === 0 ? 'Forçage manuel' : 'Dossier']]) +
+    '<h2>À faire — avant le ' + fmt(YEAR_END) + '</h2>' + tbl(todo, [['Indicateur', name], ['Précision', r => r.precision || ''], ['Refus', r => r.statut === 'refus' ? 'oui' : '']]) +
+    (excl.length ? '<h2>Exclus</h2>' + tbl(excl, [['Indicateur', name], ['Motif', r => r.precision]]) : '') +
+    '<p class="foot">Statut indicatif calculé d’après le dossier XMed ; le décompte officiel est établi par l’Assurance Maladie.</p>';
+  document.body.classList.add('print-doc'); window.print(); setTimeout(() => document.body.classList.remove('print-doc'), 500);
+}
 function printXw(){ document.body.classList.add('print-xw'); window.print(); setTimeout(() => document.body.classList.remove('print-xw'), 500); }
 
 root.addEventListener('click', e => {
@@ -325,10 +338,10 @@ root.addEventListener('click', e => {
   const a = e.target.closest('[data-act]');
   if(a){
     const act = a.dataset.act;
-    if(act === 'Imprimer' || act === 'Impression PDF'){ printXw(); return; }
+    if(act === 'Imprimer' || act === 'Impression PDF'){ if(tab === 'mt') printMT(); else printXw(); return; }
     if(tab === 'mt' && selId){
       if(act === 'Fait'){ const st = mtOf()[selId] = mtOf()[selId] || {}; st.done = iso(REF); st.refus = null; render(); return; }
-      if(act === 'Annuler la saisie'){ delete mtOf()[selId]; render(); return; }
+      if(act === 'Annuler la saisie' || act === 'Annuler le forçage'){ delete mtOf()[selId]; render(); return; }
     }
     return;
   }
@@ -343,7 +356,8 @@ root.addEventListener('change', e => {
     const id = e.target.dataset.id, st = mtOf()[id] = mtOf()[id] || {};
     if(m === 'prop') st.prop = e.target.checked;
     if(m === 'refus') st.refus = e.target.checked ? iso(REF) : null;
-    if(m === 'excl') st.excl = e.target.checked;
+    if(m === 'excl'){ st.excl = e.target.checked; st.until = e.target.checked ? iso(addM(REF, 12)) : null; }   // délai de sortie par défaut : 12 mois
+    if(m === 'until') st.until = e.target.value || null;
     selId = id; render(); return;
   }
   if(e.target.name === 'xwUnit'){ unit = e.target.value; render(); }

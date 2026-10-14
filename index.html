@@ -294,31 +294,23 @@ s += '<h2 style="margin:22px 0 10px">4. Score 2</h2><div class="card" id="score2
 
 s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents manquants, questions restantes</h2>'+
  '<h3 class="s">Décidé</h3><ul>'+
- '<li><strong>Médecin traitant</strong> : XMed dispose d’un indicateur « médecin traitant » spécifique ; il sert à limiter les indicateurs à la patientèle du praticien.</li>'+
- '<li><strong>Acte « fait »</strong> : résultat incorporé dans XMed, vaccin saisi dans le module Vaccins, ou date saisie à la main (bouton « Fait »).</li>'+
- '<li><strong>Médicaments</strong> : les prescriptions font foi (XMed ne connaît pas les délivrances).</li>'+
- '<li><strong>ALD</strong> : le numéro d’ALD n’est pas connu ; on s’appuie sur le code CIM10 ou, à défaut, sur le statut ALD global du dossier.</li>'+
- '<li><strong>Refus</strong> : spécifié par un statut distinct « Refusé », daté, visible dans la grille.</li>'+
- '<li><strong>Voyant</strong> : une petite LED d’alerte plutôt que l’ampoule ; règle encore à définir (proposition affichée : vert = rien à faire, orange = au moins un « À faire », rouge = refus).</li>'+
- '<li><strong>Échéance</strong> : « à faire avant le 31/12 » de l’année en cours.</li>'+
- '<li><strong>Exclusions</strong> : case « Exclu » à cocher par indicateur.</li>'+
- '<li><strong>Montant</strong> : non affiché, non nécessaire pour l’instant. <strong>Paramétrage modifiable</strong> : beaucoup plus tard.</li>'+
- '<li><strong>Impression</strong> : oui (boutons « Imprimer » et « Impression PDF », comme l’écran actuel).</li>'+
+ '<li><strong>Médecin traitant</strong> : XMed dispose d’un indicateur « médecin traitant » spécifique ; il limite les indicateurs à la patientèle du praticien.</li>'+
+ '<li><strong>Acte « fait »</strong> : posé <em>automatiquement</em> quand la donnée est trouvée (résultat incorporé, vaccin du module) ; sinon <em>forçage manuel</em> par le praticien (« Forcer Fait »).</li>'+
+ '<li><strong>Médicaments</strong> : les prescriptions font foi. <strong>ALD</strong> : pas de numéro ; code CIM10 ou statut ALD global du dossier.</li>'+
+ '<li><strong>Refus</strong> et <strong>Exclu</strong> : de simples cases à cocher, sans lien automatique avec les modules existants. L’exclusion porte un <strong>délai de sortie</strong> (date, 12 mois proposés par défaut) ; à l’échéance, l’indicateur est réévalué.</li>'+
+ '<li><strong>Voyants</strong> : LED sur les onglets (vert / orange / rouge selon les indicateurs) ; <strong>neutre pour le Score 2</strong> pour l’instant.</li>'+
+ '<li><strong>Ordre des onglets</strong> : Vaccins, Examens et consultations, Prévention MT, Chronologie, Score 2.</li>'+
+ '<li><strong>Chronologie</strong> : ne montre pas les indicateurs CPAM ; la CPAM reste clairement différenciée des rappels existants.</li>'+
+ '<li><strong>Échéance</strong> : « à faire avant le 31/12 » de l’année en cours. <strong>Montant</strong> : non affiché. <strong>Paramétrage modifiable</strong> : beaucoup plus tard.</li>'+
+ '<li><strong>Impression</strong> (onglet MT) : ce qui est « Fait » d’un côté, ce qui est « À faire » à part ; les exclus en note séparée.</li>'+
  '<li><strong>Score 2</strong> : seuils des articles ; SCORE2-Diabetes à prévoir ; lipides en mmol/L ou g/L au choix ; calcul proposé dès 40 ans (à revalider).</li>'+
  '</ul>'+
- '<h3 class="s">A. Documents ou informations qui manquent</h3>'+
+ '<h3 class="s">Documents ou informations qui manquent</h3>'+
  '<div class="q"><b>1 — Cinq fiches techniques.</b> Consultations M9 et M24-25, bucco-dentaire, ROR, méningocoque ACWY : codes d’actes et de produits, exclusions, profondeur d’historique.</div>'+
- '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». Le numéro n’étant pas connu dans XMed, il faut la <strong>table officielle de correspondance ALD / codes CIM10</strong> pour traduire chaque item (ALD 1, 3, 5, 8, 12, 13… ). Je peux la rechercher sur ameli.fr / data.gouv si vous le souhaitez.</div>'+
- '<div class="q"><b>3 — SCORE2-Diabetes.</b> Document de référence (article et supplément) à fournir : variables supplémentaires attendues (âge au diagnostic du diabète, HbA1c, DFG estimé — à confirmer) et coefficients.</div>'+
+ '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». Le numéro étant inconnu dans XMed, il faut la table officielle de correspondance ALD / codes CIM10.</div>'+
+ '<div class="q"><b>3 — SCORE2-Diabetes.</b> Document de référence (article et supplément) : variables attendues et coefficients.</div>'+
  '<div class="q"><b>4 — Supplément SCORE2-OP.</b> Pour le calcul continu des 70–89 ans (aujourd’hui : tableau par tranches).</div>'+
- '<div class="q"><b>5 — Champs XMed.</b> Nom exact du champ « médecin traitant », du statut ALD global, du code CIM10 de l’épisode, des prescriptions (classe ATC ?), des résultats incorporés (code NABM/LOINC ?), des vaccins (code CIP déjà présent dans le module). À obtenir auprès d’Olaqin ; je peux rédiger la liste de demande.</div>'+
- '<h3 class="s">B. Questions restantes</h3>'+
- '<div class="q"><b>6 — Refus et modules existants.</b> Un refus coché dans Vaccins ou Examens (colonne « Refus ») doit-il poser automatiquement « Refusé » sur l’indicateur correspondant (ex. Gardasil refusé → HPV refusé), avec date de reproposition ? Ou saisie séparée dans l’onglet MT ?</div>'+
- '<div class="q"><b>7 — Case « Exclu ».</b> Vous avez parlé d’une « case pourcent » : s’agit-il bien d’une simple case à cocher ? Faut-il y ajouter un motif (liste ou texte libre) et une date ?</div>'+
- '<div class="q"><b>8 — Bouton « Fait ».</b> Une date saisie à la main : quelles informations demander (date, document source, praticien) ? Une saisie manuelle doit-elle être distinguée d’un résultat incorporé dans l’affichage ?</div>'+
- '<div class="q"><b>9 — Voyant des onglets.</b> La règle proposée (vert / orange / rouge) vous convient-elle comme base de discussion ? Le voyant « Score 2 » doit-il rester neutre (gris/vert) comme pour l’ampoule de l’étape 1 ?</div>'+
- '<div class="q"><b>10 — Emplacement.</b> Ordre des onglets proposé : Vaccins, Examens, Score 2, Prévention MT, Chronologie. La Chronologie doit-elle aussi montrer les indicateurs CPAM « à faire avant le 31/12 » ? Le cadre latéral doit-il recevoir les modes MT et Score 2 en plus de Grille / Chronologie ?</div>'+
- '<div class="q"><b>11 — Impression.</b> Que doit contenir l’impression de l’onglet MT : seulement les « À faire », tout ce qui concerne le patient, avec ou sans les exclus ? Document destiné au patient ou usage interne ?</div>'+
+ '<div class="q"><b>5 — Champs XMed.</b> Noms exacts des champs : médecin traitant, statut ALD global, CIM10 de l’épisode, prescriptions (ATC), résultats incorporés (codes), vaccins (code CIP présent dans le module). À obtenir auprès d’Olaqin.</div>'+
  '</div>';
 
 s += '<div class="card"><h2>6. Sources</h2><ul>'+

@@ -68,3 +68,12 @@
   body.print-xw .xw-bar,body.print-xw .xw-note,body.print-xw .xw-dock,body.print-xw h3.s{display:none!important}
   body.print-xw .xw-side{display:none}
 }
+
+#xwPrintDoc{display:none}
+@media print{
+  body.print-doc > *{display:none!important}
+  body.print-doc > #xwPrintDoc{display:block!important;padding:18px;font:13px/1.4 "Segoe UI",Arial,sans-serif;color:#000}
+  #xwPrintDoc h1{font-size:18px;margin:0 0 4px}#xwPrintDoc h2{font-size:15px;margin:16px 0 6px;border-bottom:1px solid #000}
+  #xwPrintDoc table{width:100%;border-collapse:collapse}#xwPrintDoc th,#xwPrintDoc td{border:1px solid #888;padding:4px 6px;text-align:left}
+  #xwPrintDoc .foot{font-size:11px;color:#444;margin-top:14px}
+}
