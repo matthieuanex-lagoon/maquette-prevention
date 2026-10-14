@@ -1,7 +1,9 @@
-/* SCORE2 / SCORE2-OP — France = région « risque faible » (SCORE2 working group, Eur Heart J 2021;42:2439-2454, Fig. 5 ;
-   SCORE2-OP working group, Eur Heart J 2021;42:2455-2467).
-   - 40–69 ans : modèle SCORE2 (formule, recalibrée région « faible »). Vérifié sur les exemples publiés (5,9 % / 4,2 %).
-   - 70–89 ans : SCORE2-OP, lu dans le tableau officiel (Figure 3, panneau A « low risk »), par tranches. */
+/* SCORE2 / SCORE2-OP / SCORE2-Diabetes — France = région « risque faible » (SCORE2 working group, Eur Heart J 2021;42:2439-2454, Fig. 5).
+   - SCORE2          40–69 ans, sans diabète : formule, recalibrée région « faible ». Vérifiée sur les exemples publiés (5,9 % / 4,2 %).
+   - SCORE2-OP       70–89 ans, sans diabète : lu dans le tableau officiel (Figure 3, panneau A « low risk »), par tranches.
+   - SCORE2-Diabetes 40–79 ans, diabète de type 2, sans maladie CV (Eur Heart J 2023;44:2544-2556) : estimation à partir des rapports de risque
+     du Tableau 2 (arrondis à 2 décimales), survie de base 0,9625 / 0,9795 et mêmes facteurs de recalibration que SCORE2 (cités par l'article).
+     Les coefficients exacts sont dans le supplément en ligne : écart observé de −0,2 à −0,5 point sur les 4 exemples publiés (région faible). */
 (function(root){
 'use strict';
 
@@ -10,13 +12,28 @@ const K = {
   M:{a:.3742, s:.6012, b:.2777, c:.1458, h:-.2698, sa:-.0755, ba:-.0255, ca:-.0281, ha:.0426, S0:.9605, s1:-.5699, s2:.7476},
   F:{a:.4648, s:.7744, b:.3131, c:.1002, h:-.2606, sa:-.1088, ba:-.0277, ca:-.0226, ha:.0613, S0:.9776, s1:-.7380, s2:.7019}
 };
+function recal(k, u){ return 100 * (1 - Math.exp(-Math.exp(k.s1 + k.s2*Math.log(-Math.log(1-u))))); }
 function score2(sex, age, smoker, sbp, tchol, hdl){
   const k = K[sex], s = smoker ? 1 : 0;
   const ca = (age-60)/5, cs = (sbp-120)/20, ct = tchol-6, ch = (hdl-1.3)/0.5;
   const x = k.a*ca + k.s*s + k.b*cs + k.c*ct + k.h*ch + k.sa*s*ca + k.ba*cs*ca + k.ca*ct*ca + k.ha*ch*ca;
-  const u = 1 - Math.pow(k.S0, Math.exp(x));                       // risque non recalibré
-  return 100 * (1 - Math.exp(-Math.exp(k.s1 + k.s2*Math.log(-Math.log(1-u)))));   // recalibration région faible
+  return recal(k, 1 - Math.pow(k.S0, Math.exp(x)));
 }
+
+/* ---- SCORE2-Diabetes : rapports de risque du Tableau 2 (effet principal / terme d'interaction avec l'âge) ---- */
+const DM = {
+  M:{S0:.9625, a:1.71, smk:1.61, smkA:.94, sbp:1.14, sbpA:.97, tc:1.12, tcA:.98, hdl:.90, hdlA:1.01, dm:1.91, dmA:.91, dx:.90, hb:1.10, hbA:.99, eg:.94, egA:1.01, eg2:1.01},
+  F:{S0:.9795, a:1.94, smk:1.85, smkA:.89, sbp:1.15, sbpA:.98, tc:1.12, tcA:.98, hdl:.85, hdlA:1.02, dm:2.25, dmA:.88, dx:.89, hb:1.12, hbA:.98, eg:.94, egA:1.02, eg2:1.01}
+};
+// centrages : âge 60, PAS 120, CT 6, HDL 1,3, âge au diagnostic 50, HbA1c 31 mmol/mol (1 SD = 9,34), ln(DFG) 4,5 (1 SD = 0,15)
+function scoreDiabetes(sex, age, smoker, sbp, tchol, hdl, ageDx, hba1cMmol, egfr){
+  const t = DM[sex], k = K[sex], L = Math.log, s = smoker ? 1 : 0;
+  const ca = (age-60)/5, cs = (sbp-120)/20, ct = tchol-6, ch = (hdl-1.3)/0.5, cd = (ageDx-50)/5, chb = (hba1cMmol-31)/9.34, ce = (L(egfr)-4.5)/0.15;
+  const x = L(t.a)*ca + s*(L(t.smk) + L(t.smkA)*ca) + cs*(L(t.sbp) + L(t.sbpA)*ca) + ct*(L(t.tc) + L(t.tcA)*ca) + ch*(L(t.hdl) + L(t.hdlA)*ca)
+          + (L(t.dm) + L(t.dmA)*ca) + L(t.dx)*cd + chb*(L(t.hb) + L(t.hbA)*ca) + ce*(L(t.eg) + L(t.egA)*ca) + ce*ce*L(t.eg2);
+  return recal(k, 1 - Math.pow(t.S0, Math.exp(x)));
+}
+const hba1cPctToMmol = p => (p - 2.15) * 10.929;     // NGSP (%) → IFCC (mmol/mol)
 
 /* ---- SCORE2-OP : Figure 3, panneau A (risque faible). Lignes PAS : 160-179, 140-159, 120-139, 100-119 ; colonnes non-HDL : 3.0-3.9, 4.0-4.9, 5.0-5.9, 6.0-6.9 ---- */
 const OP = {
@@ -42,7 +59,7 @@ function scoreOP(sex, age, smoker, sbp, tchol, hdl){
   return {value: OP[band][key][r][c], flags, cell:{band, rows:['160-179','140-159','120-139','100-119'][r], chol:['3,0–3,9','4,0–4,9','5,0–5,9','6,0–6,9'][c]}};
 }
 
-/* ---- Seuils des figures (légende vert / orange / rouge) ---- */
+/* ---- Seuils des figures (légende vert / orange / rouge) — non définis pour SCORE2-Diabetes dans l'article ---- */
 function classify(model, age, v){
   if(model==='OP') return v < 7.5 ? 0 : v < 15 ? 1 : 2;
   const [lo, hi] = age < 50 ? [2.5, 7.5] : [5, 10];
@@ -51,29 +68,43 @@ function classify(model, age, v){
 const CLASS_TXT = {
   SCORE2_lt50: ['< 2,5 %','2,5 à < 7,5 %','≥ 7,5 %'], SCORE2_50: ['< 5 %','5 à < 10 %','≥ 10 %'], OP: ['< 7,5 %','7,5 à < 15 %','≥ 15 %']
 };
+const fr = (v, d) => v.toFixed(d).replace('.', ',');
 
 /* ---- Point d'entrée : applicabilité + calcul ---- */
 function compute(p){
-  // p : {sex:'M'|'F', age, smoker, sbp, tchol, hdl, diabetes, cvd, statin, severeHTA}
+  // p : {sex:'M'|'F', age, smoker, sbp, tchol, hdl, diabetes, type1, cvd, statin, severeHTA, ageDx, hba1c (mmol/mol), egfr}
+  const miss = [];
+  if(p.sbp==null) miss.push('PAS'); if(p.tchol==null) miss.push('cholestérol total'); if(p.hdl==null) miss.push('HDL');
+
+  if(p.diabetes){
+    const why = [];
+    if(p.cvd) why.push("Maladie cardiovasculaire établie : le score ne s'applique pas (prévention secondaire).");
+    if(p.type1) why.push("Diabète de type 1 : hors du modèle SCORE2-Diabetes (type 2 uniquement).");
+    if(p.age < 40 || p.age > 79) why.push("Âge hors de la plage 40–79 ans du modèle SCORE2-Diabetes.");
+    if(why.length) return {ok:false, why, diabetes:true};
+    if(p.ageDx==null) miss.push('âge au diagnostic du diabète'); if(p.hba1c==null) miss.push('HbA1c'); if(p.egfr==null) miss.push('DFG estimé');
+    if(miss.length) return {ok:false, missing:miss, why:['Variable(s) manquante(s) : ' + miss.join(', ') + '.'], diabetes:true};
+    const v = scoreDiabetes(p.sex, p.age, p.smoker, p.sbp, p.tchol, p.hdl, p.ageDx, p.hba1c, p.egfr);
+    return {ok:true, model:'SCORE2-Diabetes', value:v, shown:'≈ ' + fr(v, 1), cls:null, thresholds:null, exact:false, approx:true,
+            flags:["Estimation : rapports de risque arrondis du Tableau 2 de l’article. Écart observé de −0,2 à −0,5 point sur les exemples publiés ; coefficients exacts à intégrer (supplément).",
+                   ...(p.statin ? ["Traitement hypolipémiant en cours : valeurs sous traitement, interprétation à valider."] : [])]};
+  }
+
   const why = [];
   if(p.cvd) why.push("Maladie cardiovasculaire établie : le score ne s'applique pas (prévention secondaire).");
   if(p.severeHTA) why.push("Hypertension sévère (≥ 180/110) : score non applicable.");
   if(p.statin) why.push("Traitement hypolipémiant : score non applicable (valeurs sous traitement).");
-  if(p.diabetes) why.push("Diabète : le SCORE2 est publié « sans diabète ». SCORE2-Diabetes (modèle distinct) est prévu, en attente du document de référence.");
   if(p.age < 40 || p.age > 89) why.push("Âge hors de la plage 40–89 ans.");
-  if(why.length) return {ok:false, why, diabetes:!!p.diabetes};
-  const miss = [];
-  if(p.sbp==null) miss.push('PAS'); if(p.tchol==null) miss.push('cholestérol total'); if(p.hdl==null) miss.push('HDL');
+  if(why.length) return {ok:false, why};
   if(miss.length) return {ok:false, missing:miss, why:['Variable(s) manquante(s) : ' + miss.join(', ') + '.']};
   if(p.age <= 69){
     const v = score2(p.sex, p.age, p.smoker, p.sbp, p.tchol, p.hdl);
-    const cls = classify('S2', p.age, v);
-    return {ok:true, model:'SCORE2', value:v, shown:v.toFixed(1).replace('.',','), cls, thresholds: CLASS_TXT[p.age<50?'SCORE2_lt50':'SCORE2_50'], exact:true, flags:[]};
+    return {ok:true, model:'SCORE2', value:v, shown:fr(v, 1), cls:classify('S2', p.age, v), thresholds: CLASS_TXT[p.age<50?'SCORE2_lt50':'SCORE2_50'], exact:true, flags:[]};
   }
   const o = scoreOP(p.sex, p.age, p.smoker, p.sbp, p.tchol, p.hdl);
   return {ok:true, model:'SCORE2-OP', value:o.value, shown:String(o.value), cls:classify('OP', p.age, o.value), thresholds:CLASS_TXT.OP, exact:false, flags:o.flags, cell:o.cell};
 }
 
-root.SCORE2ALGO = {compute, score2, scoreOP, K, OP};
+root.SCORE2ALGO = {compute, score2, scoreOP, scoreDiabetes, hba1cPctToMmol, K, DM, OP};
 if(typeof module !== 'undefined') module.exports = root.SCORE2ALGO;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -15,31 +15,77 @@ const CHOL = 2.586;                                          // 1 g/L = 2,586 mm
 
 /* ---- Patients fictifs ---- */
 const V = (d, nom, val, extra) => Object.assign({d, nom, val}, extra || {});
+const X = (nom, ech, dans, o) => Object.assign({nom, ech, dans: dans || '', statut:'Actif', par:'ANEX Matthieu', pose:'28/09/2026', note:'', repN:0, repY:0, prop:false, refus:false}, o || {});
 const PROFILES = {
- E:{label:"Homme de 69 ans — le dossier des captures", sexe:'M', _dob:'1957-03-04', ald:[], meds:{}, ante:[], refus:{},
+ E:{label:"Homme de 69 ans — dossier des captures (polypathologie légère)", sexe:'M', _dob:'1957-03-04', ald:[], meds:{}, ante:[], refus:{},
     vacc:[ V('2013-04-29','REPEVAX SER 0,5ML 1 [Supprimé]','DTCP',{rappel:'2024-08-05'}), V('2019-11-28','PREVENAR 13 SER A/A 0,5ML','Pneumocoque (13 souches)'),
            V('2020-01-24','PNEUMOVAX SER 0,5ML 1','Pneumocoque (23 souches)',{lot:'1031728'}), V('2021-10-27','INFLUVAC TETRA SER 0,5ML 1 [Sup…]','Grippe saisonnière',{lot:'Z20'}),
            V('2022-11-07','INFLUVAC SER 0,5ML 1 [Supprimé]','Grippe saisonnière'), V('2024-01-01','REPEVAX SER+1AIG 0,5ML 1','DTCP',{rappel:'2034-08-05',lot:'X30151V',vert:true}),
            V('2024-11-08','FLUARIXTETRA SER 0,5ML','Grippe saisonnière'), V('2025-01-27','PNEUMOVAX SER 0,5ML 1','Pneumocoque (23 souches)',{rappel:'2030-01-27',lot:'3037819',vert:true}),
            V('2025-07-16','SHINGRIX PDR+SUSP IM FL+FL 1','Varicelle-Zona',{lot:'E53T7…'}), V('2025-11-12','SHINGRIX PDR+SUSP IM FL+FL 1','Varicelle-Zona',{lot:'N4GS4'}),
            V('2025-11-29','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
-    exams:[{nom:'Echographie thyroïdienne', ech:'2027-07-28', statut:'Actif', par:'ANEX Matthieu', pose:'28/09/2026', dans:'10 mois'}],
+    exams:[ X('Echographie thyroïdienne','2027-07-28','10 mois',{note:'Nodule droit EU-TIRADS 3'}), X('Consultation de cardiologie','2026-12-15','2 mois',{note:'Bilan annuel',repN:1,repY:5}),
+            X('Bilan lipidique','2026-11-20','1 mois',{repN:1,repY:10}), X('Coloscopie de contrôle','2028-03-10','18 mois',{note:'Polypes réséqués en 2023'}),
+            X('Pression intra-oculaire (ophtalmologie)','2026-09-01','',{note:'Non réalisée'}), X('Ostéodensitométrie','2027-02-01','4 mois',{refus:true,note:'Refusée par le patient'}) ],
     ev:{flu:['2025-11-29']}, s2:{tabac:false, pas:135, chol:5.9, hdl:1.4, statine:false, date:'2026-04-18'}},
+ F:{label:"Nourrisson de 7 mois — suivi de la première année", sexe:'M', _dob:'2026-03-10', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2026-05-12','HEXYON SUSP INJ SER 0,5ML 1','DTCP-Hib-Hépatite B'), V('2026-05-12','PREVENAR 20 SUSP INJ SER 0,5ML','Pneumocoque',{rappel:'2026-12-12'}),
+           V('2026-09-14','HEXYON SUSP INJ SER 0,5ML 1','DTCP-Hib-Hépatite B',{rappel:'2027-03-10'}) ],
+    exams:[ X('Consultation obligatoire du 9e mois','2026-12-10','2 mois',{note:'Certificat de santé'}), X('Pesée et courbe de croissance','2026-11-10','1 mois'),
+            X('Dépistage des troubles auditifs','2026-12-20',''), X('Rappel vaccinal (6 mois après la 2e dose)','2027-03-10','5 mois') ],
+    ev:{}, s2:{tabac:false, pas:null, chol:null, hdl:null, statine:false}},
+ G:{label:"Enfant de 20 mois — ROR et consultations obligatoires", sexe:'F', _dob:'2025-02-10', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2025-04-10','HEXYON SUSP INJ SER 0,5ML 1','DTCP-Hib-Hépatite B'), V('2026-02-12','PRIORIX PDR+SOLV SER 0,5ML 1','Rougeole-Oreillons-Rubéole',{rappel:'2026-12-30'}) ],
+    exams:[ X('Consultation obligatoire du 24e mois','2027-02-10','4 mois',{note:'Certificat de santé'}), X('Bilan du langage','2026-12-05',''), X('Visite chez le dentiste (première)','2027-03-01','5 mois') ],
+    ev:{}, s2:{tabac:false, pas:null, chol:null, hdl:null, statine:false}},
  A:{label:"Enfant de 11 ans — HPV refusé", sexe:'F', _dob:'2015-03-12', ald:[], meds:{}, ante:[], refus:{HPV:'2025-10-22', MEN:'2025-10-22'},
     vacc:[ V('2016-05-28','PRIORIX PDR+SOLV SER 0,5ML 1','Rougeole-Oreillons-Rubéole'), V('2020-12-28','REPEVAX SER 0,5ML 1 [Supprimé]','DTCP'),
            V('2025-10-22','GARDASIL 9 SER+2 AIG 0,5ML 1','papillomavirus (Humain types 6…',{refus:true}), V('2025-10-22','NIMENRIX PDR+SOL SER IM 1','méningocoque A + C + Y + W-135',{refus:true}),
-           V('2026-01-14','REPEVAX SER+1AIG 0,5ML 1','DTCP',{lot:'Y3K12…'}) ], exams:[],
+           V('2026-01-14','REPEVAX SER+1AIG 0,5ML 1','DTCP',{lot:'Y3K12…'}) ],
+    exams:[ X('Examen bucco-dentaire','2026-12-10','2 mois'), X('Bilan visuel','2027-01-25','3 mois'), X('Consultation HPV (reproposition)','2027-03-12','',{note:'Refus du 22/10/2025'}) ],
     ev:{}, s2:{tabac:false, pas:null, chol:null, hdl:null, statine:false}},
+ H:{label:"Adolescent de 17 ans — suivi bucco-dentaire à jour", sexe:'M', _dob:'2009-06-20', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2021-03-02','GARDASIL 9 SER+2 AIG 0,5ML 1','papillomavirus (Humain types 6…'), V('2021-09-02','GARDASIL 9 SER+2 AIG 0,5ML 1','papillomavirus (Humain types 6…'),
+           V('2024-10-05','NIMENRIX PDR+SOL SER IM 1','méningocoque A + C + Y + W-135') ],
+    exams:[ X('Certificat d’aptitude sportive','2026-11-30','1 mois',{repN:1,repY:3}), X('Contrôle orthodontique','2027-01-20','3 mois'), X('Consultation de prévention 16-25 ans','2026-12-12','') ],
+    ev:{dent:['2025-11-12']}, s2:{tabac:false, pas:null, chol:null, hdl:null, statine:false}},
+ I:{label:"Femme de 32 ans — dépistage du col à jour", sexe:'F', _dob:'1994-08-30', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2022-11-20','REPEVAX SER+1AIG 0,5ML 1','DTCP',{rappel:'2032-11-20'}) ],
+    exams:[ X('Consultation gynécologique','2027-01-12','3 mois',{repN:1,repY:10}), X('Bilan sanguin préconceptionnel','2026-12-02','1 mois'), X('Test HPV-HR (rappel à 5 ans)','2030-06-10','',{repN:1,repY:10}) ],
+    ev:{hpvhr:['2025-06-10']}, s2:{tabac:false, pas:null, chol:null, hdl:null, statine:false}},
+ L:{label:"Femme de 45 ans — fumeuse, Score 2 avant 50 ans", sexe:'F', _dob:'1981-09-02', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2023-10-18','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
+    exams:[ X('Consultation de tabacologie','2026-11-05','3 semaines',{note:'Aide au sevrage'}), X('Bilan lipidique','2027-03-03','5 mois',{repN:1,repY:5}), X('Mammographie (dès 50 ans)','2031-09-02','',{note:'Dépistage organisé'}) ],
+    ev:{hpvhr:['2022-03-15']}, s2:{tabac:true, pas:128, chol:6.4, hdl:1.2, statine:false, date:'2026-04-18'}},
  B:{label:"Femme de 58 ans — diabète de type 2", sexe:'F', _dob:'1968-05-20', ald:[8], meds:{A10:true}, ante:[], refus:{},
-    vacc:[ V('2024-11-05','FLUARIXTETRA SER 0,5ML','Grippe saisonnière') ], exams:[{nom:'Fond d’œil', ech:'2026-12-01', statut:'Actif', par:'ANEX Matthieu', pose:'02/06/2026', dans:'6 mois'}],
+    vacc:[ V('2024-11-05','FLUARIXTETRA SER 0,5ML','Grippe saisonnière') ],
+    exams:[ X('Fond d’œil','2026-12-01','6 mois',{repN:1,repY:10}), X('Albuminurie et créatininurie','2026-11-18','1 mois',{repN:1,repY:10}), X('Consultation de podologie','2027-01-14','3 mois'),
+            X('Electrocardiogramme','2026-08-20','',{note:'En retard'}) ],
     ev:{creat:['2026-02-10'], hba1c:['2026-06-10'], dcc:['2025-02-14'], hpvhr:['2023-09-05'], mammo:['2024-05-20'], flu:['2024-11-05']},
-    s2:{tabac:false, pas:138, chol:5.4, hdl:1.4, statine:false, date:'2026-04-18'}},
+    s2:{tabac:false, pas:138, chol:5.4, hdl:1.4, statine:false, date:'2026-04-18', dx:52, hba1c:54, egfr:78}},
+ M:{label:"Homme de 63 ans — diabète de type 2 depuis 8 ans, fumeur", sexe:'M', _dob:'1963-07-09', ald:[8], meds:{A10:true}, ante:[], refus:{},
+    vacc:[ V('2025-11-04','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
+    exams:[ X('Fond d’œil','2026-11-30','1 mois',{repN:1,repY:10}), X('Consultation de diabétologie','2027-01-21','3 mois'), X('Electrocardiogramme de repos','2026-12-18','2 mois'), X('Bilan rénal complet','2026-11-10','') ],
+    ev:{hba1c:['2026-08-20'], creat:['2026-08-20'], alb:['2026-08-20'], creatU:['2026-08-20'], flu:['2025-11-04'], dcc:['2024-09-12']},
+    s2:{tabac:true, pas:146, chol:4.9, hdl:1.0, statine:true, date:'2026-08-20', dx:55, hba1c:62, egfr:68}},
+ J:{label:"Homme de 55 ans — maladie coronaire (ALD)", sexe:'M', _dob:'1971-01-15', ald:[13], meds:{}, ante:[], refus:{},
+    vacc:[ V('2022-06-14','REPEVAX SER+1AIG 0,5ML 1','DTCP',{rappel:'2032-06-14'}), V('2025-11-10','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
+    exams:[ X('Consultation de cardiologie','2026-12-01','1 mois',{repN:1,repY:10}), X('Epreuve d’effort','2027-03-15','5 mois',{repN:1,repY:5}), X('Echocardiographie','2027-06-01','8 mois'),
+            X('Bilan lipidique','2026-10-05','',{note:'En retard'}), X('Test immunologique colorectal','2026-11-25','') ],
+    ev:{creat:['2026-03-05'], alb:['2026-03-05'], creatU:['2026-03-05'], dcc:['2024-05-20'], flu:['2025-11-10']},
+    s2:{tabac:false, pas:128, chol:4.2, hdl:1.3, statine:true, date:'2026-03-05'}},
  C:{label:"Homme de 68 ans — fumeur, sans ALD", sexe:'M', _dob:'1958-02-02', ald:[], meds:{}, ante:[], refus:{},
-    vacc:[ V('2026-10-02','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ], exams:[],
+    vacc:[ V('2026-10-02','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
+    exams:[ X('Test immunologique colorectal','2026-11-12','1 mois'), X('Consultation de tabacologie','2026-12-01','2 mois',{note:'Souhaite arrêter'}), X('Scanner thoracique low-dose','2027-02-15','4 mois') ],
     ev:{dcc:['2022-11-03'], flu:['2026-10-02']}, s2:{tabac:true, pas:142, chol:5.8, hdl:1.1, statine:false, date:'2026-04-18'}},
  D:{label:"Femme de 74 ans — sans ALD (SCORE2-OP)", sexe:'F', _dob:'1952-06-14', ald:[], meds:{}, ante:[], refus:{},
-    vacc:[ V('2026-10-05','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ], exams:[],
-    ev:{flu:['2026-10-05']}, s2:{tabac:false, pas:150, chol:6.1, hdl:1.5, statine:false, date:'2026-04-18'}}
+    vacc:[ V('2026-10-05','VAXIGRIP SER+AIG 0,5ML 1','Grippe saisonnière') ],
+    exams:[ X('Mammographie','2027-05-03','7 mois',{repN:2,repY:2}), X('Ostéodensitométrie','2027-02-10','4 mois') ],
+    ev:{flu:['2026-10-05']}, s2:{tabac:false, pas:150, chol:6.1, hdl:1.5, statine:false, date:'2026-04-18'}},
+ K:{label:"Femme de 82 ans — vaccinations à compléter (SCORE2-OP)", sexe:'F', _dob:'1944-02-20', ald:[], meds:{}, ante:[], refus:{},
+    vacc:[ V('2025-02-12','PREVENAR 20 SUSP INJ SER 0,5ML','Pneumocoque'), V('2025-10-20','EFLUELDA SUSP INJ SER 0,5ML','Grippe saisonnière'), V('2026-10-08','COMIRNATY SUSP INJ','Covid-19') ],
+    exams:[ X('Consultation gériatrique','2027-01-18','3 mois'), X('Ostéodensitométrie','2026-12-14','2 mois'), X('Bilan ophtalmologique','2026-11-25','1 mois'), X('Audiométrie','2027-04-08','6 mois') ],
+    ev:{vpc:['2025-02-12'], flu:['2025-10-20'], covid:['2026-10-08']}, s2:{tabac:false, pas:148, chol:5.6, hdl:1.6, statine:false, date:'2026-06-30'}}
 };
 Object.values(PROFILES).forEach(p => { p.dobD = D(p._dob); p.ageM = monthsBetween(p.dobD, REF); p.age = Math.floor(p.ageM/12); });
 
@@ -127,7 +173,7 @@ const RULES = {
 const ORDER_XW = ['MRC','DIA','DOC','DOU','DOS','HBA','GRI','COV','PNE','HPV','M9','M24','DENT','ROR','MEN'];
 
 /* ---- État de la démonstration ---- */
-let cur = 'E', tab = 'vacc', selId = null, dock = 'grille', unit = 'mmol', s2sim = {}, mt = {}, vsel = 0;
+let cur = 'E', tab = 'vacc', selId = null, dock = 'grille', unit = 'mmol', hunit = 'mmol', s2sim = {}, mt = {}, vsel = 0;
 const mtOf = () => (mt[cur] = mt[cur] || {});
 function evalAll(){
   const p = PROFILES[cur], st = mtOf();
@@ -176,13 +222,20 @@ function paneVacc(){
 }
 
 /* ---- Examens et consultations ---- */
+const examStatut = x => x.refus ? 'Refusé' : (D(x.ech) < REF ? 'En retard' : x.statut);
+let esel = 0;
 function paneExam(){
-  const p = PROFILES[cur], e = p.exams[0];
+  const p = PROFILES[cur];
+  if(esel >= p.exams.length) esel = 0;
+  const e = p.exams[esel];
+  const rep = x => x.repN ? 'Tous les ' + x.repN + ' an(s) pendant ' + x.repY + ' an(s)' : '';
   const grid = '<table class="xw-grid"><tr><th>Examen</th><th>Répétition</th><th>Note</th><th>Statut</th><th>Créé par</th><th>Proposé</th><th>Refusé</th><th>Échéance</th></tr>' +
-    p.exams.map((x,i)=>'<tr class="'+(i===0?'sel':'')+'"><td>'+x.nom+'</td><td></td><td></td><td>'+x.statut+'</td><td>'+x.par+'</td><td>☐</td><td>☐</td><td>'+fmt(D(x.ech))+'</td></tr>').join('') + '</table>';
-  const form = e ? '<div class="xw-form" style="grid-template-columns:90px 1fr"><div></div><div class="mut">Posé le '+e.pose+' par '+e.par+'</div><div>Examen :</div><div><span class="fld" style="display:block">'+e.nom+'</span></div>'+
-    '<div>dans</div><div><span class="fld">'+e.dans.split(' ')[0]+'</span> '+e.dans.split(' ')[1]+' ou le <span class="fld" style="min-width:90px;display:inline-block"></span></div><div></div><div>☐ Répéter tous les <span class="fld">1</span> an(s) pendant <span class="fld">10</span> an(s)</div>'+
-    '<div>Note :</div><div><span class="fld" style="display:block;min-height:22px"></span></div><div></div><div style="color:#2f6f9f">→ '+e.nom+' le '+fmt(D(e.ech))+'</div></div>' : '<div class="xw-pad mut">Aucun examen programmé pour ce patient.</div>';
+    p.exams.slice().sort((x,y)=>x.ech<y.ech?-1:1).map(x => { const i = p.exams.indexOf(x), s = examStatut(x);
+      return '<tr class="click' + (i === esel ? ' sel' : '') + '" data-e="' + i + '"><td>' + x.nom + '</td><td>' + rep(x) + '</td><td>' + x.note + '</td><td' + (s === 'En retard' ? ' style="color:#b3261e;font-weight:600"' : '') + '>' + s + '</td><td>' + x.par + '</td><td>' + (x.prop ? '☑' : '☐') + '</td><td>' + (x.refus ? '☑' : '☐') + '</td><td>' + fmt(D(x.ech)) + '</td></tr>'; }).join('') + '</table>';
+  const form = e ? '<div class="xw-form" style="grid-template-columns:90px 1fr"><div></div><div class="mut">Posé le ' + e.pose + ' par ' + e.par + '</div><div>Examen :</div><div><span class="fld" style="display:block">' + e.nom + '</span></div>' +
+    '<div>dans</div><div>' + (e.dans ? '<span class="fld">' + e.dans.split(' ')[0] + '</span> ' + e.dans.split(' ').slice(1).join(' ') : '<span class="fld" style="min-width:40px;display:inline-block"></span>') + ' ou le <span class="fld" style="min-width:90px;display:inline-block">' + (e.dans ? '' : fmt(D(e.ech))) + '</span></div>' +
+    '<div></div><div>' + (e.repN ? '☑' : '☐') + ' Répéter tous les <span class="fld">' + (e.repN || 1) + '</span> an(s) pendant <span class="fld">' + (e.repY || 10) + '</span> an(s)</div>' +
+    '<div>Note :</div><div><span class="fld" style="display:block;min-height:22px">' + e.note + '</span></div><div></div><div style="color:#2f6f9f">→ ' + e.nom + ' le ' + fmt(D(e.ech)) + '</div></div>' : '<div class="xw-pad mut">Aucun examen programmé pour ce patient.</div>';
   return '<div class="xw-body"><div class="xw-main">' + grid + form + '</div>' + sideButtons() + '</div>';
 }
 
@@ -212,9 +265,13 @@ function chronoSVG(compact){
     const ends = real.slice(); if(rap) ends.push(rap);
     if(ends.length > 1) s += '<line x1="'+X(ends[0])+'" x2="'+X(ends[ends.length-1])+'" y1="'+y+'" y2="'+y+'" stroke="#bbb" stroke-width="'+(compact?5:8)+'"/>';
     real.forEach(d => s += '<circle cx="'+X(d)+'" cy="'+y+'" r="'+(compact?4:5.5)+'" fill="#2e7d5b"/>');
-    r.items.filter(x => x.refus).forEach(x => s += '<text x="'+X(D(x.d))+'" y="'+(y+5)+'" font-size="15" text-anchor="middle" fill="#f39c12" font-weight="700">✖</text>');
-    const tri = rap || (r.type==='e' ? D(r.items[0].ech) : null);
-    if(tri) s += '<polygon points="'+(X(tri)-6)+','+(y+6)+' '+(X(tri)+6)+','+(y+6)+' '+X(tri)+','+(y-7)+'" fill="#3f78b5"/>';
+    r.items.filter(x => r.type === 'v' && x.refus).forEach(x => s += '<text x="'+X(D(x.d))+'" y="'+(y+5)+'" font-size="15" text-anchor="middle" fill="#f39c12" font-weight="700">✖</text>');
+    if(r.type === 'e'){
+      const x = r.items[0], t = D(x.ech);
+      if(x.refus) s += '<text x="'+X(t)+'" y="'+(y+5)+'" font-size="15" text-anchor="middle" fill="#f39c12" font-weight="700">✖</text>';
+      else if(t < REF) s += '<rect x="'+(X(t)-5)+'" y="'+(y-5)+'" width="10" height="10" fill="#d93025"/>';
+      else s += '<polygon points="'+(X(t)-6)+','+(y+6)+' '+(X(t)+6)+','+(y+6)+' '+X(t)+','+(y-7)+'" fill="#3f78b5"/>';
+    } else if(rap) s += '<polygon points="'+(X(rap)-6)+','+(y+6)+' '+(X(rap)+6)+','+(y+6)+' '+X(rap)+','+(y-7)+'" fill="#3f78b5"/>';
   });
   const xt = X(REF);
   s += '<line x1="'+xt+'" x2="'+xt+'" y1="'+T+'" y2="'+(H-B)+'" stroke="#2f6f9f" stroke-width="1.5"/>';
@@ -229,44 +286,51 @@ function paneChrono(){
 function s2input(p){
   const s = p.s2, o = s2sim[cur] || {}, pick = (k, v) => (o[k] !== undefined ? o[k] : v);
   return {sex:p.sexe, age:p.age, smoker:pick('smoker', s.tabac), sbp:pick('sbp', s.pas), tchol:pick('chol', s.chol), hdl:pick('hdl', s.hdl),
-          diabetes:p.ald.includes(8) || !!p.meds.A10, cvd:hasAny(p,[1,3,13]), statin:pick('statine', s.statine), severeHTA:p.ald.includes(12)};
+          diabetes:p.ald.includes(8) || !!p.meds.A10, type1:false, cvd:hasAny(p,[1,3,13]), statin:pick('statine', s.statine), severeHTA:p.ald.includes(12),
+          ageDx:pick('dx', s.dx == null ? null : s.dx), hba1c:pick('hba1c', s.hba1c == null ? null : s.hba1c), egfr:pick('egfr', s.egfr == null ? null : s.egfr)};
 }
 function s2result(){
   const p = PROFILES[cur], inp = s2input(p), r = SCORE2ALGO.compute(inp);
   const COL = ['#2e7d32', '#e0a100', '#b3261e'], LAB = ['Vert', 'Orange', 'Rouge'];
-  if(!r.ok){
-    return '<div class="big" style="font-size:26px">— %</div><span class="st st-ex">Non calculé</span><ul style="text-align:left;font-size:12px">' + r.why.map(w => '<li>' + w + '</li>').join('') + '</ul>' +
-      (r.diabetes ? '<div class="mut" style="font-size:11.5px;text-align:left">Variables supplémentaires attendues pour SCORE2-Diabetes (d’après la publication, à confirmer sur document) : âge au diagnostic du diabète, HbA1c, DFG estimé.</div>' : '');
-  }
-  return '<div class="big" style="color:' + COL[r.cls] + '">' + r.shown + ' %</div><div class="mut" style="font-size:12px">risque cardiovasculaire à 10 ans — ' + r.model + ' (France : risque faible)</div>' +
-    '<span class="st" style="background:' + COL[r.cls] + ';color:#fff">' + LAB[r.cls] + '</span>' +
-    '<div class="mut" style="font-size:11.5px;margin-top:6px">vert ' + r.thresholds[0] + ' · orange ' + r.thresholds[1] + ' · rouge ' + r.thresholds[2] + '</div>' +
-    (r.exact ? '' : '<div class="mut" style="font-size:11.5px">Lu dans le tableau officiel (tranches, entiers)</div>') +
-    (r.flags.length ? '<div style="font-size:11.5px;color:#b26a00">' + r.flags.join('<br>') + '</div>' : '');
+  if(!r.ok) return '<div class="big" style="font-size:26px">— %</div><span class="st st-ex">Non calculé</span><ul style="text-align:left;font-size:12px">' + r.why.map(w => '<li>' + w + '</li>').join('') + '</ul>';
+  const col = r.cls == null ? '#37474f' : COL[r.cls];
+  return '<div class="big" style="color:' + col + '">' + r.shown + ' %</div><div class="mut" style="font-size:12px">risque cardiovasculaire à 10 ans — ' + r.model + ' (France : risque faible)</div>' +
+    (r.cls == null ? '<span class="st st-ex">Pas de seuil défini dans l’article</span>'
+                   : '<span class="st" style="background:' + col + ';color:#fff">' + LAB[r.cls] + '</span><div class="mut" style="font-size:11.5px;margin-top:6px">vert ' + r.thresholds[0] + ' · orange ' + r.thresholds[1] + ' · rouge ' + r.thresholds[2] + '</div>') +
+    (r.exact || r.approx ? '' : '<div class="mut" style="font-size:11.5px">Lu dans le tableau officiel (tranches, entiers)</div>') +
+    (r.flags.length ? '<div style="font-size:11.5px;color:#b26a00;text-align:left;margin-top:4px">' + r.flags.join('<br>') + '</div>' : '');
 }
 function paneS2(){
   const p = PROFILES[cur], s = p.s2, inp = s2input(p), dt = s.date ? fmt(D(s.date)) : '—';
   const conv = v => v == null ? null : (unit === 'g' ? +(v / CHOL).toFixed(2) : v);
+  const hconv = v => v == null ? null : (hunit === 'pct' ? +((v / 10.929) + 2.15).toFixed(1) : v);
   const num = (f, v, step) => '<input type="number" data-sim="' + f + '" step="' + (step || 1) + '" value="' + (v == null ? '' : v) + '" placeholder="manquant">';
   const row = (lab, ctl, u, src) => '<tr><td>' + lab + '</td><td>' + ctl + ' ' + u + '</td><td>' + (ctl.includes('value=""') ? '—' : dt) + '</td><td>' + src + '</td></tr>';
-  const ante = [
-    [!inp.cvd, 'Pas de maladie cardiovasculaire établie', inp.cvd ? 'ALD cardiovasculaire' : 'aucune'],
-    [!inp.severeHTA, 'Pas d’HTA sévère', inp.severeHTA ? 'au dossier' : 'aucune'],
-    [!inp.statin, 'Pas de traitement hypolipémiant', inp.statin ? 'en cours' : 'aucun'],
-    [!inp.diabetes, 'Pas de diabète (sinon SCORE2-Diabetes)', inp.diabetes ? 'diabète au dossier' : 'aucun']
-  ];
+  const dm = inp.diabetes;
+  const ante = [[!inp.cvd, 'Pas de maladie cardiovasculaire établie', inp.cvd ? 'ALD cardiovasculaire' : 'aucune']];
+  if(dm){
+    ante.push([!inp.type1, 'Diabète de type 2 (SCORE2-Diabetes)', 'à confirmer au dossier']);
+  } else {
+    ante.push([!inp.severeHTA, 'Pas d’HTA sévère', inp.severeHTA ? 'au dossier' : 'aucune']);
+    ante.push([!inp.statin, 'Pas de traitement hypolipémiant', inp.statin ? 'en cours' : 'aucun']);
+  }
+  const lo = dm ? 40 : 40, hi = dm ? 79 : 89;
   const u = unit === 'g' ? 'g/L' : 'mmol/L', stp = unit === 'g' ? 0.01 : 0.1;
+  const dmRows = dm ? row('Âge au diagnostic du diabète', num('dx', inp.ageDx), 'ans', 'Épisode de soins') +
+      row('HbA1c', num('hba1c', hconv(inp.hba1c), hunit === 'pct' ? 0.1 : 1), hunit === 'pct' ? '%' : 'mmol/mol', 'Biologie') +
+      row('DFG estimé (CKD-EPI)', num('egfr', inp.egfr), 'mL/min/1,73 m²', 'Biologie') : '';
   return '<div class="xw-top"><div style="display:flex;gap:6px"><div class="xw-btn" data-act="Imprimer">Imprimer</div><div class="xw-btn" data-act="Impression PDF">Impression PDF</div></div><div class="xw-btn">Fermer</div></div><div class="xw-main" style="margin:0 6px 6px"><div class="xw-s2"><div>' +
    '<h4>Variables lues au dossier (modifiables pour simuler)</h4><table class="xw-grid"><tr><th>Variable</th><th>Valeur</th><th>Date</th><th>Origine</th></tr>' +
    row('Sexe', p.sexe === 'F' ? 'Femme' : 'Homme', '', 'Fiche patient') + row('Âge', String(p.age), 'ans', 'Date de naissance') +
    row('Tabagisme', '<label><input type="checkbox" data-sim="smoker"' + (inp.smoker ? ' checked' : '') + '> Fumeur</label>', '', 'Facteurs de risque') +
-   row('PAS', num('sbp', inp.sbp), 'mmHg', 'Constantes') + row('Cholestérol total', num('chol', conv(inp.tchol), stp), u, 'Biologie') + row('Cholestérol HDL', num('hdl', conv(inp.hdl), stp), u, 'Biologie') + '</table>' +
-   '<p style="font-size:12.5px">Unité des lipides : <label><input type="radio" name="xwUnit" value="mmol"' + (unit === 'mmol' ? ' checked' : '') + '> mmol/L</label> <label><input type="radio" name="xwUnit" value="g"' + (unit === 'g' ? ' checked' : '') + '> g/L</label> <span class="mut">(1 g/L = 2,586 mmol/L ; calcul toujours en mmol/L)</span></p>' +
+   row('PAS', num('sbp', inp.sbp), 'mmHg', 'Constantes') + row('Cholestérol total', num('chol', conv(inp.tchol), stp), u, 'Biologie') + row('Cholestérol HDL', num('hdl', conv(inp.hdl), stp), u, 'Biologie') + dmRows + '</table>' +
+   '<p style="font-size:12.5px">Unité des lipides : <label><input type="radio" name="xwUnit" value="mmol"' + (unit === 'mmol' ? ' checked' : '') + '> mmol/L</label> <label><input type="radio" name="xwUnit" value="g"' + (unit === 'g' ? ' checked' : '') + '> g/L</label> <span class="mut">(1 g/L = 2,586 mmol/L ; calcul toujours en mmol/L)</span>' +
+   (dm ? '<br>Unité de l’HbA1c : <label><input type="radio" name="xwHUnit" value="mmol"' + (hunit === 'mmol' ? ' checked' : '') + '> mmol/mol</label> <label><input type="radio" name="xwHUnit" value="pct"' + (hunit === 'pct' ? ' checked' : '') + '> %</label> <span class="mut">(calcul en mmol/mol IFCC)</span>' : '') + '</p>' +
    '<p class="mut" style="font-size:12px">Simulation devant le patient (ex. arrêt du tabac) : rien n’est écrit au dossier. <a href="#" id="xwS2Reset">Revenir aux valeurs du dossier</a></p></div><div>' +
    '<h4>Applicabilité</h4><ul class="xw-chk">' + ante.map(c => '<li>' + (c[0] ? '✅' : '❌') + ' ' + c[1] + ' <span class="mut">— ' + c[2] + '</span></li>').join('') +
-   '<li>' + ((p.age >= 40 && p.age <= 89) ? '✅' : '❌') + ' Âge entre 40 et 89 ans <span class="mut">— ' + p.age + ' ans' + (p.age >= 70 ? ' (SCORE2-OP)' : '') + ' · calcul proposé dès 40 ans, à revalider</span></li></ul>' +
+   '<li>' + ((p.age >= lo && p.age <= hi) ? '✅' : '❌') + ' Âge entre ' + lo + ' et ' + hi + ' ans <span class="mut">— ' + p.age + ' ans' + (!dm && p.age >= 70 ? ' (SCORE2-OP)' : '') + ' · calcul proposé dès 40 ans, à revalider</span></li></ul>' +
    '<div class="xw-res" id="xwS2Res">' + s2result() + '</div>' +
-   '<p class="mut" style="font-size:12px;margin-top:8px">Source : articles SCORE2 et SCORE2-OP (ESC 2021), région France = risque faible.</p></div></div></div>';
+   '<p class="mut" style="font-size:12px;margin-top:8px">Sources : articles SCORE2, SCORE2-OP (ESC 2021) et SCORE2-Diabetes (ESC 2023), région France = risque faible.</p></div></div></div>';
 }
 
 /* ---- Prévention MT (CPAM) : même langage visuel que Examens et consultations ---- */
@@ -309,7 +373,7 @@ function renderDock(){
     const rows = [];
     Object.keys(groups).forEach(k => { const g = groups[k].sort((a,c)=>a.d<c.d?-1:1), l = g[g.length-1], rap = g.map(x=>x.rappel).filter(Boolean).sort().pop();
       if(rap || monthsBetween(D(l.d), REF) < 60) rows.push(['Vaccin', k.slice(0,16), rap ? fmt(D(rap)) : '', rap ? 'Rappel atte…' : 'Fait', fmt(D(l.d))]); });
-    p.exams.forEach(e => rows.push(['Examen', e.nom.slice(0,16), fmt(D(e.ech)), 'A faire', '']));
+    p.exams.forEach(e => rows.push(['Examen', e.nom.slice(0,16), fmt(D(e.ech)), examStatut(e) === 'Actif' ? 'A faire' : examStatut(e), '']));
     b.innerHTML = '<table class="xw-grid"><tr><th>Type</th><th>Examen / …</th><th>Échéance</th><th>Statut</th><th>Réalisé le</th></tr>' + rows.map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + r[4] + '</td></tr>').join('') + '</table>';
   } else if(dock === 'mt'){
     const r = evalAll().filter(x => x.statut === 'todo');
@@ -345,6 +409,7 @@ root.addEventListener('click', e => {
     }
     return;
   }
+  const ex_ = e.target.closest('tr[data-e]'); if(ex_){ esel = +ex_.dataset.e; render(); return; }
   const v = e.target.closest('tr[data-v]'); if(v){ vsel = +v.dataset.v; root.querySelectorAll('tr[data-v]').forEach(x => x.classList.remove('sel')); v.classList.add('sel'); return; }
   const r = e.target.closest('tr[data-id]');
   if(r && !e.target.closest('input')){ selId = r.dataset.id; root.querySelectorAll('tr[data-id]').forEach(x => x.classList.toggle('sel', x === r)); return; }
@@ -361,6 +426,7 @@ root.addEventListener('change', e => {
     selId = id; render(); return;
   }
   if(e.target.name === 'xwUnit'){ unit = e.target.value; render(); }
+  if(e.target.name === 'xwHUnit'){ hunit = e.target.value; render(); }
 });
 root.addEventListener('input', e => {
   const f = e.target.dataset && e.target.dataset.sim; if(!f) return;
@@ -369,11 +435,12 @@ root.addEventListener('input', e => {
   else {
     let v = e.target.value === '' ? null : parseFloat(e.target.value);
     if(v != null && (f === 'chol' || f === 'hdl') && unit === 'g') v = v * CHOL;   // saisie en g/L → calcul en mmol/L
+    if(v != null && f === 'hba1c' && hunit === 'pct') v = (v - 2.15) * 10.929;      // saisie en % → calcul en mmol/mol
     o[f] = v;
   }
   const res = document.getElementById('xwS2Res'); if(res) res.innerHTML = s2result();
   renderDock();
 });
-sel.addEventListener('change', () => { cur = sel.value; selId = null; vsel = 0; render(); });
+sel.addEventListener('change', () => { cur = sel.value; selId = null; vsel = 0; esel = 0; render(); });
 render();
 })();

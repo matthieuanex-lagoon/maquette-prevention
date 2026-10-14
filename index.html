@@ -303,12 +303,12 @@ s += '<div class="card" style="margin-top:20px"><h2>5. Décisions, documents man
  '<li><strong>Chronologie</strong> : ne montre pas les indicateurs CPAM ; la CPAM reste clairement différenciée des rappels existants.</li>'+
  '<li><strong>Échéance</strong> : « à faire avant le 31/12 » de l’année en cours. <strong>Montant</strong> : non affiché. <strong>Paramétrage modifiable</strong> : beaucoup plus tard.</li>'+
  '<li><strong>Impression</strong> (onglet MT) : ce qui est « Fait » d’un côté, ce qui est « À faire » à part ; les exclus en note séparée.</li>'+
- '<li><strong>Score 2</strong> : seuils des articles ; SCORE2-Diabetes à prévoir ; lipides en mmol/L ou g/L au choix ; calcul proposé dès 40 ans (à revalider).</li>'+
+ '<li><strong>Score 2</strong> : seuils des articles ; <strong>SCORE2-Diabetes intégré</strong> (estimation, voir § Score 2) ; lipides en mmol/L ou g/L au choix, HbA1c en mmol/mol ou %; calcul proposé dès 40 ans (à revalider).</li>'+
  '</ul>'+
  '<h3 class="s">Documents ou informations qui manquent</h3>'+
  '<div class="q"><b>1 — Cinq fiches techniques.</b> Consultations M9 et M24-25, bucco-dentaire, ROR, méningocoque ACWY : codes d’actes et de produits, exclusions, profondeur d’historique.</div>'+
  '<div class="q"><b>2 — Correspondance ALD → CIM10.</b> Les fiches définissent les populations par <strong>numéro d’ALD</strong> « avec un code CIM10 associé ». Le numéro étant inconnu dans XMed, il faut la table officielle de correspondance ALD / codes CIM10.</div>'+
- '<div class="q"><b>3 — SCORE2-Diabetes.</b> Document de référence (article et supplément) : variables attendues et coefficients.</div>'+
+ '<div class="q"><b>3 — Coefficients exacts SCORE2-Diabetes.</b> L’article fourni donne des rapports de risque arrondis à deux décimales (estimation avec un écart de −0,2 à −0,5 point). Les coefficients exacts sont dans le supplément en ligne (annexes 1 et 2) : à récupérer pour supprimer le « ≈ ».</div>'+
  '<div class="q"><b>4 — Supplément SCORE2-OP.</b> Pour le calcul continu des 70–89 ans (aujourd’hui : tableau par tranches).</div>'+
  '<div class="q"><b>5 — Champs XMed.</b> Noms exacts des champs : médecin traitant, statut ALD global, CIM10 de l’épisode, prescriptions (ATC), résultats incorporés (codes), vaccins (code CIP présent dans le module). À obtenir auprès d’Olaqin.</div>'+
  '</div>';
@@ -318,6 +318,20 @@ s += '<div class="card"><h2>6. Sources</h2><ul>'+
  '<li><a href="https://recomedicales.fr/scores/score2/" target="_blank" rel="noopener">RecoMédicales — SCORE2 et SCORE2-OP</a> (Score 2), page fournie par vos soins.</li>'+
  '<li><a href="'+AMELI_URL+'" target="_blank" rel="noopener">ameli.fr — Le nouveau forfait médecin traitant (janvier 2026)</a> : liste des 15 indicateurs, populations et critères provisoires.</li></ul></div>';
 spec.innerHTML = s;
+/* Sommaire et numérotation des sections */
+(function(){
+  const hs = [...spec.querySelectorAll(':scope > h2, :scope > .card > h2')].filter(h => !h.closest('details') && !h.closest('#score2Spec'));
+  const items = [];
+  hs.forEach((h, i) => {
+    const clean = h.textContent.replace(/^\s*\d+\.\s*/, '').replace(/\s+Source :.*$/, '').trim();
+    const title = h.firstChild && h.firstChild.nodeType === 3 ? h.firstChild.textContent.replace(/^\s*\d+\.\s*/, '').trim() : clean;
+    h.id = 'sec' + (i + 1);
+    if(h.firstChild && h.firstChild.nodeType === 3) h.firstChild.textContent = (i + 1) + '. ' + title + ' ';
+    else h.textContent = (i + 1) + '. ' + clean;
+    items.push('<li><a href="#sec' + (i + 1) + '">' + title + '</a></li>');
+  });
+  spec.insertAdjacentHTML('afterbegin', '<nav class="card"><strong>Sommaire</strong><ol style="columns:2;margin:6px 0 0">' + items.join('') + '</ol></nav>');
+})();
 
 /* Score 2 — contenu repris de la page RecoMédicales ; l'algorithme n'y figure pas */
 const SCORE2 =
@@ -333,7 +347,7 @@ const SCORE2 =
  '<tr><td>Cholestérol HDL</td><td>0,7 à 2,5 mmol/L</td><td>Résultats de biologie</td></tr></table>'+
  '<h3 class="s">Score non applicable en cas de</h3>'+
  '<ul><li>maladie cardiovasculaire (prévention secondaire)</li><li>hypertension sévère (≥ 180/110 mmHg) ou secondaire</li><li>LDL &gt; 1,9 g/L, hypercholestérolémie familiale</li><li>grossesse</li><li>traitement hypolipémiant (statine ou autre)</li></ul>'+
- '<p>En cas de diabète ne relevant pas d\'emblée d\'un risque marqué, la page renvoie au <strong>SCORE2-Diabetes</strong> (calcul distinct, non décrit sur la page).</p>'+
+ '<p>En cas de diabète ne relevant pas d’emblée d’un risque marqué, la page renvoie au <strong>SCORE2-Diabetes</strong> : intégré à partir de l’article ESC 2023 (voir la méthode ci-dessous).</p>'+
  '<h3 class="s">Seuils et répétition (selon la page)</h3>'+
  '<ul><li>Seuils de risque à <strong>2 %, 10 % et 20 %</strong> (ESC 2025).</li><li>Répéter par exemple tous les 5 ans (ESC 2021) ; calcul envisageable dès 40 ans chez l\'homme, 50 ans chez la femme ou dès la ménopause (ESC 2021).</li></ul>'+
  '<h3 class="s">Autres éléments pouvant reclasser le risque (liste de la page)</h3>'+
@@ -345,10 +359,11 @@ document.getElementById('score2Card').innerHTML = SCORE2;
 document.getElementById('score2Spec').innerHTML = SCORE2 +
  '<h3 class="s">Questions ouvertes — Score 2</h3>'+
  '<div class="s2doc"></div>'+
- '<div class="q"><b>Décidé.</b> Seuils des articles (par âge) ; lipides en mmol/L ou g/L au choix (1 g/L = 2,586 mmol/L, calcul toujours en mmol/L) ; calcul proposé dès 40 ans, à revalider ; SCORE2-Diabetes à prévoir.</div>'+
+ '<div class="q"><b>Décidé.</b> Seuils des articles (par âge) ; lipides en mmol/L ou g/L au choix (1 g/L = 2,586 mmol/L), HbA1c en mmol/mol ou % ; calcul proposé dès 40 ans, à revalider ; SCORE2-Diabetes intégré.</div>'+
  '<div class="q"><b>S1.</b> SCORE2-OP (70–89 ans) : valeur lue dans le <strong>tableau officiel</strong> (Figure 3), par tranches, arrondie à l’entier. La formule continue exige le supplément en ligne de l’article.</div>'+
- '<div class="q"><b>S2.</b> SCORE2-Diabetes : modèle distinct, non décrit dans les deux articles fournis ; document à fournir. En attendant, le calcul est refusé avec un message explicite.</div>'+
- '<div class="q"><b>S3.</b> Statut réglementaire : un score affiché oriente une décision thérapeutique (point déjà noté à l’étape 1 avec Olaqin).</div>';
+ '<div class="q"><b>S2.</b> SCORE2-Diabetes : estimation à partir du Tableau 2 de l’article (rapports de risque arrondis). Elle sous-estime de 0,2 à 0,5 point les quatre exemples publiés ; le résultat est donc affiché « ≈ » avec cet avertissement. Les coefficients exacts du supplément le rendront exact. Aucune couleur : l’article ne définit pas de seuils d’action.</div>'+
+ '<div class="q"><b>S3.</b> Diabète de type 2 uniquement : XMed distingue-t-il le type 1 du type 2 (code CIM10 E10 / E11) ? Sans cela, le type 2 est supposé.</div>'+
+ '<div class="q"><b>S4.</b> Statut réglementaire : un score affiché oriente une décision thérapeutique (point déjà noté à l’étape 1 avec Olaqin).</div>';
 
 /* Navigation */
 function bind(navId, attr, show){
