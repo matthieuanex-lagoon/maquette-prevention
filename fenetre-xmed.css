@@ -1,0 +1,56 @@
+/* Modélisation de la fenêtre XMed — style inspiré des captures de l'application (Windows, onglets, grilles) */
+.xw-note{font-size:13px;color:#5d6b75;margin:0 0 12px}
+.xw-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:13px}
+.xw-bar select{font:inherit;padding:4px 8px}
+.xw-win{border:1px solid #9aa4ab;background:#f0f0f0;box-shadow:0 2px 10px rgba(0,0,0,.18);font:13px/1.35 "Segoe UI",Tahoma,sans-serif;color:#111;max-width:1100px}
+.xw-title{background:#fff;padding:5px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #ccc}
+.xw-title .ico{width:16px;height:16px;background:linear-gradient(135deg,#e8452c,#f5a623);border-radius:3px}
+.xw-title .ctl{margin-left:auto;letter-spacing:14px;color:#333}
+.xw-tabs{display:flex;gap:2px;padding:4px 6px 0;background:#f0f0f0}
+.xw-tabs button{border:1px solid #adadad;border-bottom:0;background:#e1e1e1;padding:3px 10px;font:inherit;cursor:pointer}
+.xw-tabs button.act{background:#fff;font-weight:600}
+.xw-tabs button.new{border-color:#00769e}
+.xw-tabs button.new.act{box-shadow:inset 0 3px 0 #00769e}
+.xw-body{display:flex;gap:8px;padding:6px;background:#f0f0f0;min-height:520px}
+.xw-main{flex:1;min-width:0;border:1px solid #bbb;background:#fff;overflow:auto}
+.xw-side{width:150px;display:flex;flex-direction:column;gap:7px}
+.xw-btn{border:1px solid #aaa;background:#fdfdfd;padding:6px 4px;font:inherit;text-align:center;cursor:default}
+.xw-btn.dis{color:#999;background:#f2f2f2}
+.xw-btn.tall{padding:14px 4px}
+.xw-top{display:flex;justify-content:space-between;padding:6px;background:#f0f0f0}
+.xw-top .xw-btn{width:140px}
+.xw-grid{width:100%;border-collapse:collapse;font-size:12.5px}
+.xw-grid th{background:#f5f5f5;border:1px solid #d6d6d6;padding:3px 6px;text-align:left;font-weight:400;white-space:nowrap}
+.xw-grid td{border:1px solid #e6e6e6;padding:3px 6px;white-space:nowrap;vertical-align:middle}
+.xw-grid tr.sel td{background:#7b7f85;color:#fff}
+.xw-grid tr.grp td{background:#e8f0f5;font-weight:600;color:#005a78}
+.xw-grid tr.click{cursor:pointer}
+.xw-grid tr.click:hover td{background:#eef6fa}
+.xw-form{display:grid;grid-template-columns:130px 1fr;gap:6px 10px;padding:10px;font-size:12.5px;border-top:1px solid #ccc}
+.xw-form input[type=text],.xw-form .fld{border:1px solid #bbb;padding:2px 6px;background:#fff;min-height:22px}
+.st{display:inline-block;padding:1px 8px;border-radius:9px;font-size:12px;font-weight:600;white-space:nowrap}
+.st-ok{background:#e1f2e3;color:#2e7d32}
+.st-todo{background:#fde8d4;color:#b25a00}
+.st-late{background:#fbdcd9;color:#b3261e}
+.st-ex{background:#e6e6ea;color:#555}
+.st-nc{background:#f1f1f1;color:#888}
+.xw-pane{display:none}
+.xw-pane.act{display:block}
+.xw-pad{padding:12px}
+.xw-s2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;padding:12px}
+@media (max-width:820px){.xw-s2{grid-template-columns:1fr}.xw-side{width:110px}}
+.xw-s2 h4{margin:0 0 6px;font-size:13px;color:#005a78}
+.xw-s2 input[type=number]{width:80px;padding:2px 4px;font:inherit}
+.xw-chk li{list-style:none;margin:2px 0}
+.xw-chk{padding-left:0;margin:4px 0}
+.xw-res{border:1px solid #bbb;padding:12px;background:#fafafa;text-align:center}
+.xw-res .big{font-size:34px;font-weight:600;color:#888}
+.xw-scale{display:flex;height:14px;margin:10px 0 2px;border-radius:3px;overflow:hidden}
+.xw-scale i{flex:1}
+.xw-dock{width:340px;border:1px solid #8a94c4;background:#fff;font:12.5px "Segoe UI",sans-serif}
+.xw-dock .hd{background:#5a6aa8;color:#fff;padding:5px 8px;font-weight:600;display:flex;justify-content:space-between}
+.xw-seg{display:flex;margin:6px;border:1px solid #5a6aa8;border-radius:12px;overflow:hidden}
+.xw-seg button{flex:1;border:0;background:#fff;padding:3px;font:inherit;cursor:pointer}
+.xw-seg button.act{background:#5a6aa8;color:#fff}
+.xw-dock .bd{padding:6px 10px 10px;min-height:150px}
+.legendbox{border:1px solid #ccc;background:#fff;padding:6px 10px;font-size:12px;position:absolute;right:12px;top:52px}

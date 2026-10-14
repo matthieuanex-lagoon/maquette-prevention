@@ -59,6 +59,7 @@ ul{margin:4px 0 8px;padding-left:20px}
 .sc{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 @media print{.main-tabs,.sub-tabs{display:none}.pane{display:block!important}}
 </style>
+<link rel="stylesheet" href="fenetre-xmed.css">
 </head>
 <body>
 <header class="top">
@@ -67,6 +68,7 @@ ul{margin:4px 0 8px;padding-left:20px}
 </header>
 <nav class="main-tabs" id="mainTabs">
   <button data-p="prev" class="act">Prévention étape 2</button>
+  <button data-p="xw">Fenêtre XMed (modélisation)</button>
   <button data-p="spec">Spécifications techniques étape 2</button>
   <button data-p="arch" class="arch">Archive étape 1</button>
 </nav>
@@ -85,6 +87,10 @@ ul{margin:4px 0 8px;padding-left:20px}
   <div id="s-score2" style="display:none">
     <div class="card" id="score2Card"></div>
   </div>
+</section>
+
+<section class="pane" id="p-xw">
+  <div id="xwRoot"></div>
 </section>
 
 <section class="pane" id="p-spec">
@@ -228,7 +234,7 @@ function detail(i, full){
     h += '<h3 class="s">Données du dossier XMed à lire <span class="mut" style="font-weight:400">(proposition — à valider)</span></h3>'+li(i.xmed);
     if(i.limites) h += '<h3 class="s">Écarts attendus entre le dossier et le calcul CPAM (fiche, § Limites)</h3>'+li(i.limites);
     if(i.refs && i.refs!=='—') h += '<p class="mut">Référence : '+i.refs+'</p>';
-    if(i.source==='fiche') h += '<p class="mut">Fichier source : <code>sources-cpam/'+i.pdf+'</code></p>';
+    if(i.source==='fiche') h += '<p class="mut">Fichier source : <a href="sources-cpam/'+encodeURI(i.pdf)+'" target="_blank" rel="noopener"><code>'+i.pdf+'</code></a></p>';
     else h += '<p class="mut">Source provisoire : <a href="'+AMELI_URL+'" target="_blank" rel="noopener">ameli.fr — Le nouveau forfait médecin traitant</a>. À remplacer par la fiche technique officielle dès réception.</p>';
   }
   return h;
@@ -342,8 +348,9 @@ function bind(navId, attr, show){
     show(b.dataset[attr]);
   });
 }
-bind('mainTabs','p',p=>['prev','spec','arch'].forEach(k=>document.getElementById('p-'+k).classList.toggle('act',k===p)));
+bind('mainTabs','p',p=>['prev','xw','spec','arch'].forEach(k=>document.getElementById('p-'+k).classList.toggle('act',k===p)));
 bind('subTabs','s',p=>{ document.getElementById('s-cpam').style.display = p==='cpam'?'':'none'; document.getElementById('s-score2').style.display = p==='score2'?'':'none'; });
 </script>
+<script src="fenetre-xmed.js"></script>
 </body>
 </html>
