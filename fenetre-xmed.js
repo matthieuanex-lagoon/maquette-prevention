@@ -426,7 +426,8 @@ function paneMT(){
   const row = r => { const i = byId[r.id], st = ST[r.statut], act = r.statut !== 'nc';
     const echeance = r.statut === 'todo' ? 'Avant le ' + fmt(r.ech) : (r.ech instanceof Date ? fmt(r.ech) : (r.statut === 'ok' && r.ech ? r.ech : ''));
     const cb = (k, v) => act ? '<input type="checkbox" data-mt="' + k + '" data-id="' + r.id + '"' + (v ? ' checked' : '') + '>' : '';
-    return '<tr class="click' + (r.id === selId ? ' sel' : '') + '" data-id="' + r.id + '"><td>' + (r.statut === 'todo' ? led('o') : (r.statut === 'ok' ? led('g') : (r.statut === 'refus' ? led('r') : ''))) + '</td><td>' + i.titre + (i.source === 'ameli' ? ' <span class="st st-nc" title="Fiche technique non reçue">provisoire</span>' : '') + '</td>' +
+    const why = r.statut === 'nc' ? ('<strong>Ne concerne pas ce patient</strong><br>' + (r.precision || '') + '<br><span style="opacity:.8">Population visée par la fiche : ' + (i.cible || []).join(' ; ').slice(0, 260) + ((i.cible || []).join(' ; ').length > 260 ? '…' : '') + '</span>') : '';
+    return '<tr class="click' + (r.id === selId ? ' sel' : '') + '" data-id="' + r.id + '"' + (why ? ' data-why="' + why.replace(/"/g, '&quot;') + '"' : '') + '><td>' + (r.statut === 'todo' ? led('o') : (r.statut === 'ok' ? led('g') : (r.statut === 'refus' ? led('r') : ''))) + '</td><td>' + i.titre + (i.source === 'ameli' ? ' <span class="st st-nc" title="Fiche technique non reçue">provisoire</span>' : '') + '</td>' +
       '<td><span class="st ' + st[0] + '">' + st[1] + '</span></td><td>' + (r.last ? fmt(r.last) : '') + '</td><td>' + echeance + '</td>' +
       '<td>' + cb('prop', r.prop) + '</td><td>' + cb('refus', r.refusBox) + '</td><td>' + cb('excl', r.exclBox) + (act && r.exclBox ? '<br><span class="mut" style="font-size:11px">jusqu’au</span> <input type="date" data-mt="until" data-id="' + r.id + '" value="' + r.until + '">' : '') + '</td><td style="white-space:normal;min-width:240px">' + (r.precision || '') + '</td><td>' + (i.source === 'fiche' ? 'v' + i.ver : 'liste') + '</td></tr>'; };
   const head = '<tr><th></th><th>Indicateur</th><th>Statut</th><th>Réalisé le</th><th>Échéance</th><th>Proposé</th><th>Refusé</th><th>Exclu</th><th>Précision</th><th>Fiche</th></tr>';
@@ -524,6 +525,16 @@ root.addEventListener('input', e => {
   const res = document.getElementById('xwS2Res'); if(res) res.innerHTML = s2result();
   renderDock();
 });
+/* info-bulle : pourquoi l'indicateur ne concerne pas ce patient */
+const tip = document.body.appendChild(Object.assign(document.createElement('div'), {id:'xwTip'}));
+root.addEventListener('mouseover', e => { const r = e.target.closest('tr[data-why]'); if(r){ tip.innerHTML = r.dataset.why; tip.style.display = 'block'; } });
+root.addEventListener('mousemove', e => {
+  if(tip.style.display !== 'block') return;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  tip.style.left = Math.max(8, Math.min(e.clientX + 14, window.innerWidth - w - 8)) + 'px';
+  tip.style.top = (e.clientY + 18 + h > window.innerHeight ? e.clientY - h - 12 : e.clientY + 18) + 'px';
+});
+root.addEventListener('mouseout', e => { const r = e.target.closest('tr[data-why]'); if(r && !r.contains(e.relatedTarget)) tip.style.display = 'none'; });
 sel.addEventListener('change', () => { cur = sel.value; selId = null; vsel = 0; esel = 0; edraft = null; edirty = false; render(); });
 
 /* ---- interactions : Examens et consultations / repli « Ne concerne pas » ---- */
